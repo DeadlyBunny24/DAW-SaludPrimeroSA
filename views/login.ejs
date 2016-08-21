@@ -82,18 +82,31 @@
             <h1 class="text-center login-title">WAD-SaludPrimeroSA</h1>
             <div class="account-wall">
                 <img class="profile-img" src="images/Logo.gif?sz=160" alt="">
-                <form class="form-signin">
+                <form class="form-signin" method="post" action="/login">
+				<!-- Single button -->
+					<div style="margin-bottom: 25px" class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					Seleccione un Rol    <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li onclick="dropdown(this.innerHTML);"><a>Paciente</a></li>
+						<li onclick="dropdown(this.innerHTML);"><a>Operario</a></li>
+						<li onclick="dropdown(this.innerHTML);"><a>Laboratorista</a></li>
+					</ul>
+				</div>
                   <div style="margin-bottom: 25px" class="input-group">
                       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					  <input  type="hidden" class="form-control" id= "rol" name="rol">
                       <input id="username" type="text" class="form-control" name="username" value="" placeholder="username or email">
                   </div>
                   <div style="margin-bottom: 25px" class="input-group">
                       <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                      <input type="password" class="form-control" name="username" value="" placeholder="password">
+                      <input type="password" class="form-control" name="password" id= "password" value="" placeholder="password">
                   </div>
-                  <a id="boton_inicio" href="home.ejs" class="btn btn-lg btn-primary btn-block" >
+				  <input type="submit" class="form-control" value= "Iniciar Sesion"><br />
+                  <!--<a id="boton_inicio"  href="home.ejs" class="btn btn-lg btn-primary btn-block" >
                       Inicia sesion</a>
-                      <br />
+                      <br />-->
                   <div class="form-group">
                       <div class="col-md-12 control">
                           <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
@@ -116,6 +129,7 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script src="javascripts/login_script.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     </body>
 
 </html>

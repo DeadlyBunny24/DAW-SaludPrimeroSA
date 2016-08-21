@@ -3,16 +3,11 @@ $( document ).ready(function() {
     });
 
 function init(){
-	//Inicialización
-	$("#boton_inicio").click(function(){
-		if($("#username").val()=="usuario"){
-			$("#boton_inicio").attr("href", "home")
-		}
-		else if($("#username").val()=="operario"){
-			$("#boton_inicio").attr("href", "operario")
-		}
-		else{
-			$("#boton_inicio").attr("href", "laboratorista")
-		}
-	});
+	
+}
+
+ function dropdown(val) {
+  var y = document.getElementsByClassName('btn btn-default dropdown-toggle');
+  $("#rol").attr("value",val.replace(/\n|<.*?>/g,''));
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>'; 
 }

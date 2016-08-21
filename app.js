@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 
 var mongoose = require("mongoose");
@@ -38,11 +39,61 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+	secret: 'MY-SESSION-DEMO',
+	resave: true,
+	saveUninitialized: false	
+}));
+
+
 app.use('/', login);
 app.use('/home', home);
 app.use('/laboratorista', laboratorista);
 app.use('/operario', operario);
 app.use('/paciente', pacienteRoute);
+
+
+app.post('/login', function(req, res){
+	var username= req.body.username;
+	var password= req.body.password;
+	var rol= req.body.rol;
+	if (username =="admin" && password =="admin1234" && rol=="Operario"){
+		req.session ["username"]= username;
+		req.session ["rol"]= rol;
+		res.redirect('operario');
+		return;
+	}
+	if (username =="user" && password =="user1234"&& rol=="Paciente"){
+		req.session ["username"]= username;
+		req.session ["rol"]= rol;
+		res.redirect('home');
+		return;
+	}
+	if (username =="lab" && password =="lab1234"&& rol=="Laboratorista"){
+		req.session ["username"]= username;
+		req.session ["rol"]= rol;
+		res.redirect('laboratorista');
+		return;
+	}
+	res.send ("Usuario o contraseña invalidos");
+});
+
+app.get('/logout', function(req, res, next){
+	req.session.destroy();
+	res.render('login');
+});
+
+
+
+var auth= function(req, res, next) {
+  //res.render('index', { title: 'Express' });
+  //console.log("este es el middleware");
+  if (req.session["rol"]!= "admin"){
+		res.sendStatus(401);
+		return;
+	}
+  next();
+};
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
