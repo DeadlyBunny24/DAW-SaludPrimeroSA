@@ -3,7 +3,6 @@ var router = express.Router();
 var mongoose = require("mongoose");
 var paciente_db = require("../models/paciente_db.js");
 
-//var nuevo_paciente = new paciente_db({id:"2",datos_personales.cedula:000000000,fichas:});
 
 /* GET lista de pacientes. */
 router.get("/",function(req,res){
@@ -19,6 +18,18 @@ router.get("/",function(req,res){
 router.get("/:id",function(req,res){
 	var id = req.params["id"];
 	paciente_db.find({"id":id},function(err,docs){
+		if(err){
+			res.send({mensaje:"Tarea no encontrada!"});
+		}else{
+			res.send(docs);
+		}
+	});
+});
+
+
+router.get("/fichas/:id",function(req,res){
+	var id = req.params["id"];
+	paciente_db.find({"id":id},"fichas",function(err,docs){
 		if(err){
 			res.send({mensaje:"Tarea no encontrada!"});
 		}else{
@@ -56,18 +67,18 @@ router.put("/datospersonales/:id",function(req,res){
 
 router.put("/fichas/:id",function(req,res){
 	var ficha_i = req.body.fichas;
-	var id_i = req.params["id"];
-	console.log(ficha_i);
-	paciente_db.update({id:id_i},{$push:{fichas:ficha_i}},function(err){
-		if(err){
-			
-			res.send({message:"Error en la actualizacion!"})
-		}else{
-			res.send({message:"Actualizacion exitosa!"})
-		}
-	});
+	var ficha_json = JSON.parse(ficha_i);
+	var date = new Date();
+	var id_i = req.params["id"];	
+	ficha_json.fid=date.getTime().toString();
 
-	
+		  paciente_db.update({id:id_i},{$push:{fichas:ficha_json}},function(err){
+			if(err){
+				res.send({message:"Error en la actualizacion!"})
+			}else{
+				res.send({message:"Actualizacion exitosa!"})
+			}
+		});
 });
 
 router.delete("/:id",function(req,res){

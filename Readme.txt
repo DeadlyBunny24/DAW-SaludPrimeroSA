@@ -33,13 +33,16 @@ Tienen que asegurarse que el JSON enviado mantenga los nombres de los parametros
 Nota: Los exámenes se almacenan en el campo fichas, y en el requerimiento deben ser 
 enviados como un json con el siguiente formato:
 
-	fichas: {
+Ejemplo del campo fichas de un paciente:
+	fichas: [{
 			centro: " ",
-			examen: {tipo:" ",nombre:" "},
+			examen: [
+							{tipo:" ",nombre:" ",resultado:"",estado:""}
+							],
 			laboratorio: " ",
-			resultado: " ",
-			fecha: " "
-		} 
+			fecha: " ",
+			fid=""
+		} ]
 
 Nota: Enviar una ficha por cada examen a realizarse.
 
@@ -59,6 +62,9 @@ localhost:3000/pacientes
 		
 		localhost:3000/paciente/fichas/:id ingresa un nuevo examen al
 		paciente (id) 
+			
+			Nota: Este método asocia un "fid" único a la ficha. Cada ficha es un objeto JSON. 
+	
 	
 	DELETE:
 		localhost:3000/paciente/:id elimina paciente(id)
