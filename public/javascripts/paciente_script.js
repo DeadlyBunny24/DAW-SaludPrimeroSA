@@ -12,19 +12,80 @@ function init(){
 		// Objetos de datos
 		//Examenes
 		var exa;
-		$.getJSON("../json/examenes.JSON",function(response){
-			exa=response;
-			exa.examenes.forEach(function(item){
-				$("#examenes_contenido").append("<tr>");
-				$("#examenes_contenido tr:last-child").append("<td>"+item.tipo+"</td>");
-				$("#examenes_contenido tr:last-child").append("<td>"+item.fecha+"</td>");
-				if(item.estado=="estado_1"){
-					$("#examenes_contenido tr:last-child").append("<td><div id="+"'circle_espera'"+"></div></td>");
-				}else{
-					$("#examenes_contenido tr:last-child").append("<td><div id="+"'circle_completo'"+"></div></td>");
-				}	
-			});	
-		});
+	//	$.getJSON("../json/examenes.JSON",function(response){
+	//		exa=response;
+	//		exa.examenes.forEach(function(item){
+	//			$("#examenes_contenido").append("<tr>");
+	//			$("#examenes_contenido tr:last-child").append("<td>"+item.tipo+"</td>");
+	//			$("#examenes_contenido tr:last-child").append("<td>"+item.fecha+"</td>");
+	//			if(item.estado=="estado_1"){
+	//				$("#examenes_contenido tr:last-child").append("<td><div id="+"'circle_espera'"+"></div></td>");
+	//			}else{
+	//				$("#examenes_contenido tr:last-child").append("<td><div id="+"'circle_completo'"+"></div></td>");
+	//			}	
+	//		});	
+	//	});
+
+		var dataSet = new Array;
+		var fila = [];
+		
+
+
+		
+	 	$.getJSON("http://localhost:3000/paciente/4", function(response)
+	 	{
+	 		
+
+	 		response.forEach(function(paciente)
+	 		{	
+	 			paciente.fichas.forEach(function(ficha)
+	 			{
+	 				ficha.examen.forEach(function(examen)
+	 				{
+	 					fila.push(ficha.fecha);
+	 					fila.push(examen.tipo);
+	 					fila.push(examen.nombre);
+	 					fila.push(examen.estado);
+	 					fila.push("");
+
+	 					//table.row.add([ficha.fecha.toString(), examen.tipo.toString(), examen.nombre.toString(), examen.estado.toString(), ""]);
+
+	 					dataSet.push([ficha.fecha.toString(), examen.tipo.toString(), examen.nombre.toString(), examen.estado.toString(), ""]);
+
+	 					
+
+	 					//console.log(fila);
+	 					fila = [];
+
+	 				});
+
+	 			});
+	 		});
+	 		console.log(dataSet);
+	 		$('#Examenes_Paciente').DataTable( 
+		 	{
+    	    	data: dataSet,
+    	    	columns: 
+    	    	[
+    	    	    { title: "Fecha" },
+    	    	    { title: "Tipo" },
+    	    	    { title: "Exámen" },
+    	    	    { title: "Estado" },
+    	    	    { title: "pdf" }
+    	    	]
+    		} );
+
+	 	});
+
+
+	 	
+	 	//console.log(dataSet);
+	 	console.log(dataSet);
+
+
+
+	 	
+
 				
 		//Sucursales
 		var suc;

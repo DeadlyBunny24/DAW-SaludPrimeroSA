@@ -16,6 +16,8 @@
 		
 		<link rel="stylesheet" type="text/css" href="stylesheets/paciente_style.css">
 		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     </style>
 	</head>
 
@@ -64,7 +66,7 @@
 		        <div class=" main">
 					<div id="container_examenes">
 					  <div class="table-responsive">
-						<table class="table table-striped">
+						<!-- <table class="table table-striped">
 						  <thead>
 							<tr>
 							  <th>Tipo</th>
@@ -74,7 +76,8 @@
 						  </thead>
 						  <tbody id="examenes_contenido">
 						  </tbody>
-						</table>
+						</table>  -->
+						<table id = "Examenes_Paciente" class = "display" width = "100%"></table>
 					  </div>
 					</div>
 					
@@ -189,6 +192,8 @@
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcLo8bParriMgAdAOKEW-z71cTmLs6ZJs" async defer></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script src="javascripts/paciente_script.js"></script>
+		<script src="//code.jquery.com/jquery-1.12.3.js"></script>
+		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 		
 		
 	</body>

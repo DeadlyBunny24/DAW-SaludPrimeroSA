@@ -15,20 +15,121 @@ function init(){
 	// Objetos de datos
 	//Operario
 		var ope;
-		$.getJSON("../json/operario.JSON",function(response){
-			ope = response;
-			ope.lista.forEach(function(item){
-				$("#examenes_contenido").append("<tr>");
-				$("#examenes_contenido tr:last-child").append("<td>"+item.paciente+"</td>");
-				$("#examenes_contenido tr:last-child").append("<td>"+item.centro+"</td>");
-				$("#examenes_contenido tr:last-child").append("<td>"+item.examen+"</td>");
-				$("#examenes_contenido tr:last-child").append('<td>'+			
-					'<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+
-					'&thinsp;'+
-					'<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>'+
-					'</td>');	
-			});	
-		});		
+	//	$.getJSON("../json/operario.JSON",function(response){
+	//		ope = response;
+	//		ope.lista.forEach(function(item){
+	//			$("#examenes_contenido").append("<tr>");
+	//			$("#examenes_contenido tr:last-child").append("<td>"+item.paciente+"</td>");
+	//			$("#examenes_contenido tr:last-child").append("<td>"+item.centro+"</td>");
+	//			$("#examenes_contenido tr:last-child").append("<td>"+item.examen+"</td>");
+	//			$("#examenes_contenido tr:last-child").append('<td>'+			
+	//				'<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+
+	//				'&thinsp;'+
+	//				'<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>'+
+	//				'</td>');	
+	//		});	
+	//	});	
+
+		var dataSet = new Array;
+		var filaS = [];
+		var filaO = [];
+		var filaH = [];
+		var flag = 0;
+		
+
+
+		
+	 	$.getJSON("http://localhost:3000/paciente", function(response)
+	 	{
+	 		
+
+	 		response.forEach(function(paciente)
+	 		{	
+	 			paciente.fichas.forEach(function(ficha)
+	 			{
+	 				filaS.push(ficha.fecha);
+	 				filaS.push(paciente.datos_personales.cedula);
+	 				filaS.push(ficha.centro);
+	 				filaS.push(ficha.laboratorio);
+	 				filaS.push("");
+	 				filaS.push("");
+	 				filaS.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
+	 				filaS.push(ficha.fid);
+	 				flag = 0;
+
+	 				ficha.examen.forEach(function(examen)
+	 				{
+	 					
+	 					if (examen.tipo == "sangre")
+	 					{
+	 						filaS[4]=examen.tipo;
+	 						filaS[5]= filaS[5].concat(examen.nombre, ", ");
+	 						flag =1;
+	 					}
+	 					else if (examen.tipo == "orina")
+	 					{
+	 						filaO.push(ficha.fecha);
+	 						filaO.push(paciente.datos_personales.cedula);
+	 						filaO.push(ficha.centro);
+	 						filaO.push(ficha.laboratorio);
+	 						filaO.push(examen.tipo);
+	 						filaO.push(examen.nombre);
+	 						filaO.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
+	 						filaO.push(ficha.fid);
+	 						dataSet.push(filaO);
+	 						filaO = [];
+	 					}
+	 					else if (examen.tipo == "heces")
+	 					{
+	 						filaH.push(ficha.fecha);
+	 						filaH.push(paciente.datos_personales.cedula);
+	 						filaH.push(ficha.centro);
+	 						filaH.push(ficha.laboratorio);
+	 						filaH.push(examen.tipo);
+	 						filaH.push(examen.nombre);
+	 						filaH.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
+	 						filaH.push(ficha.fid);
+	 						dataSet.push(filaH);
+	 						filaH = [];
+	 					};
+
+	 				});
+	 				if (flag==1)
+	 				{
+	 					dataSet.push(filaS);
+	 				}
+
+	 				filaS = [];
+
+	 			});
+	 		});
+	 		console.log(dataSet);
+	 		$('#Examenes_Operario').DataTable( 
+		 	{
+    	    	data: dataSet,
+    	    	columns: 
+    	    	[
+    	    		{title: "fecha"},
+    	    	    { title: "Paciente" },
+    	    	    { title: "Centro" },
+    	    	    { title: "Laboratorio" },
+    	    	    { title: "Tipo" },
+    	    	    { title: "Exámenes" },
+    	    	    { title: "Acciones"},
+    	    	    {
+    	    	    	title: "Id",
+    	    	    	"visible": false,
+                		"searchable": false
+    	    	    }
+    	    	],
+
+    	    	paging: true,
+    	    	
+
+    		} );
+
+	 	});
+
 	
 	
 	//Comportamiento del menú principal
@@ -62,7 +163,7 @@ function init(){
 	//Comportamiento de los exámenes
 	
 	
-	//Compa�ero
+	//Compa?ro
 		var parseTime = d3.timeParse("%M");
 
 		var svg = d3.select("svg");

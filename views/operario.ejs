@@ -18,6 +18,7 @@
 		<link rel="stylesheet" type="text/css" href="stylesheets/bar-grupo.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/bar-2.css">
 		<link href="stylesheets/bootstrap-datetimepicker.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 	</head>
 	<body>
 		
@@ -68,6 +69,7 @@
 					  </button>
 					  </div>
 					  <div class="table-responsive table-content">
+					  <!--
 						<table class="table table-striped">
 						  <thead>
 							<tr>
@@ -80,6 +82,8 @@
 						  <tbody id="examenes_contenido">
 						  </tbody>
 						</table>
+						-->
+						<table id = "Examenes_Operario" class = "display" width = "100%"></table>
 					  </div>
 					</div>
 					
@@ -453,6 +457,8 @@
         <script src="javascripts/bar-ciudad.js"></script>
 		<script type="text/javascript" src="javascripts/bootstrap-datetimepicker.min.js"> </script>
         <script type="text/javascript" src="javascripts/bootstrap-datetimepicker.pt-BR.js"> </script>
+		<script src="//code.jquery.com/jquery-1.12.3.js"></script>
+		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 		
 		<script type="text/javascript">
 
