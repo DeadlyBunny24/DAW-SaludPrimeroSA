@@ -115,20 +115,32 @@ function init(){
     	    	    { title: "Laboratorio" },
     	    	    { title: "Tipo" },
     	    	    { title: "Exámenes" },
-    	    	    { title: "Acciones"},
+    	    	    { title: "Acciones",
+    	    	    "className":  'dc'
+    	    		},
     	    	    {
     	    	    	title: "Id",
-    	    	    	"visible": false,
-                		"searchable": false
+    	    	    	"visible": true,
+                		"searchable": true
     	    	    }
-    	    	],
+    	    	]
 
-    	    	paging: true,
-    	    	
 
     		} );
-
+    		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-danger', function () {
+    	    	var tr = $(this).closest('tr');
+    	    	
+    	    	tr.hide();
+    	    	console.log("borrar de la base de datos la ficha");
+    		} );
+    		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
+    	    	console.log("mostrar modal para editar");
+    		} );
 	 	});
+
+	 	
+
+
 
 	
 	
