@@ -250,7 +250,8 @@ function init(){
     	    	    	title: "Id",
     	    	    	"visible": true,
                 		"searchable": true
-    	    	    }
+    	    	    },
+
     	    	]
 
 
@@ -262,9 +263,12 @@ function init(){
     		$('#Pacientes_Operario').DataTable( 
 		 	{
     	    	data: pacientes,
+    	    	"lengthMenu": [[100, 50, 25, -1], [100, 50, 25, "All"]],
     	    	columns: 
     	    	[
-    	    		{ title: "Cedula"},
+    	    		{ title: "Cedula",
+    	    		  "className":  'ced'
+    	    		},
     	    	    { title: "Nombre" },
     	    	    { title: "Apellido" },
     	    	    { title: "Correo" },
@@ -292,9 +296,21 @@ function init(){
     		} );
     		$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-danger', function () {
     	    	var tr = $(this).closest('tr');
-    	    	
-    	    	tr.hide();
-    	    	console.log("borrar de la base de datos la ficha");
+    	    	var tds = $(this).parent().parent().find('td:first-child');
+    	    	// $this
+    	    	var ced = tds.text();
+
+    	    	$.ajax({
+    				url: 'http://localhost:3000/paciente/' + ced,
+    				type: 'DELETE',
+    				success: function(result) {
+    					tr.hide();        				
+   					 }
+				});
+    	    	console.log(ced);
+      	    	console.log(tds);
+    	    	//tr.hide();
+    	    	//console.log("borrar de la base de datos la ficha");
     		} );
     		$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
     	    	console.log("mostrar modal para editar");

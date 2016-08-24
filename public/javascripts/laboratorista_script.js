@@ -1,3 +1,7 @@
+
+var i=0;
+var x=0;
+						var indice = 1;
 $( document ).ready(function() {
         init();
     });
@@ -7,7 +11,7 @@ function init(){
 	//	var lab;
 	//	$.getJSON("../json/laboratorio.JSON",function(response){
 	//		lab = response;
-	//		//Comportamiento de los exámenes
+	//		//Comportamiento de los exï¿½menes
 	//		lab.lista.forEach(function(item){
 	//			$("#examenes_contenido").append("<tr>");
 	//			$("#examenes_contenido tr:last-child").append("<td>"+item.paciente+"</td>");
@@ -17,15 +21,15 @@ function init(){
 	//				$("#examenes_contenido tr:last-child").append("<td><div id="+"'circle_espera'"+"></div></td>");
 	//			}else{
 	//				$("#examenes_contenido tr:last-child").append("<td><div id="+"'circle_completo'"+"></div></td>");
-	//			}	
-	//			$("#examenes_contenido tr:last-child").append('<td>'+			
+	//			}
+	//			$("#examenes_contenido tr:last-child").append('<td>'+
 	//				'<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#notificar"><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'+
 	//				'&thinsp;'+
 	//				'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ingresar"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>'+
-	//				'</td>');	
-	//		});	
+	//				'</td>');
+	//		});
 	//	});
-		
+
 		var dataSet = new Array;
 		var filaS = [];
 		var filaO = [];
@@ -34,60 +38,60 @@ function init(){
 
 		$.getJSON("http://localhost:3000/paciente", function(response)
 	 	{
-	 		
 
 	 		response.forEach(function(paciente)
-	 		{	
-	 			paciente.fichas.forEach(function(ficha)
+	 		{
+				for (; x<paciente.fichas.length ; x++ )
+	 			//paciente.fichas.forEach(function(ficha)
 	 			{
-	 				filaS.push(ficha.fecha);
-	 				filaS.push(ficha.centro);
-	 				filaS.push(ficha.laboratorio);
-	 				filaS.push("");
-	 				filaS.push("");
-	 				filaS.push("");
-	 				filaS.push('<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#notificar"><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'+'&thinsp;'+'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ingresar"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
-	 				filaS.push(ficha.fid);
-	 				flag = 0;
 
-	 				ficha.examen.forEach(function(examen)
+					i=0;
+	 				for (; i<paciente.fichas[x]['examen'].length ; i++ )
+					//for (var examen in ficha.examen )
 	 				{
-	 					
-	 					if (examen.tipo == "sangre")
+	 					if (paciente.fichas[x]['examen'][i]["tipo"] == "sangre")
 	 					{
-	 						filaS[3]=examen.tipo;
-	 						filaS[4]= filaS[4].concat(examen.nombre, ", ");
-	 						filaS[5] = examen.estado;
-	 						flag =1;
+							filaS.push(i);
+							filaS.push(paciente.fichas[x]["fecha"]);
+	 						filaS.push(paciente.fichas[x]["centro"]);
+	 						filaS.push(paciente.fichas[x]["laboratorio"]);
+	 						filaS.push(paciente.fichas[x]['examen'][i]["tipo"]);
+	 						filaS.push(paciente.fichas[x]['examen'][i]["nombre"]);
+	 						filaS.push(paciente.fichas[x]['examen'][i]["estado"]);
+	 						filaS.push('<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#notificar"><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'+'&thinsp;'+'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ingresar"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
+	 						filaS.push(paciente.fichas[x]["fid"]);
+	 						dataSet.push(filaS);
+	 						filaS = [];
 	 					}
-	 					else if (examen.tipo == "orina")
+	 					else if (paciente.fichas[x]['examen'][i]["tipo"] == "orina")
 	 					{
-	 						filaO.push(ficha.fecha);
-	 						filaO.push(ficha.centro);
-	 						filaO.push(ficha.laboratorio);
-	 						filaO.push(examen.tipo);
-	 						filaO.push(examen.nombre);
-	 						filaO.push(examen.estado);
+							filaO.push(i);
+	 						filaO.push(paciente.fichas[x]["fecha"]);
+	 						filaO.push(paciente.fichas[x]["centro"]);
+	 						filaO.push(paciente.fichas[x]["laboratorio"]);
+	 						filaO.push(paciente.fichas[x]['examen'][i]["tipo"]);
+	 						filaO.push(paciente.fichas[x]['examen'][i]["nombre"]);
+	 						filaO.push(paciente.fichas[x]['examen'][i]["estado"]);
 	 						filaO.push('<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#notificar"><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'+'&thinsp;'+'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ingresar"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
-	 						filaO.push(ficha.fid);
+	 						filaO.push(paciente.fichas[x]["fid"]);
 	 						dataSet.push(filaO);
 	 						filaO = [];
 	 					}
-	 					else if (examen.tipo == "heces")
+	 					else if (paciente.fichas[x]['examen'][i]["tipo"]  == "heces")
 	 					{
-	 						filaH.push(ficha.fecha);
-	 						filaH.push(ficha.centro);
-	 						filaH.push(ficha.laboratorio);
-	 						filaH.push(examen.tipo);
-	 						filaH.push(examen.nombre);
-	 						filaH.push(examen.estado);
+							filaH.push(i);
+	 						filaH.push(paciente.fichas[x]["fecha"]);
+	 						filaH.push(paciente.fichas[x]["centro"]);
+	 						filaH.push(paciente.fichas[x]["laboratorio"]);
+	 						filaH.push(paciente.fichas[x]['examen'][i]["tipo"]);
+	 						filaH.push(paciente.fichas[x]['examen'][i]["nombre"]);
+	 						filaH.push(paciente.fichas[x]['examen'][i]["estado"]);
 	 						filaH.push('<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#notificar"><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'+'&thinsp;'+'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ingresar"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
-	 				        filaH.push(ficha.fid);
+	 						filaH.push(paciente.fichas[x]["fid"]);
 	 						dataSet.push(filaH);
 	 						filaH = [];
 	 					};
-
-	 				});
+	 				};
 	 				if (flag==1)
 	 				{
 	 					dataSet.push(filaS);
@@ -95,19 +99,20 @@ function init(){
 
 	 				filaS = [];
 
-	 			});
+	 			};
 	 		});
 	 		console.log(dataSet);
-	 		$('#Examenes_Laboratorista').DataTable( 
+			$('#Examenes_Laboratorista').DataTable(
 		 	{
     	    	data: dataSet,
-    	    	columns: 
+    	    	columns:
     	    	[
+							{title: "Indice"},
     	    		{title: "Fecha"},
     	    	    { title: "Centro" },
     	    	    { title: "Laboratorio" },
     	    	    { title: "Tipo" },
-    	    	    { title: "Exámenes" },
+    	    	    { title: "Exï¿½menes" },
     	    	    { title : "Estado"},
     	    	    { title: "Acciones",
     	    	    "className":  'dc'
@@ -122,7 +127,7 @@ function init(){
 
     		} );
     		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
-    	    	
+
     	    	console.log("notificar");
     		} );
     		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-primary', function () {
@@ -132,4 +137,3 @@ function init(){
 	 	});
 
 }
-

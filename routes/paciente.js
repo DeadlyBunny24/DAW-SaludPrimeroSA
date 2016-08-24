@@ -11,9 +11,47 @@ router.get("/",function(req,res){
 		if(err){
 			res.send({mensaje:"Tarea no encontrada!"});
 		}else{
+
 			res.send(docs);
 		}
-	});	
+	});
+});
+
+var HashMap = require('hashmap');
+var json2csv = require('json2csv');
+router.get("/laboratorio/total",function(req,res){
+	paciente_db.find({},function(err,docs){
+		if(err){
+			res.send({mensaje:"Tarea no encontrada!"});
+		}else{
+			var map = new HashMap();
+			docs.forEach(function (u) {
+				u.fichas.forEach(function (x) {
+					x.examen.forEach(function (y) {
+						if (map.get(y.nombre) === null || map.get(y.nombre) == null){
+								map.set(y.nombre, 1);
+								//console.log("111 : " + map.get(y.nombre));
+						} else {
+								var cant =map.get(y.nombre)+1;
+								//console.log(" : " + cant);
+								map.set(y.nombre, cant);
+						}
+					});
+				});
+			});
+			var myCars = [];
+			map.forEach(function(value, key) {
+				var jsonObj = {"age":key+": "+value,"population":value};
+				myCars.push(jsonObj);
+			});
+			var fields = ['age', 'population'];
+			json2csv({ data: myCars, fields: fields }, function(err, csv) {
+				res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+				res.set('Content-Type', 'text/csv');
+				res.status(200).send(csv);
+			});
+		}
+	});
 });
 
 router.get("/:id",function(req,res){
@@ -48,7 +86,7 @@ router.post("/",function(req,res){
 			}else{
 				res.send(req.body);
 			}
-		});  
+		});
     });
 });
 
@@ -74,7 +112,7 @@ router.post("/email",function(req,res){
 
 router.put("/datospersonales/:id",function(req,res){
 	var id_i = req.params["id"];
-	
+
 	paciente_db.update({id:id_i},req.body)
 	.then(function (success) {
       res.json();
@@ -83,7 +121,7 @@ router.put("/datospersonales/:id",function(req,res){
         res.status(404).send(err);
     });
 
-	
+
 });
 
 router.put("/fichas/:id",function(req,res){
@@ -91,12 +129,21 @@ router.put("/fichas/:id",function(req,res){
 	var ficha_i = req.body;
 	//var ficha_json = JSON.parse(ficha_i);
 	var date = new Date();
+<<<<<<< HEAD
 	var id_i = req.params["id"];	
 	//ficha_json.fid=date.getTime().toString();
 	ficha_i.fid=date.getTime().toString();
 	//ficha_json.fid=mongoose.Types.ObjectId();
 
 		  paciente_db.update({"datos_personales.cedula":id_i},{$push:{fichas:/*ficha_json*/ficha_i}},function(err){
+=======
+	var id_i = req.params["id"];
+	ficha_json.fid=date.getTime().toString();
+	ficha_json.examen.forEach(function(examen){
+		examen.eid=date.getTime().toString();
+	});
+		  paciente_db.update({id:id_i},{$push:{fichas:ficha_json}},function(err){
+>>>>>>> origin/master
 			if(err){
 				res.send({message:"Error en la actualizacion!"})
 			}else{
@@ -105,17 +152,30 @@ router.put("/fichas/:id",function(req,res){
 		});
 });
 
+
+router.put("/examen/:fid/:resultado",function(req,res){
+	var fid_i = req.params["fid"];
+	var res_i = req.params["resultado"];
+	 paciente_db.update({"fichas.fid":fid_i},{$set:{"fichas.$.examen.0.resultado":res_i}},function(err){
+	if(err){
+	res.send({message:"Error en la actualizacion!"})
+	}else{
+	res.send({message:"Actualizacion exitosa!"})
+	}
+	});
+});
+
 router.delete("/:id",function(req,res){
 	var id_i = req.params["id"];
 	paciente_db.remove({
-		id: id_i
+		"datos_personales.cedula": id_i
 	}, function (err, docs) {
 		 if(err){
 				res.send({mensaje:"Error en el borrado!"});
 			}else{
 				res.send(id_i);
 			}
-	});	
+	});
 });
 
 module.exports = router;

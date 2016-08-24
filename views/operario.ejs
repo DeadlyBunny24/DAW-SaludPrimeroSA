@@ -2,13 +2,13 @@
 <html>
 
 	<head>
-		
+
 		<title>Salud Primero S.A.</title>
-		
+
 		<meta charset="UTF-8">
 		<meta name="description" content="Pag. principal de un paciente">
 		<meta name="keywords" content="paciente, salud, primero, sa">
-		
+
 		<!-- Hojas de estilo-->
 		<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css"  >
 		<link href="stylesheets/base_structure.css" rel="stylesheet">
@@ -22,7 +22,7 @@
 
 	</head>
 	<body>
-		
+
 		<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -47,7 +47,7 @@
       <div id="contenedor_general" class="row">
         <div id= "menu_sucursales" class="col-sm-3 col-md-2 sidebar">
           <ul class="menu nav nav-sidebar">
-            <li class="active"><a href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Exámenes <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  ExÃ¡menes <span class="sr-only">(current)</span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>  Generar Reportes</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Registrar</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Pacientes</a></li>
@@ -56,18 +56,18 @@
         <div id="contenedor_info" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 ">
 	        <div id="navegacion" class="row">
 	        	<ol class="breadcrumb" style="    margin-bottom: 0px;">
-				  <li><h2>Exámenes</h2></li>
-				  <button type="button" class="btn-u btn-u-blue btn-header" id="botonRegistro" style="border-bottom: 10%;" 
+				  <li><h2>ExÃ¡menes</h2></li>
+				  <button type="button" class="btn-u btn-u-blue btn-header" id="botonRegistro" style="border-bottom: 10%;"
                                     data-toggle="modal" data-target="#myModalPaciente">
 					  	            <span  aria-hidden="true"></span> Registrar Paciente
 					              </button>
 				</ol>
 	        </div>
-	        
+
 	        <div id="contenedor_datos" class="row">
 		        <div class=" main">
 					<div id="container_examenes">
-						
+
 					  <div class="table-responsive table-content">
 					  <!--
 						<table class="table table-striped">
@@ -86,99 +86,65 @@
 						<table id = "Examenes_Operario" class = "display" width = "100%"></table>
 					  </div>
 					</div>
-					
+
 					<div id="container_sucursales">
-			        <div class="tab-v2 margin-bottom-40 container-list-v">
-	                    <ul class="nav nav-tabs">
-	                        <li class="active"><a href="#alert-1" data-toggle="tab" aria-expanded="true">Muestras por mes </a></li>
-	                        <li class=""><a href="#alert-2" data-toggle="tab" aria-expanded="false">Por Enfermedad</a></li>
-	                        <li class=""><a href="#alert-3" data-toggle="tab" aria-expanded="false">Por Laboratorio</a></li>
-	                        <li class=""><a href="#alert-4" data-toggle="tab" aria-expanded="false">Por Ciudad</a></li>
+                  <div class="tab-v2 margin-bottom-40 container-list-v">
+										<ul class="nav nav-tabs">
+	                        <li class="active"><a href="#alert-1" data-toggle="tab" aria-expanded="true">Total muestras medicas asignadas </a></li>
+	                        <li class=""><a href="#alert-2" data-toggle="tab" aria-expanded="false">Gráfico del total de muestras médicas mensuales por laboratorio</a></li>
 	                    </ul>
 	                    <div class="tab-content">
 
 	                        <div class="tab-pane fade active in" id="alert-1">
-	                         
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por mes</h2>                                    
-                                  <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;"
-                                           data-toggle="modal" data-target="#myModalMeses">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_meses" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
+
+                              <div id="container_examenes">
+									              <h2 class="sub-header">Total muestras medicas asignadas </h2>
+				                        <div id="grafico_meses" class="table-responsive table-content">
+
+									              </div>
+									            </div>
 	                        </div>
 
 	                        <div class="tab-pane fade" id="alert-2">
 
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por enfermedades</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" data-toggle="modal" data-target="#myModalEnfermedad">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_enfermedades" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
-	                            
+                              <div id="container_examenes">
+									              <h2 class="sub-header">Gráfico del total de muestras médicas mensuales por laboratorio</h2>
+																<form id="myform" method="post" action="somewhere" onsubmit="return submitForm(this);">
+
+							<input type="text" id="fecha1" name="fecha1" value="08/15/2016" class="form-control" />
+							<input type="text" id="fecha2" name="fecha2" value="08/20/2016" class="form-control" />
+																	<input type="submit" value="Buscar"/>
+																</form>
+									              <div id="grafico_enfermedades" class="table-responsive table-content">
+
+									              </div>
+									            </div>
+
 	                        </div>
-	                        <div class="tab-pane fade" id="alert-3">
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por laboratorio</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" 
-                                    data-toggle="modal" data-target="#myModalLaboratorios">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_laboratorio" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
-                            </div>
-	                        <div class="tab-pane fade" id="alert-4">
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por ciudades</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" 
-                                    data-toggle="modal" data-target="#myModalCiudades">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_ciudades" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
-                            </div>
+
 	                    </div>
-	                </div>
-											
-		        </div>
-					
-					
-					<div id="container_datos">	
+                  </div>
+
+  	        </div>
+
+
+					<div id="container_datos">
 						<div class="panel panel-blue margin-bottom-40">
 							<!-- <div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-tasks"></i> Informaci󮠤el registro</h3>
+								<h3 class="panel-title"><i class="fa fa-tasks"></i> Informació® ¤el registro</h3>
 							</div> -->
 							<div class="panel-body">
 								<form class="margin-bottom-40" role="form">
 								<div class="col-lg-5" style="margin-bottom: 25px">
 								<input type="text" class="form-control" id="paciente" placeholder="Paciente">
 								</div>
+<<<<<<< HEAD
 		`						<br>
 		<br>
 		<br>
+=======
+		`
+>>>>>>> origin/master
 								  <div style="margin-bottom: 25px" class="btn-group">
 					<button type="button" class="btn btn-default dropdown-toggle" id="centroDrop" data-toggle="dropdown">
 					Seleccione un Centro    <span class="caret"></span>
@@ -210,35 +176,35 @@
 				<label><input class="Sangre" type="checkbox" id= "hemograma" name="rMuestra" value="Hemograma">Hemograma</label>
 				</div>
 				<div class="checkbox">
-				<label><input class="Sangre" type="checkbox" id= "bioquimica" name="rMuestra" value="Bioqu�mica">Bioqu&iacute;mica</label>
+				<label><input class="Sangre" type="checkbox" id= "bioquimica" name="rMuestra" value="Bioquímica">Bioqu&iacute;mica</label>
 				</div>
 				<div class="checkbox">
-				<label><input class="Sangre" type="checkbox" id= "seriologia" name="rMuestra" value="Seriolog�a">Seriolog&iacute;a</label>
+				<label><input class="Sangre" type="checkbox" id= "seriologia" name="rMuestra" value="Seriología">Seriolog&iacute;a</label>
 				</div>
 				<h3>Ex&aacute;menes de Orina</h3>
 				<div class="checkbox">
-				<label><input class="Orina" type="checkbox" id= "uroanalisis" name="rMuestra" value="Uroan�lisis">Uroan&aacute;lisis</label>
+				<label><input class="Orina" type="checkbox" id= "uroanalisis" name="rMuestra" value="Uroanálisis">Uroan&aacute;lisis</label>
 				</div>
 				<h3>Ex&aacute;menes de Heces</h3>
 				<div class="checkbox">
 				<label><input class="Heces" type="checkbox" id= "coprocultivo" name="rMuestra" value="Coprocultivo">Coprocultivo</label>
 				</div>
-			
-									
-								</form>	
-									<button id="actualizar" onclick="registroMuestra();">Registrar</button>	
-								
+
+
+								</form>
+									<button id="actualizar" onclick="registroMuestra();">Registrar</button>
+
 							</div>
 						</div>
 					</div>
 
 					<div id="container_pacientes">
-						
-								  
+
+
 					  	<div class="table-responsive table-content">
 							<table id = "Pacientes_Operario" class = "display" width = "100%"></table>
 					  	</div>
-					</div>						
+					</div>
 		        </div>
 	        </div>
         </div>
@@ -307,12 +273,12 @@
 					</div>
 				</form>
 		  </div>
-		  
+
 		  <div class="modal-footer">
 			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
 			<button type="button" class="btn btn-primary">Filtrar</button>
 		  </div>
-		  
+
 		</div>
 	  </div>
 	</div>
@@ -362,16 +328,16 @@
 					</div>
 				</form>
 		  </div>
-		  
+
 		  <div class="modal-footer">
 			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
 			<button type="button" class="btn btn-primary">Filtrar</button>
 		  </div>
-		  
+
 		</div>
 	  </div>
 	</div>
-	
+
 <div class="modal fade" id="myModalPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
@@ -407,16 +373,16 @@
 					</div>
 				</form>
 		  </div>
-		  
+
 		  <div class="modal-footer">
 			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
 			<button type="button" class="btn" id="registrarPaciente" onclick="registroPaciente();" data-dismiss="modal">Registrar</button>
 		  </div>
-		  
+
 		</div>
 	  </div>
 	</div>
-	
+
 	<div class="modal fade" id="myModalLaboratorios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
@@ -462,12 +428,12 @@
 					</div>
 				</form>
 		  </div>
-		  
+
 		  <div class="modal-footer">
 			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
 			<button type="button" class="btn btn-primary">Filtrar</button>
 		  </div>
-		  
+
 		</div>
 	  </div>
 	</div>
@@ -529,12 +495,12 @@
 					</div>
 				</form>
 		  </div>
-		  
+
 		  <div class="modal-footer">
 			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
 			<button type="button" class="btn btn-primary">Filtrar</button>
 		  </div>
-		  
+
 		</div>
 	  </div>
 	</div>
@@ -543,19 +509,23 @@
 		<!-- Scripts -->
 		<script src="javascripts/d3.v3.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script src="javascripts/operario_script.js"></script>	
+		<script src="javascripts/operario_script.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
-		<script src="javascripts/bar-mes.js"></script>
-        <script src="javascripts/bar-emfermedad.js"></script>	
-        <script src="javascripts/bar-laboratorio.js"></script>	
+		<script src="javascripts/grafico_pastel.js"></script>
+		<script src="javascripts/graphs.js"></script>
+		<script src="javascripts/map.js"></script>
+		<script src="javascripts/grafico_barra.js"></script>
+		<!--
+        <script src="javascripts/bar-emfermedad.js"></script>
+        <script src="javascripts/bar-laboratorio.js"></script>
         <script src="javascripts/bar-ciudad.js"></script>
+			-->
 		<script type="text/javascript" src="javascripts/bootstrap-datetimepicker.min.js"> </script>
         <script type="text/javascript" src="javascripts/bootstrap-datetimepicker.pt-BR.js"> </script>
 		<script src="//code.jquery.com/jquery-1.12.3.js"></script>
 		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-		
-		<script type="text/javascript">
 
+		<script type="text/javascript">
            $('#datetimepicker1').datetimepicker({
         format: 'dd/MM/yyyy',
         language: 'pt-BR'
@@ -565,18 +535,16 @@
         format: 'dd/MM/yyyy',
         language: 'pt-BR'
       });
-
                $('#datetimepicker3').datetimepicker({
         format: 'MM/yyyy',
         language: 'pt-BR'
       });
-
       $('#datetimepicker4').datetimepicker({
         format: 'MM/yyyy ',
         language: 'pt-BR'
       });
 		</script>
-		
+
 	</body>
 
 </html>
