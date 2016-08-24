@@ -88,82 +88,44 @@
 					</div>
 
 					<div id="container_sucursales">
-			        <div class="tab-v2 margin-bottom-40 container-list-v">
-	                    <ul class="nav nav-tabs">
-	                        <li class="active"><a href="#alert-1" data-toggle="tab" aria-expanded="true">Muestras por mes </a></li>
-	                        <li class=""><a href="#alert-2" data-toggle="tab" aria-expanded="false">Por Enfermedad</a></li>
-	                        <li class=""><a href="#alert-3" data-toggle="tab" aria-expanded="false">Por Laboratorio</a></li>
-	                        <li class=""><a href="#alert-4" data-toggle="tab" aria-expanded="false">Por Ciudad</a></li>
+                  <div class="tab-v2 margin-bottom-40 container-list-v">
+										<ul class="nav nav-tabs">
+	                        <li class="active"><a href="#alert-1" data-toggle="tab" aria-expanded="true">Total muestras medicas asignadas </a></li>
+	                        <li class=""><a href="#alert-2" data-toggle="tab" aria-expanded="false">Gráfico del total de muestras médicas mensuales por laboratorio</a></li>
 	                    </ul>
 	                    <div class="tab-content">
 
 	                        <div class="tab-pane fade active in" id="alert-1">
 
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por mes</h2>
-                                  <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;"
-                                           data-toggle="modal" data-target="#myModalMeses">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_meses" class="table-responsive table-content">
+                              <div id="container_examenes">
+									              <h2 class="sub-header">Total muestras medicas asignadas </h2>
+				                        <div id="grafico_meses" class="table-responsive table-content">
 
-					              </div>
-					            </div>
+									              </div>
+									            </div>
 	                        </div>
 
 	                        <div class="tab-pane fade" id="alert-2">
 
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por enfermedades</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" data-toggle="modal" data-target="#myModalEnfermedad">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_enfermedades" class="table-responsive table-content">
+                              <div id="container_examenes">
+									              <h2 class="sub-header">Gráfico del total de muestras médicas mensuales por laboratorio</h2>
+																<form id="myform" method="post" action="somewhere" onsubmit="return submitForm(this);">
 
-					              </div>
-					            </div>
+							<input type="text" id="fecha1" name="fecha1" value="08/15/2016" class="form-control" />
+							<input type="text" id="fecha2" name="fecha2" value="08/20/2016" class="form-control" />
+																	<input type="submit" value="Buscar"/>
+																</form>
+									              <div id="grafico_enfermedades" class="table-responsive table-content">
+
+									              </div>
+									            </div>
 
 	                        </div>
-	                        <div class="tab-pane fade" id="alert-3">
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por laboratorio</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;"
-                                    data-toggle="modal" data-target="#myModalLaboratorios">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_laboratorio" class="table-responsive table-content">
 
-					              </div>
-					            </div>
-                            </div>
-	                        <div class="tab-pane fade" id="alert-4">
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por ciudades</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;"
-                                    data-toggle="modal" data-target="#myModalCiudades">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_ciudades" class="table-responsive table-content">
-
-					              </div>
-					            </div>
-                            </div>
 	                    </div>
-	                </div>
+                  </div>
 
-		        </div>
+  	        </div>
 
 
 					<div id="container_datos">
@@ -543,10 +505,15 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script src="javascripts/operario_script.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
-		<script src="javascripts/bar-mes.js"></script>
+		<script src="javascripts/grafico_pastel.js"></script>
+		<script src="javascripts/graphs.js"></script>
+		<script src="javascripts/map.js"></script>
+		<script src="javascripts/grafico_barra.js"></script>
+		<!--
         <script src="javascripts/bar-emfermedad.js"></script>
         <script src="javascripts/bar-laboratorio.js"></script>
         <script src="javascripts/bar-ciudad.js"></script>
+			-->
 		<script type="text/javascript" src="javascripts/bootstrap-datetimepicker.min.js"> </script>
         <script type="text/javascript" src="javascripts/bootstrap-datetimepicker.pt-BR.js"> </script>
 		<script src="//code.jquery.com/jquery-1.12.3.js"></script>
