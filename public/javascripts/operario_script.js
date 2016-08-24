@@ -71,19 +71,27 @@ function registroMuestra(){
 return false;
 }*/
 
-var paciente;
+var paciente, datosMail;
 function registroPaciente(){
 	
 	paciente={
 	["datos_personales.nombre"]: "a",
 	["datos_personales.apellido"]: "a",
 	["datos_personales.cedula"]: "a",
-	["datos_personales.correo"]: "a"
+	["datos_personales.correo"]: "a",
+	["datos_personales.contrasena"]: "a"
+	}
+	datosMail={
+	 correo: "a",
+	 contrasena: "a"
 	}
 	paciente["datos_personales.nombre"]= $("#nombres").val();
 	paciente["datos_personales.apellido"]= $("#apellidos").val();
 	paciente["datos_personales.cedula"]= $("#cedula").val();
 	paciente["datos_personales.correo"]= $("#correo").val();
+	paciente["datos_personales.contrasena"]= Math.random().toString(36).slice(-8);
+	datosMail.correo=$("#correo").val();
+	datosMail.contrasena=paciente["datos_personales.contrasena"];
 		//console.log(paciente);
 	$.ajax({
 	type: "POST",
@@ -94,6 +102,14 @@ function registroPaciente(){
 	  contentType: 'application/json'
 	});
 	
+	$.ajax({
+	type: "POST",
+	  url: "http://localhost:3000/paciente/email",
+	  data: JSON.stringify(datosMail),
+	  success: function(){ console.log(datosMail);
+	  window.alert("El mail fue enviado exitosamente.");},
+	  contentType: 'application/json'
+	});
 		
 }
 

@@ -58,8 +58,6 @@ app.post('/login', function(req, res){
 	var password= req.body.password;
 	var rol= req.body.rol;
 	var url1= "http://localhost:3000/paciente/";
-	var url2= "";
-	var url3= "";
 	
 	if (rol== "Paciente"){
 	request({method: "GET", url: url1+username, json: true}, function(error, response, body){
@@ -69,23 +67,25 @@ app.post('/login', function(req, res){
 			if (body[0].datos_personales.contrasena== password){
 			req.session ["username"]= username;
 			req.session ["rol"]= rol;
-			res.redirect('home');
+			res.send(200,'home');
 			return;
-			} 
+			} else {
+			res.send(500,'showAlert');
+			}
 		}
 	});
 	} else if (username =="admin" && password =="admin1234" && rol== "Operario"){
 		req.session ["username"]= username;
 		req.session ["rol"]= rol;
-		res.redirect('operario');
+		res.send(200,'operario') ;
 		return;
 	} else if (username =="lab" && password =="lab1234" && rol== "Laboratorista"){
 		req.session ["username"]= username;
 		req.session ["rol"]= rol;
-		res.redirect('laboratorista');
+		res.send(200,'laboratorista');
 		return;
 	
-	}else{res.send ("Usuario o contraseña invalidos");}
+	}else{res.send(500,'showAlert');}
 	
 	
 	/*
