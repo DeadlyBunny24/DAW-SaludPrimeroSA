@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
 var paciente_db = require("../models/paciente_db.js");
+var nodemailer = require('nodemailer');
 
 
 /* GET lista de pacientes. */
@@ -55,7 +56,7 @@ router.get("/laboratorio/total",function(req,res){
 
 router.get("/:id",function(req,res){
 	var id = req.params["id"];
-	paciente_db.find({"id":id},function(err,docs){
+	paciente_db.find({"datos_personales.cedula":id},function(err,docs){
 		if(err){
 			res.send({mensaje:"Tarea no encontrada!"});
 		}else{
@@ -88,6 +89,26 @@ router.post("/",function(req,res){
 		});
     });
 });
+
+router.post("/email",function(req,res){
+		//console.log(req.body.contrasena);
+		
+		var transporter = nodemailer.createTransport('smtps://salud1ero%40gmail.com:dawesgenial@smtp.gmail.com');
+	var mailOptions = {
+		from: 'Laboratorios Salud Primero S.A. <salud1ero@gmail.com>', // sender address 
+		to: req.body.correo, // list of receivers 
+		subject: 'Creacion de Cuenta en Salud Primero SA.', // Subject line 
+		text: 'Su cuenta fue creada exitosamente. Su usuario para ingresar a nuestra pagina es su cedula y su contraseña es: '+req.body.contrasena // plaintext body 
+	};
+	
+	transporter.sendMail(mailOptions, function(error, info){
+		if(error){
+			return console.log(error);
+		}
+		console.log('Message sent: ' + info.response);
+	});
+});
+
 
 router.put("/datospersonales/:id",function(req,res){
 	var id_i = req.params["id"];
@@ -137,7 +158,7 @@ router.put("/examen/:fid/:resultado",function(req,res){
 router.delete("/:id",function(req,res){
 	var id_i = req.params["id"];
 	paciente_db.remove({
-		id: id_i
+		"datos_personales.cedula": id_i
 	}, function (err, docs) {
 		 if(err){
 				res.send({mensaje:"Error en el borrado!"});

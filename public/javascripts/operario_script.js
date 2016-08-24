@@ -4,13 +4,121 @@
     });
 	
 
+function dropdownCentro(val) {
+  var y = $("#centroDrop");
+  $("#centro").attr("value",val.replace(/\n|<.*?>/g,''));
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>'; 
+}
+	
+function dropdownLab(val) {
+  var y = $("#labDrop");
+  $("#lab").attr("value",val.replace(/\n|<.*?>/g,''));
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>'; 
+}
+var muestra;
+function registroMuestra(){
+	
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
 
+	if(dd<10) {
+		dd='0'+dd
+	} 
+
+	if(mm<10) {
+		mm='0'+mm
+	} 
+	today = mm+'/'+dd+'/'+yyyy;
 	
+	muestra={
+	fecha: "a",
+	centro: "a",
+	laboratorio: "a",
+	examenes: "a"
+	}
+	muestra.fecha= "today";
+	muestra.centro= $("#centro").val();
+	muestra.laboratorio= $("#lab").val();
+	muestra.examenes= [];
+	$('input[name="rMuestra"]:checked').each(function() {
+		var examen;
+		examen={
+	tipo: "a",
+	nombre: "a",
+	estado: "a",
+	}
+		examen.tipo= this.getAttribute("class");
+		examen.nombre= this.value;
+		examen.resultado="";
+		examen.estado= "enviado";
+		muestra.examenes.push(examen);
+		});
+		console.log(muestra);
+	/*$.ajax({
+	type: "PUT",
+	  url: "/paciente/fichas/2",
+	  data: JSON.stringify(muestra),
+	  success: function(){ console.log(muestra);},
+	  contentType: 'application/json'
+	});*/
 	
+		
+}
+/*function onSave(){
+return false;
+}*/
+
+var paciente, datosMail;
+function registroPaciente(){
+	
+	paciente={
+	["datos_personales.nombre"]: "a",
+	["datos_personales.apellido"]: "a",
+	["datos_personales.cedula"]: "a",
+	["datos_personales.correo"]: "a",
+	["datos_personales.contrasena"]: "a"
+	}
+	datosMail={
+	 correo: "a",
+	 contrasena: "a"
+	}
+	paciente["datos_personales.nombre"]= $("#nombres").val();
+	paciente["datos_personales.apellido"]= $("#apellidos").val();
+	paciente["datos_personales.cedula"]= $("#cedula").val();
+	paciente["datos_personales.correo"]= $("#correo").val();
+	paciente["datos_personales.contrasena"]= Math.random().toString(36).slice(-8);
+	datosMail.correo=$("#correo").val();
+	datosMail.contrasena=paciente["datos_personales.contrasena"];
+		//console.log(paciente);
+	$.ajax({
+	type: "POST",
+	  url: "http://localhost:3000/paciente/",
+	  data: JSON.stringify(paciente),
+	  success: function(){ console.log(paciente);
+	  window.alert("El paciente fue registrado exitosamente.");},
+	  contentType: 'application/json'
+	});
+	
+	$.ajax({
+	type: "POST",
+	  url: "http://localhost:3000/paciente/email",
+	  data: JSON.stringify(datosMail),
+	  success: function(){ console.log(datosMail);
+	  window.alert("El mail fue enviado exitosamente.");},
+	  contentType: 'application/json'
+	});
+		
+}
+
 function init(){
 	//Inicialización
 	$("#container_sucursales").hide();
 	$("#container_datos").hide();
+	$("#container_pacientes").hide();
+	$("#botonRegistro").hide();
 
 	// Objetos de datos
 	//Operario
@@ -30,10 +138,12 @@ function init(){
 	//		});	
 	//	});	
 
-		var dataSet = new Array;
+		var muestras = new Array;
+		var pacientes = new Array;
 		var filaS = [];
 		var filaO = [];
 		var filaH = [];
+		var filap = [];
 		var flag = 0;
 		
 
@@ -41,10 +151,20 @@ function init(){
 		
 	 	$.getJSON("http://localhost:3000/paciente", function(response)
 	 	{
-	 		
 
 	 		response.forEach(function(paciente)
 	 		{	
+	 			console.log(paciente)
+	 			filap.push(paciente.datos_personales.cedula);
+	 			filap.push(paciente.datos_personales.nombre);
+	 			filap.push(paciente.datos_personales.apellido);
+	 			filap.push(paciente.datos_personales.correo);
+	 			filap.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs " data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
+	 			filap.push(paciente.id);
+	 			pacientes.push(filap);
+
+	 			filap = [];
+
 	 			paciente.fichas.forEach(function(ficha)
 	 			{
 	 				filaS.push(ficha.fecha);
@@ -76,7 +196,7 @@ function init(){
 	 						filaO.push(examen.nombre);
 	 						filaO.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
 	 						filaO.push(ficha.fid);
-	 						dataSet.push(filaO);
+	 						muestras.push(filaO);
 	 						filaO = [];
 	 					}
 	 					else if (examen.tipo == "heces")
@@ -89,24 +209,29 @@ function init(){
 	 						filaH.push(examen.nombre);
 	 						filaH.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
 	 						filaH.push(ficha.fid);
-	 						dataSet.push(filaH);
+	 						muestras.push(filaH);
 	 						filaH = [];
 	 					};
 
 	 				});
 	 				if (flag==1)
 	 				{
-	 					dataSet.push(filaS);
+	 					muestras.push(filaS);
 	 				}
 
 	 				filaS = [];
+	 				
 
 	 			});
 	 		});
-	 		console.log(dataSet);
+	 		
+
+
+	 		//Crear Tabla para muestras medicas
+
 	 		$('#Examenes_Operario').DataTable( 
 		 	{
-    	    	data: dataSet,
+    	    	data: muestras,
     	    	columns: 
     	    	[
     	    		{title: "fecha"},
@@ -122,11 +247,41 @@ function init(){
     	    	    	title: "Id",
     	    	    	"visible": true,
                 		"searchable": true
+    	    	    },
+
+    	    	]
+
+
+    		} );
+
+
+    		//Tabla para Pacientes 
+
+    		$('#Pacientes_Operario').DataTable( 
+		 	{
+    	    	data: pacientes,
+    	    	"lengthMenu": [[100, 50, 25, -1], [100, 50, 25, "All"]],
+    	    	columns: 
+    	    	[
+    	    		{ title: "Cedula",
+    	    		  "className":  'ced'
+    	    		},
+    	    	    { title: "Nombre" },
+    	    	    { title: "Apellido" },
+    	    	    { title: "Correo" },
+    	    		{ title: "Acciones",
+    	    	    "className":  'dc'
+    	    		},
+    	    	    {
+    	    	    	title: "Id",
+    	    	    	"visible": true,
+                		"searchable": true
     	    	    }
     	    	]
 
 
     		} );
+
     		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-danger', function () {
     	    	var tr = $(this).closest('tr');
     	    	
@@ -136,7 +291,28 @@ function init(){
     		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
     	    	console.log("mostrar modal para editar");
     		} );
-    		dataSet = [];
+    		$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-danger', function () {
+    	    	var tr = $(this).closest('tr');
+    	    	var tds = $(this).parent().parent().find('td:first-child');
+    	    	// $this
+    	    	var ced = tds.text();
+
+    	    	$.ajax({
+    				url: 'http://localhost:3000/paciente/' + ced,
+    				type: 'DELETE',
+    				success: function(result) {
+    					tr.hide();        				
+   					 }
+				});
+    	    	console.log(ced);
+      	    	console.log(tds);
+    	    	//tr.hide();
+    	    	//console.log("borrar de la base de datos la ficha");
+    		} );
+    		$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
+    	    	console.log("mostrar modal para editar");
+    		} );
+    		muestras = [];
 	 	});
 
 	 	
@@ -151,7 +327,9 @@ function init(){
 		$(".menu li:nth-child(2)").siblings("li").removeClass("active");
 		$(".menu li:nth-child(2)").addClass("active");
 		$("#container_examenes").hide();
-		$("#container_datos").hide();	
+		$("#container_datos").hide();
+		$("#botonRegistro").hide();
+		$("#container_pacientes").hide();	
 		$("#container_sucursales").show();
 	});	
 
@@ -161,6 +339,8 @@ function init(){
 		$(".menu li:nth-child(1)").addClass("active");
 		$("#container_sucursales").hide();
 		$("#container_datos").hide();	
+		$("#container_pacientes").hide();
+		$("#botonRegistro").hide();
 		$("#container_examenes").show();		
 	});
 
@@ -170,7 +350,21 @@ function init(){
 		$(".menu li:nth-child(3)").addClass("active");
 		$("#container_sucursales").hide();
 		$("#container_examenes").hide();
+		$("#botonRegistro").hide();
+		$("#container_pacientes").hide();
 		$("#container_datos").show();	
+	});	
+
+	$(".menu li:nth-child(4) a").click(function(){
+		$(".breadcrumb li h2").text("Pacientes");
+		$(".menu li:nth-child(4)").siblings("li").removeClass("active");
+		$(".menu li:nth-child(4)").addClass("active");
+		$("#container_sucursales").hide();
+		$("#container_examenes").hide();
+		$("#container_datos").hide();	
+		$("#container_pacientes").show();
+		$("#botonRegistro").show();
+		
 	});	
 	
 	//Comportamiento de los exámenes
