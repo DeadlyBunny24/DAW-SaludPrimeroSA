@@ -136,6 +136,7 @@ function init(){
     		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
     	    	console.log("mostrar modal para editar");
     		} );
+    		dataSet = [];
 	 	});
 
 	 	
