@@ -2,27 +2,39 @@
 <html>
 
 	<head>
-		
+
 		<title>Salud Primero S.A.</title>
-		
+
 		<meta charset="UTF-8">
 		<meta name="description" content="Pag. principal de un paciente">
 		<meta name="keywords" content="paciente, salud, primero, sa">
-		
+
 		<!-- Hojas de estilo-->
 		<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css"  >
 		<link href="stylesheets/base_structure.css" rel="stylesheet">
 		<link href="stylesheets/bootstrap-edit.css" rel="stylesheet">
 		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="stylesheets/operario_style.css">
+		<!--<link rel="stylesheet" type="text/css" href="stylesheets/operario_style.css">
 		<link rel="stylesheet" type="text/css" href="stylesheets/bar-grupo.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/bar-2.css">
+			-->
 		<link href="stylesheets/bootstrap-datetimepicker.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+		<style>
 
+		.arc text {
+		  font: 10px sans-serif;
+		  text-anchor: middle;
+		}
+
+		.arc path {
+		  stroke: #fff;
+		}
+
+		</style>
 	</head>
 	<body>
-		
+
 		<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -58,12 +70,12 @@
 				  <li><h2>Exámenes</h2></li>
 				</ol>
 	        </div>
-	        
+
 	        <div id="contenedor_datos" class="row">
 		        <div class=" main">
 					<div id="container_examenes">
 						<div>
-					  
+
 					  <h2 class="sub-header">Lista de Exámenes</h2>
 					  <button type="button" class="btn-u btn-u-blue btn-header" data-toggle="modal" data-target="#myModal">
 					  	<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
@@ -87,87 +99,49 @@
 						<table id = "Examenes_Operario" class = "display" width = "100%"></table>
 					  </div>
 					</div>
-					
+
 					<div id="container_sucursales">
 			        <div class="tab-v2 margin-bottom-40 container-list-v">
 	                    <ul class="nav nav-tabs">
-	                        <li class="active"><a href="#alert-1" data-toggle="tab" aria-expanded="true">Muestras por mes </a></li>
-	                        <li class=""><a href="#alert-2" data-toggle="tab" aria-expanded="false">Por Enfermedad</a></li>
-	                        <li class=""><a href="#alert-3" data-toggle="tab" aria-expanded="false">Por Laboratorio</a></li>
-	                        <li class=""><a href="#alert-4" data-toggle="tab" aria-expanded="false">Por Ciudad</a></li>
+	                        <li class="active"><a href="#alert-1" data-toggle="tab" aria-expanded="true">Total muestras medicas asignadas </a></li>
+	                        <li class=""><a href="#alert-2" data-toggle="tab" aria-expanded="false">Gráfico del total de muestras médicas mensuales por laboratorio</a></li>
 	                    </ul>
 	                    <div class="tab-content">
 
 	                        <div class="tab-pane fade active in" id="alert-1">
-	                         
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por mes</h2>                                    
-                                  <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;"
-                                           data-toggle="modal" data-target="#myModalMeses">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_meses" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
+
+                              <div id="container_examenes">
+									              <h2 class="sub-header">Total muestras medicas asignadas </h2>
+				                        <div id="grafico_meses" class="table-responsive table-content">
+
+									              </div>
+									            </div>
 	                        </div>
 
 	                        <div class="tab-pane fade" id="alert-2">
 
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por enfermedades</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" data-toggle="modal" data-target="#myModalEnfermedad">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_enfermedades" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
-	                            
+                              <div id="container_examenes">
+									              <h2 class="sub-header">Gráfico del total de muestras médicas mensuales por laboratorio</h2>
+																<form id="myform" method="post" action="somewhere" onsubmit="return submitForm(this);">
+
+							<input type="text" id="fecha1" name="fecha1" value="08/15/2016" class="form-control" />
+							<input type="text" id="fecha2" name="fecha2" value="08/20/2016" class="form-control" />
+																	<input type="submit" value="Buscar"/>
+																</form>
+									              <div id="grafico_enfermedades" class="table-responsive table-content">
+
+									              </div>
+									            </div>
+
 	                        </div>
-	                        <div class="tab-pane fade" id="alert-3">
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por laboratorio</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" 
-                                    data-toggle="modal" data-target="#myModalLaboratorios">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_laboratorio" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
-                            </div>
-	                        <div class="tab-pane fade" id="alert-4">
-                                <div id="container_examenes">
-					              <h2 class="sub-header">Grafico por ciudades</h2>
-                                    <button type="button" class="btn-u btn-u-dark-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	            <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Exportar
-					              </button>
-					              <button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" 
-                                    data-toggle="modal" data-target="#myModalCiudades">
-					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
-					              </button>
-					              <div id="grafico_ciudades" class="table-responsive table-content">
-						
-					              </div>
-					            </div>
-                            </div>
+
 	                    </div>
 	                </div>
-											
+
 		        </div>
-					
-					
-					<div id="container_datos">	
+
+
+					<div id="container_datos">
 						<div class="panel panel-blue margin-bottom-40">
 							<!-- <div class="panel-heading">
 								<h3 class="panel-title"><i class="fa fa-tasks"></i> Informaci󮠤el registro</h3>
@@ -187,10 +161,10 @@
 										<input type="text" class="form-control" id="examen" placeholder="Examen">
 									</div>
 									<button id="actualizar" type="submit" class="btn-u btn-u-blue">Registrar</button>
-								</form>								
+								</form>
 							</div>
 						</div>
-				</div>						
+				</div>
 		        </div>
 	        </div>
         </div>
@@ -202,265 +176,25 @@
     </footer>
     </div>
 
-	<div class="modal fade" id="myModalMeses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content modal-u-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
-		  </div>
-		  <div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Enfermedad</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todas</option>
-							<option>Enfermedad 2</option>
-							<option>Enfermedad 3</option>
-							<option>Enfermedad 4</option>
-							<option>Enfermedad 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Laboratorio</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Laboratorio 2</option>
-							<option>Laboratorio 3</option>
-							<option>Laboratorio 4</option>
-							<option>Laboratorio 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker3">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker4">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</form>
-		  </div>
-		  
-		  <div class="modal-footer">
-			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
-		  </div>
-		  
-		</div>
-	  </div>
-	</div>
-
-	<div class="modal fade" id="myModalEnfermedad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content modal-u-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
-		  </div>
-		  <div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Laboratorio</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Laboratorio 2</option>
-							<option>Laboratorio 3</option>
-							<option>Laboratorio 4</option>
-							<option>Laboratorio 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker1">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker2">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</form>
-		  </div>
-		  
-		  <div class="modal-footer">
-			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
-		  </div>
-		  
-		</div>
-	  </div>
-	</div>
-
-	<div class="modal fade" id="myModalLaboratorios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content modal-u-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
-		  </div>
-		  <div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Enfermedad</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Enfermedad 2</option>
-							<option>Enfermedad 3</option>
-							<option>Enfermedad 4</option>
-							<option>Enfermedad 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker1">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker2">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</form>
-		  </div>
-		  
-		  <div class="modal-footer">
-			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
-		  </div>
-		  
-		</div>
-	  </div>
-	</div>
-
-	<div class="modal fade" id="myModalCiudades" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content modal-u-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
-		  </div>
-		  <div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Enfermedad</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Enfermedad 2</option>
-							<option>Enfermedad 3</option>
-							<option>Enfermedad 4</option>
-							<option>Enfermedad 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Laboratorio</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Laboratorio 2</option>
-							<option>Laboratorio 3</option>
-							<option>Laboratorio 4</option>
-							<option>Laboratorio 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker1">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker2">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</form>
-		  </div>
-		  
-		  <div class="modal-footer">
-			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
-		  </div>
-		  
-		</div>
-	  </div>
-	</div>
-
-
 		<!-- Scripts -->
 		<script src="javascripts/d3.v3.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script src="javascripts/operario_script.js"></script>	
+		<script src="javascripts/operario_script.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
-		<script src="javascripts/bar-mes.js"></script>
-        <script src="javascripts/bar-emfermedad.js"></script>	
-        <script src="javascripts/bar-laboratorio.js"></script>	
+		<script src="javascripts/grafico_pastel.js"></script>
+		<script src="javascripts/graphs.js"></script>
+		<script src="javascripts/map.js"></script>
+		<script src="javascripts/grafico_barra.js"></script>
+		<!--
+        <script src="javascripts/bar-emfermedad.js"></script>
+        <script src="javascripts/bar-laboratorio.js"></script>
         <script src="javascripts/bar-ciudad.js"></script>
+			-->
 		<script type="text/javascript" src="javascripts/bootstrap-datetimepicker.min.js"> </script>
         <script type="text/javascript" src="javascripts/bootstrap-datetimepicker.pt-BR.js"> </script>
 		<script src="//code.jquery.com/jquery-1.12.3.js"></script>
 		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-		
+
 		<script type="text/javascript">
 
            $('#datetimepicker1').datetimepicker({
@@ -483,7 +217,7 @@
         language: 'pt-BR'
       });
 		</script>
-		
+
 	</body>
 
 </html>
