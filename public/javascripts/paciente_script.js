@@ -25,62 +25,131 @@ function init(){
 	//			}	
 	//		});	
 	//	});
+		var muestras = new Array;
+		var filaS = [];
+		var filaO = [];
+		var filaH = [];
+		var filap = [];
+		var flag = 0;
+		var user = $("#cedula").text();
 
-		var dataSet = new Array;
-		var fila = [];
+
+		console.log(user);
 		
 
 
 		
-	 	$.getJSON("http://localhost:3000/paciente/4", function(response)
+	 	$.getJSON("http://localhost:3000/paciente/" + user, function(response)
 	 	{
 	 		
-
-	 		response.forEach(function(paciente)
+			response.forEach(function(paciente)
 	 		{	
+
+	 			$("#nombre_i").val(paciente.datos_personales.nombre);
+				$("#apellido_i").val(paciente.datos_personales.apellido);
+				$("#correo_i").val(paciente.datos_personales.correo);
+				$("#cedula_i").val(paciente.datos_personales.cedula);
+				$("#direccion_i").val(paciente.datos_personales.direccion);
+				$("#telefono_i").val(paciente.datos_personales.telefono);
+				$("#imagen_i").attr("src",paciente.datos_personales.foto);
+
+	 			//filap = [];
+
 	 			paciente.fichas.forEach(function(ficha)
 	 			{
+	 				filaS.push(ficha.fecha);
+	 				filaS.push(ficha.centro);
+	 				filaS.push(ficha.laboratorio);
+	 				filaS.push("");
+	 				filaS.push("");
+	 				filaS.push("");
+	 				filaS.push("");
+	 				flag = 0;
+
 	 				ficha.examen.forEach(function(examen)
 	 				{
-	 					fila.push(ficha.fecha);
-	 					fila.push(examen.tipo);
-	 					fila.push(examen.nombre);
-	 					fila.push(examen.estado);
-	 					fila.push("");
-
-	 					//table.row.add([ficha.fecha.toString(), examen.tipo.toString(), examen.nombre.toString(), examen.estado.toString(), ""]);
-
-	 					dataSet.push([ficha.fecha.toString(), examen.tipo.toString(), examen.nombre.toString(), examen.estado.toString(), ""]);
-
 	 					
-
-	 					//console.log(fila);
-	 					fila = [];
+	 					if (examen.tipo == "sangre")
+	 					{
+	 						filaS[3]=examen.tipo;
+	 						filaS[4]= filaS[4].concat(examen.nombre, ", ");
+	 						filaS[5] = examen.estado;
+	 						if (examen.estado == "listo")
+	 						{
+	 							filaS[6] ='<a href = "#" >pdf</> ';
+	 						}
+	 						flag =1;
+	 					}
+	 					else if (examen.tipo == "orina")
+	 					{
+	 						filaO.push(ficha.fecha);
+	 						filaO.push(ficha.centro);
+	 						filaO.push(ficha.laboratorio);
+	 						filaO.push(examen.tipo);
+	 						filaO.push(examen.nombre);
+	 						filaO.push(examen.estado);
+	 						if (examen.estado == "listo")
+	 						{
+	 							filaO.push('<a href = "#" >pdf</> ');
+	 						}
+	 						else
+	 						{
+	 							filaO.push("");
+	 						}
+	 						muestras.push(filaO);
+	 						filaO = [];
+	 					}
+	 					else if (examen.tipo == "heces")
+	 					{
+	 						filaH.push(ficha.fecha);
+	 						filaH.push(ficha.centro);
+	 						filaH.push(ficha.laboratorio);
+	 						filaH.push(examen.tipo);
+	 						filaH.push(examen.nombre);
+	 						filaH.push(examen.estado);
+	 						if (examen.estado == "listo")
+	 						{
+	 							filaH.push('<a href = "#" >pdf</> ');
+	 						}
+	 						else
+	 						{
+	 							filaH.push("");
+	 						}
+	 						muestras.push(filaH);
+	 						filaH = [];
+	 					};
 
 	 				});
+	 				if (flag==1)
+	 				{
+	 					muestras.push(filaS);
+	 				}
+
+	 				filaS = [];
+	 				
 
 	 			});
 	 		});
-	 		console.log(dataSet);
+	 		console.log(muestras);
 	 		$('#Examenes_Paciente').DataTable( 
 		 	{
-    	    	data: dataSet,
+    	    	data: muestras,
     	    	columns: 
     	    	[
     	    	    { title: "Fecha" },
+    	    	    { title: "Centro"},
+    	    	    { title: "laboratorio"},
     	    	    { title: "Tipo" },
     	    	    { title: "Exámen" },
     	    	    { title: "Estado" },
-    	    	    { title: "pdf" }
+    	    	    { title: "Resultado" }
     	    	]
     		} );
 
 	 	});
 
 
-	 	
-	 	//console.log(dataSet);
-	 	console.log(dataSet);
+	 
 
 
 
@@ -132,17 +201,7 @@ function init(){
 		});
 	
 		//Datos usuario
-		var user;
-		$.getJSON("../json/usuario.JSON",function(response){
-			user = response;
-			$("#nombre_i").val(user.datos[0].nombre);
-			$("#apellido_i").val(user.datos[0].apellido);
-			$("#correo_i").val(user.datos[0].correo);
-			$("#cedula_i").val(user.datos[0].cedula);
-			$("#direccion_i").val(user.datos[0].direccion);
-			$("#telefono_i").val(user.datos[0].telefono);
-			$("#imagen_i").attr("src",user.datos[0].img);
-		});
+		
 		
 		//Sucursales
 		/* var suc = jQuery.parseJSON('{"lista":[\
