@@ -4,9 +4,99 @@
     });
 	
 
+function dropdownCentro(val) {
+  var y = $("#centroDrop");
+  $("#centro").attr("value",val.replace(/\n|<.*?>/g,''));
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>'; 
+}
+	
+function dropdownLab(val) {
+  var y = $("#labDrop");
+  $("#lab").attr("value",val.replace(/\n|<.*?>/g,''));
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>'; 
+}
+var muestra;
+function registroMuestra(){
+	
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
 
+	if(dd<10) {
+		dd='0'+dd
+	} 
+
+	if(mm<10) {
+		mm='0'+mm
+	} 
+	today = mm+'/'+dd+'/'+yyyy;
 	
+	muestra={
+	fecha: "a",
+	centro: "a",
+	laboratorio: "a",
+	examenes: "a"
+	}
+	muestra.fecha= "today";
+	muestra.centro= $("#centro").val();
+	muestra.laboratorio= $("#lab").val();
+	muestra.examenes= [];
+	$('input[name="rMuestra"]:checked').each(function() {
+		var examen;
+		examen={
+	tipo: "a",
+	nombre: "a",
+	estado: "a",
+	}
+		examen.tipo= this.getAttribute("class");
+		examen.nombre= this.value;
+		examen.resultado="";
+		examen.estado= "enviado";
+		muestra.examenes.push(examen);
+		});
+		console.log(muestra);
+	/*$.ajax({
+	type: "PUT",
+	  url: "/paciente/fichas/2",
+	  data: JSON.stringify(muestra),
+	  success: function(){ console.log(muestra);},
+	  contentType: 'application/json'
+	});*/
 	
+		
+}
+/*function onSave(){
+return false;
+}*/
+
+var paciente;
+function registroPaciente(){
+	
+	paciente={
+	["datos_personales.nombre"]: "a",
+	["datos_personales.apellido"]: "a",
+	["datos_personales.cedula"]: "a",
+	["datos_personales.correo"]: "a"
+	}
+	paciente["datos_personales.nombre"]= $("#nombres").val();
+	paciente["datos_personales.apellido"]= $("#apellidos").val();
+	paciente["datos_personales.cedula"]= $("#cedula").val();
+	paciente["datos_personales.correo"]= $("#correo").val();
+		//console.log(paciente);
+	$.ajax({
+	type: "POST",
+	  url: "http://localhost:3000/paciente/",
+	  data: JSON.stringify(paciente),
+	  success: function(){ console.log(paciente);
+	  window.alert("El paciente fue registrado exitosamente.");},
+	  contentType: 'application/json'
+	});
+	
+		
+}
+
 function init(){
 	//Inicialización
 	$("#container_sucursales").hide();

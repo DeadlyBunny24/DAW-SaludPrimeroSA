@@ -174,20 +174,65 @@
 							</div> -->
 							<div class="panel-body">
 								<form class="margin-bottom-40" role="form">
-									<div class="form-group" id="form_paciente">
-										<label for="paciente">Paciente</label>
-										<input type="text" class="form-control" id="paciente" placeholder="Paciente">
-									</div>
-									<div class="form-group" id="form_centro">
-										<label for="centro">Centro</label>
-										<input type="text" class="form-control" id="centro" placeholder="Centro">
-									</div>
-									<div class="form-group" id="form_examen">
-										<label for="examen">Examen</label>
-										<input type="text" class="form-control" id="examen" placeholder="Examen">
-									</div>
-									<button id="actualizar" type="submit" class="btn-u btn-u-blue">Registrar</button>
-								</form>								
+								<div class="col-lg-5" style="margin-bottom: 25px">
+								<input type="text" class="form-control" id="paciente" placeholder="Paciente">
+								</div>
+		`						<button type="button" class="btn-u btn-u-blue btn-header" style="margin-right: 5px;" 
+                                    data-toggle="modal" data-target="#myModalPaciente">
+					  	            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Registrar Paciente
+					              </button>
+								  <br>
+								  <br>
+								  <br>
+								  <div style="margin-bottom: 25px" class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle" id="centroDrop" data-toggle="dropdown">
+					Seleccione un Centro    <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li onclick="dropdownCentro(this.innerHTML);"><a>Centro1</a></li>
+						<li onclick="dropdownCentro(this.innerHTML);"><a>Centro2</a></li>
+						<li onclick="dropdownCentro(this.innerHTML);"><a>Centro3</a></li>
+					</ul>
+				</div>
+				<br>
+				<div style="margin-bottom: 25px" class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle" id="labDrop" data-toggle="dropdown">
+					Seleccione un Laboratorio    <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li onclick="dropdownLab(this.innerHTML);"><a>Lab1</a></li>
+						<li onclick="dropdownLab(this.innerHTML);"><a>Lab2</a></li>
+						<li onclick="dropdownLab(this.innerHTML);"><a>Lab3</a></li>
+						<li onclick="dropdownLab(this.innerHTML);"><a>Lab4</a></li>
+						<li onclick="dropdownLab(this.innerHTML);"><a>Lab5</a></li>
+					</ul>
+				</div>
+				<input  type="hidden" class="form-control" id= "centro" name="centro">
+				<input  type="hidden" class="form-control" id= "lab" name="lab">
+				<h2>Escoger Ex&aacute;menes a Realizar</h2>
+				<h3>Ex&aacute;menes de Sangre</h3>
+				<div class="checkbox">
+				<label><input class="Sangre" type="checkbox" id= "hemograma" name="rMuestra" value="Hemograma">Hemograma</label>
+				</div>
+				<div class="checkbox">
+				<label><input class="Sangre" type="checkbox" id= "bioquimica" name="rMuestra" value="Bioquímica">Bioqu&iacute;mica</label>
+				</div>
+				<div class="checkbox">
+				<label><input class="Sangre" type="checkbox" id= "seriologia" name="rMuestra" value="Seriología">Seriolog&iacute;a</label>
+				</div>
+				<h3>Ex&aacute;menes de Orina</h3>
+				<div class="checkbox">
+				<label><input class="Orina" type="checkbox" id= "uroanalisis" name="rMuestra" value="Uroanálisis">Uroan&aacute;lisis</label>
+				</div>
+				<h3>Ex&aacute;menes de Heces</h3>
+				<div class="checkbox">
+				<label><input class="Heces" type="checkbox" id= "coprocultivo" name="rMuestra" value="Coprocultivo">Coprocultivo</label>
+				</div>
+			
+									
+								</form>	
+									<button id="actualizar" onclick="registroMuestra();">Registrar</button>	
+								
 							</div>
 						</div>
 				</div>						
@@ -323,7 +368,52 @@
 		</div>
 	  </div>
 	</div>
-
+	
+<div class="modal fade" id="myModalPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content modal-u-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Ingresar Datos</h4>
+		  </div>
+		  <div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label">Nombres</label>
+						<div class="col-lg-10">
+						<input id="nombres" type="text" class="form-control" name="nombres">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label">Apellidos</label>
+						<div class="col-lg-10">
+						<input id="apellidos" type="text" class="form-control" name="apellidos">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label">Cedula</label>
+						<div class="col-lg-10">
+						<input id="cedula" type="text" class="form-control" name="cedula">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label">Correo Electronico</label>
+						<div class="col-lg-10">
+						<input id="correo" type="email" class="form-control" name="correo">
+						</div>
+					</div>
+				</form>
+		  </div>
+		  
+		  <div class="modal-footer">
+			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+			<button type="button" class="btn" id="registrarPaciente" onclick="registroPaciente();" data-dismiss="modal">Registrar</button>
+		  </div>
+		  
+		</div>
+	  </div>
+	</div>
+	
 	<div class="modal fade" id="myModalLaboratorios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
