@@ -18,12 +18,11 @@ function dropdownLab(val) {
 var muestra;
 function registroMuestra(){
 	
-	
+	var cedula= $("#paciente").val();
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth()+1; //January is 0!
 	var yyyy = today.getFullYear();
-
 	if(dd<10) {
 		dd='0'+dd
 	} 
@@ -37,39 +36,43 @@ function registroMuestra(){
 	fecha: "a",
 	centro: "a",
 	laboratorio: "a",
-	examenes: "a"
+	examen: [] 
 	}
-	muestra.fecha= "today";
+	muestra.fecha= today;
 	muestra.centro= $("#centro").val();
 	muestra.laboratorio= $("#lab").val();
-	muestra.examenes= [];
 	$('input[name="rMuestra"]:checked').each(function() {
-		var examen;
-		examen={
+		var examenes;
+		examenes={
 	tipo: "a",
 	nombre: "a",
 	estado: "a",
+	resultado: "a"
 	}
-		examen.tipo= this.getAttribute("class");
-		examen.nombre= this.value;
-		examen.resultado="";
-		examen.estado= "enviado";
-		muestra.examenes.push(examen);
+		examenes.tipo= this.getAttribute("class");
+		examenes.nombre= this.value;
+		examenes.resultado="";
+		examenes.estado= "enviado";
+		muestra.examen.push(examenes);
 		});
 		console.log(muestra);
-	/*$.ajax({
+		/*var datos={
+		fichas: muestra}*/
+		
+	$.ajax({
 	type: "PUT",
-	  url: "/paciente/fichas/2",
-	  data: JSON.stringify(muestra),
-	  success: function(){ console.log(muestra);},
-	  contentType: 'application/json'
-	});*/
+	  url: "http://localhost:3000/paciente/fichas/"+cedula,
+	  data: muestra,
+	  success: function(){ alert("Muestra registrada satisfactoriamente.");},
+	  error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Paciente no encontrado.")},
+	  contentType: 'application/x-www-form-urlencoded'
+	});
 	
+
 		
 }
-/*function onSave(){
-return false;
-}*/
 
 var paciente, datosMail;
 function registroPaciente(){

@@ -30,9 +30,9 @@ router.get("/:id",function(req,res){
 
 router.get("/fichas/:id",function(req,res){
 	var id = req.params["id"];
-	paciente_db.find({"id":id},"fichas",function(err,docs){
+	paciente_db.find({"datos_personales.cedula":id},"fichas",function(err,docs){
 		if(err){
-			res.send({mensaje:"Tarea no encontrada!"});
+			res.send({mensaje:"Paciente no encontrado!"});
 		}else{
 			res.send(docs);
 		}
@@ -87,13 +87,16 @@ router.put("/datospersonales/:id",function(req,res){
 });
 
 router.put("/fichas/:id",function(req,res){
-	var ficha_i = req.body.fichas;
-	var ficha_json = JSON.parse(ficha_i);
+	console.log(req.body);
+	var ficha_i = req.body;
+	//var ficha_json = JSON.parse(ficha_i);
 	var date = new Date();
 	var id_i = req.params["id"];	
-	ficha_json.fid=date.getTime().toString();
+	//ficha_json.fid=date.getTime().toString();
+	ficha_i.fid=date.getTime().toString();
+	//ficha_json.fid=mongoose.Types.ObjectId();
 
-		  paciente_db.update({id:id_i},{$push:{fichas:ficha_json}},function(err){
+		  paciente_db.update({"datos_personales.cedula":id_i},{$push:{fichas:/*ficha_json*/ficha_i}},function(err){
 			if(err){
 				res.send({message:"Error en la actualizacion!"})
 			}else{
