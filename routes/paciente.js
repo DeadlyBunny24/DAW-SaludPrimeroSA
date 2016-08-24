@@ -105,7 +105,7 @@ router.put("/fichas/:id",function(req,res){
 router.delete("/:id",function(req,res){
 	var id_i = req.params["id"];
 	paciente_db.remove({
-		id: id_i
+		"datos_personales.cedula": id_i
 	}, function (err, docs) {
 		 if(err){
 				res.send({mensaje:"Error en el borrado!"});
