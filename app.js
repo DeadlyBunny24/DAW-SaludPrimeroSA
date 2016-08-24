@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
+var request = require("request");
 
 var mongoose = require("mongoose");
 
@@ -57,25 +57,47 @@ app.post('/login', function(req, res){
 	var username= req.body.username;
 	var password= req.body.password;
 	var rol= req.body.rol;
-	if (username =="admin" && password =="admin1234" && rol=="Operario"){
+	var url1= "http://localhost:3000/paciente/";
+	var url2= "";
+	var url3= "";
+	
+	if (rol== "Paciente"){
+	request({method: "GET", url: url1+username, json: true}, function(error, response, body){
+		if (!error && response.statusCode === 200) {
+		//console.log(body[0].datos_personales.contrasena);
+		
+			if (body[0].datos_personales.contrasena== password){
+			req.session ["username"]= username;
+			req.session ["rol"]= rol;
+			res.redirect('home');
+			return;
+			} 
+		}
+	});
+	} else if (username =="admin" && password =="admin1234" && rol== "Operario"){
 		req.session ["username"]= username;
 		req.session ["rol"]= rol;
 		res.redirect('operario');
 		return;
-	}
+	} else if (username =="lab" && password =="lab1234" && rol== "Laboratorista"){
+		req.session ["username"]= username;
+		req.session ["rol"]= rol;
+		res.redirect('laboratorista');
+		return;
+	
+	}else{res.send ("Usuario o contraseña invalidos");}
+	
+	
+	/*
 	if (username =="user" && password =="user1234"&& rol=="Paciente"){
 		req.session ["username"]= username;
 		req.session ["rol"]= rol;
 		res.redirect('home');
 		return;
 	}
-	if (username =="lab" && password =="lab1234"&& rol=="Laboratorista"){
-		req.session ["username"]= username;
-		req.session ["rol"]= rol;
-		res.redirect('laboratorista');
-		return;
-	}
-	res.send ("Usuario o contraseña invalidos");
+	
+	*/
+	
 });
 
 app.get('/logout', function(req, res, next){
