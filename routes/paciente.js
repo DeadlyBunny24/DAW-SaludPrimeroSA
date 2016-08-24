@@ -17,7 +17,7 @@ router.get("/",function(req,res){
 
 router.get("/:id",function(req,res){
 	var id = req.params["id"];
-	paciente_db.find({"id":id},function(err,docs){
+	paciente_db.find({"datos_personales.cedula":id},function(err,docs){
 		if(err){
 			res.send({mensaje:"Tarea no encontrada!"});
 		}else{

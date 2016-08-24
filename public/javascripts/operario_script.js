@@ -102,6 +102,7 @@ function init(){
 	$("#container_sucursales").hide();
 	$("#container_datos").hide();
 	$("#container_pacientes").hide();
+	$("#botonRegistro").hide();
 
 	// Objetos de datos
 	//Operario
@@ -295,6 +296,7 @@ function init(){
 		$(".menu li:nth-child(2)").addClass("active");
 		$("#container_examenes").hide();
 		$("#container_datos").hide();
+		$("#botonRegistro").hide();
 		$("#container_pacientes").hide();	
 		$("#container_sucursales").show();
 	});	
@@ -306,6 +308,7 @@ function init(){
 		$("#container_sucursales").hide();
 		$("#container_datos").hide();	
 		$("#container_pacientes").hide();
+		$("#botonRegistro").hide();
 		$("#container_examenes").show();		
 	});
 
@@ -315,6 +318,7 @@ function init(){
 		$(".menu li:nth-child(3)").addClass("active");
 		$("#container_sucursales").hide();
 		$("#container_examenes").hide();
+		$("#botonRegistro").hide();
 		$("#container_pacientes").hide();
 		$("#container_datos").show();	
 	});	
@@ -327,6 +331,7 @@ function init(){
 		$("#container_examenes").hide();
 		$("#container_datos").hide();	
 		$("#container_pacientes").show();
+		$("#botonRegistro").show();
 		
 	});	
 	
