@@ -50,6 +50,7 @@
             <li class="active"><a href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Exámenes <span class="sr-only">(current)</span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>  Generar Reportes</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Registrar</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Pacientes</a></li>
           </ul>
         </div>
         <div id="contenedor_info" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 ">
@@ -62,13 +63,7 @@
 	        <div id="contenedor_datos" class="row">
 		        <div class=" main">
 					<div id="container_examenes">
-						<div>
-					  
-					  <h2 class="sub-header">Lista de Exámenes</h2>
-					  <button type="button" class="btn-u btn-u-blue btn-header" data-toggle="modal" data-target="#myModal">
-					  	<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
-					  </button>
-					  </div>
+						
 					  <div class="table-responsive table-content">
 					  <!--
 						<table class="table table-striped">
@@ -235,7 +230,14 @@
 								
 							</div>
 						</div>
-				</div>						
+					</div>
+
+					<div id="container_pacientes">
+						
+					  	<div class="table-responsive table-content">
+							<table id = "Pacientes_Operario" class = "display" width = "100%"></table>
+					  	</div>
+					</div>						
 		        </div>
 	        </div>
         </div>
