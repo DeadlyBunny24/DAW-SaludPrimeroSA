@@ -20,6 +20,82 @@
 		<link href="stylesheets/bootstrap-datetimepicker.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
+<style>
+/**
+ * Grid-light theme for Highcharts JS
+ * @author Torstein Honsi
+ */
+
+// Load the fonts
+Highcharts.createElement('link', {
+   href: 'https://fonts.googleapis.com/css?family=Dosis:400,600',
+   rel: 'stylesheet',
+   type: 'text/css'
+}, null, document.getElementsByTagName('head')[0]);
+
+Highcharts.theme = {
+   colors: ["#7cb5ec", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+      "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+   chart: {
+      backgroundColor: null,
+      style: {
+         fontFamily: "Dosis, sans-serif"
+      }
+   },
+   title: {
+      style: {
+         fontSize: '16px',
+         fontWeight: 'bold',
+         textTransform: 'uppercase'
+      }
+   },
+   tooltip: {
+      borderWidth: 0,
+      backgroundColor: 'rgba(219,219,216,0.8)',
+      shadow: false
+   },
+   legend: {
+      itemStyle: {
+         fontWeight: 'bold',
+         fontSize: '13px'
+      }
+   },
+   xAxis: {
+      gridLineWidth: 1,
+      labels: {
+         style: {
+            fontSize: '12px'
+         }
+      }
+   },
+   yAxis: {
+      minorTickInterval: 'auto',
+      title: {
+         style: {
+            textTransform: 'uppercase'
+         }
+      },
+      labels: {
+         style: {
+            fontSize: '12px'
+         }
+      }
+   },
+   plotOptions: {
+      candlestick: {
+         lineColor: '#404048'
+      }
+   },
+
+
+   // General
+   background2: '#F0F0EA'
+
+};
+
+// Apply the theme
+Highcharts.setOptions(Highcharts.theme);
+</style>
 	</head>
 	<body>
 
@@ -115,9 +191,11 @@
 							<input type="text" id="fecha2" name="fecha2" value="08/20/2016" class="form-control" />
 																	<input type="submit" value="Buscar"/>
 																</form>
-									              <div id="grafico_enfermedades" class="table-responsive table-content">
+									              <div id="container_grafico_3" class="table-responsive table-content">
 
 									              </div>
+
+                                         <div id="container_grafico_2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 									            </div>
 
 	                        </div>
@@ -504,43 +582,89 @@
 
 
 		<!-- Scripts -->
-		<script src="javascripts/d3.v3.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script src="javascripts/operario_script.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
-		<script src="javascripts/grafico_pastel.js"></script>
-		<script src="javascripts/graphs.js"></script>
-		<script src="javascripts/map.js"></script>
-		<script src="javascripts/grafico_barra.js"></script>
-		<!--
-        <script src="javascripts/bar-emfermedad.js"></script>
-        <script src="javascripts/bar-laboratorio.js"></script>
-        <script src="javascripts/bar-ciudad.js"></script>
-			-->
-		<script type="text/javascript" src="javascripts/bootstrap-datetimepicker.min.js"> </script>
-        <script type="text/javascript" src="javascripts/bootstrap-datetimepicker.pt-BR.js"> </script>
-		<script src="//code.jquery.com/jquery-1.12.3.js"></script>
-		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+
+		   <script src="http://code.highcharts.com/highcharts.js"></script>
+			 <script src="http://code.highcharts.com/modules/exporting.js"></script>
+          <script src="javascripts/map.js"></script>
+			 <script src="javascripts/operario_script.js"></script>
+
+<!--
+
+ optional -->
+<script src="http://code.highcharts.com/modules/offline-exporting.js"></script>
+<script src="javascripts/grafico_barra2.js"></script>
 		<script type="text/javascript">
-           $('#datetimepicker1').datetimepicker({
-        format: 'dd/MM/yyyy',
-        language: 'pt-BR'
+      	$(function () {
+          $('#container_grafico_3').highcharts({
+              chart: {
+                  type: 'column'
+              },
+              title: {
+                  text: 'Monthly Average Rainfall'
+              },
+              subtitle: {
+                  text: 'Source: WorldClimate.com'
+              },
+              xAxis: {
+                  categories: [
+                      'Jan',
+                      'Feb',
+                      'Mar',
+                      'Apr',
+                      'May',
+                      'Jun',
+                      'Jul',
+                      'Aug',
+                      'Sep',
+                      'Oct',
+                      'Nov',
+                      'Dec'
+                  ],
+                  crosshair: true
+              },
+              yAxis: {
+                  min: 0,
+                  title: {
+                      text: 'Rainfall (mm)'
+                  }
+              },
+              tooltip: {
+                  headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                  pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                      '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                  footerFormat: '</table>',
+                  shared: true,
+                  useHTML: true
+              },
+              plotOptions: {
+                  column: {
+                      pointPadding: 0.2,
+                      borderWidth: 0
+                  }
+              },
+              series: [{
+                  name: 'Tokyo',
+                  data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+              }, {
+                  name: 'New York',
+                  data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+              }, {
+                  name: 'London',
+                  data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+              }, {
+                  name: 'Berlin',
+                  data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+              }]
+          });
       });
-      //'dd/MM/yyyy hh:mm:ss',
-      $('#datetimepicker2').datetimepicker({
-        format: 'dd/MM/yyyy',
-        language: 'pt-BR'
-      });
-               $('#datetimepicker3').datetimepicker({
-        format: 'MM/yyyy',
-        language: 'pt-BR'
-      });
-      $('#datetimepicker4').datetimepicker({
-        format: 'MM/yyyy ',
-        language: 'pt-BR'
-      });
-		</script>
+      		</script>
 
 	</body>
 

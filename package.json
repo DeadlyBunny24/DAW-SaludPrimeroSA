@@ -1,5 +1,6 @@
 {
   "name": "saludprimerosa",
+ "config" : { "port" : "8080" },
   "version": "1.0.0",
   "description": "npm install -> Para instalar las dependencias.",
   "main": "app.js",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {},
   "scripts": {
+	"start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
