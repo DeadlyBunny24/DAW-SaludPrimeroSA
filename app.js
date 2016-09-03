@@ -23,7 +23,8 @@ var login = require('./routes/login');
 var home = require('./routes/home');
 var laboratorista = require('./routes/laboratorista');
 var operario = require('./routes/operario');
-var pacienteRoute = require("./routes/modelo.js");
+var modelo = require("./routes/modelo.js");
+
 
 
 var app = express();
@@ -51,7 +52,7 @@ app.use('/', login);
 app.use('/home', home);
 app.use('/laboratorista', laboratorista);
 app.use('/operario', operario);
-app.use('/paciente', pacienteRoute);
+app.use('/modelo', modelo);
 
 
 app.post('/login', function(req, res){

@@ -4,7 +4,7 @@ var mongoose = require("mongoose")
 var pacienteSchema = new Schema({
 	nombre: { type: String, lowercase: true, trim: true },
 	apellido: { type: String, lowercase: true, trim: true },
-	cedula: { type: String, lowercase: true, trim: true },
+	cedula: { type: String, lowercase: true, trim: true, unique: true },
 	correo: { type: String, lowercase: true, trim: true },
 	direccion: { type: String, lowercase: true, trim: true },
 	foto: { type: String, lowercase: true, trim: true },

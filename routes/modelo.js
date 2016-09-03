@@ -44,7 +44,7 @@ router.get("/muestra",function(req,res){
 		if(err){
 			res.send({mensaje:"No existen muestras!"});
 		}else{
-			res.send(docs);
+			res.send(docs)
 		}
 	});	
 });
@@ -146,8 +146,7 @@ router.post("/centro",function(req,res){
 /* Funciones PUT */
 router.put("/paciente/:id",function(req,res){
 	var id_i = req.params["id"];
-	
-	paciente.update({id:id_i},req.body)
+	paciente.update({"cedula":id_i},req.body)
 	.then(function (success) {
       res.json();
     })
@@ -168,9 +167,9 @@ router.put("/muestra/:id",function(req,res){
     });
 });
 
-router.put("/muestra/resultado/:id/:res",function(req,res){
+router.put("/muestra/resultado/:id",function(req,res){
 	var id_i = req.params["id"];
-	var resp  = req.params["resp"];
+	var resp  = req.body.res;
 	muestra.update({_id:id_i},{ $set: { resultado: resp }})
 	.then(function (success) {
       res.json();
@@ -180,9 +179,9 @@ router.put("/muestra/resultado/:id/:res",function(req,res){
     });
 });
 
-router.put("/muestra/notificacion/:id/:not",function(req,res){
+router.put("/muestra/notificacion/:id",function(req,res){
 	var id_i = req.params["id"];
-	var not  = req.params["not"];
+	var not  = req.body.not;
 	muestra.update({_id:id_i},{ $set: { notificacion: not }})
 	.then(function (success) {
       res.json();

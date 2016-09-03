@@ -5,17 +5,11 @@ localhost:3000/home 		-> Pag. de paciente
 localhost:3000/operario 	-> Pag. de operario
 localhost:3000/laboratorista 	-> Pag. de laboratorista
 
-Toda la informacion cargada en la pag. viene de la carpeta:
-public/json. 
+Schemas:
 
-Ya la base de datos esta creada. Estoy utilizando mlab.
+Pacientes
 
-Utilizaremos el schema paciente para almacenar toda la informacion 
-a presentar.
-
-schema pacientes:
-	id: String, 
-	datos_personales: {
+	var pacienteSchema = new Schema({
 		nombre: { type: String, lowercase: true, trim: true },
 		apellido: { type: String, lowercase: true, trim: true },
 		cedula: { type: String, lowercase: true, trim: true },
@@ -23,58 +17,111 @@ schema pacientes:
 		direccion: { type: String, lowercase: true, trim: true },
 		foto: { type: String, lowercase: true, trim: true },
 		contrasena: { type: String, lowercase: true, trim: true },
-		telefono: { type: String, lowercase: true, trim: true }
-	},
-	fichas: [],
-	updated_at: { type: Date, default: Date.now }
+		telefono: { type: String, lowercase: true, trim: true },
+		muestras: [{ type: Schema.Types.ObjectId, ref: 'muestra' }],
+		updated_at: { type: Date, default: Date.now }
+	});
 
-Tienen que asegurarse que el JSON enviado mantenga los nombres de los parametros.
+Muestras
 
-Nota: Los exámenes se almacenan en el campo fichas, y en el requerimiento deben ser 
-enviados como un json con el siguiente formato:
+	var muestraSchema = new Schema({
+		tipo: { type: String, lowercase: true, trim: true },
+		resultado: { type: String, lowercase: true, trim: true },
+		estado: { type: String, lowercase: true, trim: true },
+		lab: { type: String, lowercase: true, trim: true },
+		centro: { type: String, lowercase: true, trim: true },
+		paciente: { type: Schema.Types.ObjectId, ref: 'paciente' },
+		examenes: { type: String, lowercase: true, trim: true },
+		fecha: { type: String, lowercase: true, trim: true },
+		notificacion:{ type: String, lowercase: true, trim: true },
+		cedula:{ type: String, lowercase: true, trim: true },
+		updated_at: { type: Date, default: Date.now }
+	});
 
-Ejemplo del campo fichas de un paciente:
-	fichas: [{
-			centro: " ",
-			examen: [
-							{tipo:" ",nombre:" ",resultado:"",estado:""}
-							],
-			laboratorio: " ",
-			fecha: " ",
-			fid=""
-		} ]
+Laboratorios
 
-Nota: Enviar una ficha por cada examen a realizarse.
+	var labSchema = new mongoose.Schema({
+		nombre: { type: String, lowercase: true, trim: true },
+		muestras:[{ type: Schema.Types.ObjectId, ref: 'muestra' }],
+		updated_at: { type: Date, default: Date.now }
+	});
 
-Lo siguiente lo pueden probar usando "postman", todos retornan JSON.
+Centros
+	
+	var centroSchema = new mongoose.Schema({
+		nombre: { type: String, lowercase: true, trim: true },
+		direccion: { type: String, lowercase: true, trim: true },
+		descripcion: { type: String, lowercase: true, trim: true },
+		horario: { type: String, lowercase: true, trim: true },
+		galeria: { type: String, lowercase: true, trim: true },
+		lat: { type: String, lowercase: true, trim: true },
+		log: { type: String, lowercase: true, trim: true },
+		muestras:[{ type: Schema.Types.ObjectId, ref: 'muestra' }],
+		updated_at: { type: Date, default: Date.now }
+	});
 
-URLS:
+Métodos:
 
-localhost:3000/pacientes 
-	GET:
-		localhost:3000/pacientes returns lista de pacientes		
-		localhost:3000/paciente/:id returns paciente (id)
-	POST:
-		localhost:3000/paciente ingresa un paciente a la base de datos.
-	PUT:
-		localhost:3000/paciente/datospersonales/:id actualiza los datos
-		personales del paciente (id) 
+GET
+
+	/modelo/paciente
+	
+	/modelo/laboratorio
+	
+	/modelo/centro
+	
+	/modelo/muestra
+	
+	/modelo/paciente/:id
+	
+		Retorna info de paciente con cedula = id
+	
+	/modelo/muestra/paciente/:id
+
+		Retorna las muestras del paciente con _id = id
+	
+	/modelo/laboratorio/:id
+
+		Retorna las muestras por laboratorio con _id = id
+	
+POST
+	
+	modelo/paciente
+	
+	modelo/centro
+	
+	modelo/laboratorio
+	
+	modelo/muestra/:id
 		
-		localhost:3000/paciente/fichas/:id ingresa un nuevo examen al
-		paciente (id) 
-			
-			Nota: Este método asocia un "fid" único a la ficha. Cada ficha es un objeto JSON. 
-	
-	
-	DELETE:
-		localhost:3000/paciente/:id elimina paciente(id)
+		Añade una muestra la paciente con cedula = id
 
-Tareas:
+PUT
 
-	1. Datalists para presentar la informacion (con la opcion de buscar)
-	2. Operario: Modificar examenes, eliminar examenes, registrar paciente
-	3. Graficos
-	4. Sesiones (manejo de sesiones, cuentas de usuarios)
-	5. Laboratorista: Notificar, Ingreso de resultados
-	6. Paciente: Modificar datos personales 
- 
+	modelo/paciente/:id
+	
+		Actualiza la info de un paciente con cedula = id
+		
+	modelo/muestra/:id
+
+		Actualiza la info de una muestra con _id = id
+		
+	modelo/muestra/resultado/:id/
+
+		Actualiza el resultado con el valor de req.body.res, de una muestra con _id = id 
+
+	modelo/muestra/notificacion/:id/	
+	
+		Actualiza la notificacion con el valor de req.body.not, de una muestra con _id = id
+
+DELETE
+
+	modelo/paciente/:id
+		
+		Elimina el paciente con cedula = id
+
+	modelo/muestra/:id
+		
+		Elimina la muestra con _id = id
+	
+		
