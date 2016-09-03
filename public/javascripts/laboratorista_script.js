@@ -6,6 +6,8 @@ $( document ).ready(function() {
         init();
     });
 
+	var pos ;
+	var fid;
 function init(){
 		//Laboratorista
 	//	var lab;
@@ -38,6 +40,9 @@ function init(){
 
 		$.getJSON("http://localhost:3000/paciente", function(response)
 	 	{
+			
+			
+			
 
 	 		response.forEach(function(paciente)
 	 		{
@@ -101,6 +106,10 @@ function init(){
 
 	 			};
 	 		});
+			
+			
+			
+			
 	 		console.log(dataSet);
 			$('#Examenes_Laboratorista').DataTable(
 		 	{
@@ -126,14 +135,57 @@ function init(){
 
 
     		} );
+			
+			$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-danger', function () {
+    	    	
+    		} );
+			
     		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
 
     	    	console.log("notificar");
     		} );
-    		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-primary', function () {
-    	    	console.log("Ingresar");
+    		$('#Examenes_Laboratorista tbody .dc').on('click', 'button.btn-primary', function () {
+    	    	var tr = $(this).closest('tr');
+    	    	 pos = $(this).parent().parent().find('td:first-child').text();
+				 fid = $(this).parent().parent().find('td:last-child').text();
+				document.getElementById("examen_ingresar").innerHTML=$(this).parent().parent().find('td:nth-child(6)').text();
+    	    	// $this
+				/*
+    	    	var ced = tds.text();
+
+    	    	$.ajax({
+    				url: 'http://localhost:3000/paciente/examen/"fid//pos + ced,
+    				type: 'DELETE',
+    				success: function(result) {
+    					tr.hide();        				
+   					 }
+				});
+    	    	console.log(ced);
+      	    	console.log(tds);
+    	    	//tr.hide();
+    	    	//console.log("borrar de la base de datos la ficha");
+				*/
     		} );
     		dataSet = [];
 	 	});
 
+		
+		
 }
+/*
+function registrar(){
+	var res = document.getElementById("resultado").value;
+	var ced = tds.text();
+
+	$.ajax({
+		url: 'http://localhost:3000/paciente/examen/"fid//pos + ced,
+		type: 'DELETE',
+		success: function(result) {
+			tr.hide();        				
+		 }
+	});
+	console.log(ced);
+	console.log(tds);
+	//tr.hide();
+	//console.log("borrar de la base de datos la ficha");
+}*/

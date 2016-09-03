@@ -158,8 +158,23 @@ function init(){
 				
 		//Sucursales
 		var suc;
-		$.getJSON("../json/sucursales.JSON",function(response){
-			suc = response;
+		$.getJSON("http://localhost:3000/modelo/centro/",function(response){
+			
+			response.forEach(function(centro){
+				//Sucursal_1
+				$(".dropdown-menu li:first-child a").click(function(){
+					$(".carousel-inner .item:first-child img").attr("src","");
+					$(".carousel-inner .item:nth-child(2) img").attr("src","");
+					$("#datos_sucursal p:first-child span").text(suc.lista[0].direccion);
+					$("#datos_sucursal p:nth-child(2) span").text(suc.lista[0].descripcion);
+					$("#datos_sucursal p:nth-child(3) span").text(suc.lista[0].horario);
+					$(".carousel-inner .item:first-child img").attr("src","images/surcursal_1_1.jpg");
+					$(".carousel-inner .item:nth-child(2) img").attr("src","images/surcursal_1_2.jpg");
+					
+					// Inicialización del API de google maps
+					initMap(-2.148726,-79.9648);
+				});				
+			});
 			//Comportamiento de menú de sucursales
 			$(".carousel-inner .item:first-child img").attr("src","");
 			$(".carousel-inner .item:nth-child(2) img").attr("src","");

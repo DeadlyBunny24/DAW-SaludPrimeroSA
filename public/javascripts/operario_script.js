@@ -59,7 +59,7 @@ function registroMuestra(){
 		/*var datos={
 		fichas: muestra}*/
 		
-	$.ajax({
+	/*$.ajax({
 	type: "PUT",
 	  url: "http://localhost:3000/paciente/fichas/"+cedula,
 	  data: muestra,
@@ -68,7 +68,26 @@ function registroMuestra(){
           if(error.responseText == 'showAlert')
               alert("Paciente no encontrado.")},
 	  contentType: 'application/x-www-form-urlencoded'
-	});
+	});*/
+	
+	var settings = {
+	  "async": true,
+	  "crossDomain": true,
+	  "url": "http://localhost:3000/paciente/fichas/"+cedula,
+	  "method": "PUT",
+	  "headers": {
+		"cache-control": "no-cache",
+		"postman-token": "da45d334-ca95-5796-2719-c96d4e9958e6",
+		"content-type": "application/x-www-form-urlencoded"
+	  },
+	  "data": {
+		"fichas": JSON.stringify(muestra)
+		}
+	}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
 	
 
 		
