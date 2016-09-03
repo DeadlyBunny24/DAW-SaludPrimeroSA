@@ -1,19 +1,35 @@
 {
-  "name": "tareas",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
+  "name": "saludprimerosa",
+  "version": "1.0.0",
+  "description": "npm install -> Para instalar las dependencias.",
+  "main": "app.js",
   "dependencies": {
-    "body-parser": "~1.15.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "ejs": "~2.4.1",
-    "express": "~4.13.4",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.2.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.13.4",
+    "ejs": "^2.4.2",
+    "hashmap": "^2.0.6",
     "express-session": "^1.14.0",
-    "mongoose": "^4.5.8",
-    "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
-  }
+    "morgan": "^1.7.0",
+    "json2csv": "^3.6.3",
+    "nodemailer": "^2.5.0",
+    "mongoose": "^4.5.10",
+    "request": "^2.74.0",
+    "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeadlyBunny24/DAW-SaludPrimeroSA.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeadlyBunny24/DAW-SaludPrimeroSA/issues"
+  },
+  "homepage": "https://github.com/DeadlyBunny24/DAW-SaludPrimeroSA#readme"
 }

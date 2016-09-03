@@ -8,6 +8,7 @@ var session = require('express-session');
 var request = require("request");
 
 var mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
 
 mongoose.connect("mongodb://admin:1234@ds145395.mlab.com:45395/mdb_daw",function(err){
 	if(err){
@@ -22,7 +23,7 @@ var login = require('./routes/login');
 var home = require('./routes/home');
 var laboratorista = require('./routes/laboratorista');
 var operario = require('./routes/operario');
-var pacienteRoute = require("./routes/paciente.js");
+var pacienteRoute = require("./routes/modelo.js");
 
 
 var app = express();
