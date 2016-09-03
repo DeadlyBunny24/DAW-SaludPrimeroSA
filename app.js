@@ -26,6 +26,7 @@ var operario = require('./routes/operario');
 var modelo = require("./routes/modelo.js");
 
 
+
 var app = express();
 
 // view engine setup

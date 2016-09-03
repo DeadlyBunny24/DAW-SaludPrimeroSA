@@ -146,7 +146,6 @@ router.post("/centro",function(req,res){
 /* Funciones PUT */
 router.put("/paciente/:id",function(req,res){
 	var id_i = req.params["id"];
-	
 	paciente.update({"cedula":id_i},req.body)
 	.then(function (success) {
       res.json();
