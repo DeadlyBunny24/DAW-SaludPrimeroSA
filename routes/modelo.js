@@ -49,7 +49,18 @@ router.get("/muestra",function(req,res){
 	});	
 });
 
-router.get("/paciente/id",function(req,res){
+router.get("/muestra/:id",function(req,res){
+	var id = req.params["id"];
+	muestra.find({"_id":id},function(err,docs){
+		if(err){
+			res.send({mensaje:"No existe muestra"});
+		}else{
+			res.send(docs)
+		}
+	});	
+});
+
+router.get("/paciente/:id",function(req,res){
 	var id = req.params["id"];
 	paciente.find({"cedula":id},function(err,docs){
 		if(err){
