@@ -2,10 +2,12 @@
 var i=0;
 var x=0;
 var indice = 1;
-$( document ).ready(function() 
+$( document ).ready(function()
 {
     init();
 });
+
+
 
 var pos ;
 var fid;
@@ -34,13 +36,23 @@ function init(){
 					fila.push(muestra.tipo);
 					fila.push(muestra.examenes);
 					fila.push(muestra.estado);
-					fila.push('<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#notificar"><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'+'&thinsp;'+'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ingresar"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
+					fila.push('<button class="btn btn-warning btn-xs" data-toggle="modal"'+
+					'data-target="#notificar" onclick="agregarNotificacion(\''+muestra._id+'\');" ><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'
+					+'&thinsp;'+'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal"'
+					+' data-target="#ingresar"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
 					fila.push(muestra._id);
 					dataSet.push(fila);
 					fila  = [];
 
 	 		});
-	
+<<<<<<< HEAD
+
+
+
+
+=======
+
+>>>>>>> e7999687f882bbd3dacb1ac03ce8d262bb12afa5
 	 		//console.log(dataSet);
 			$('#Examenes_Laboratorista').DataTable(
 		 	{
@@ -66,9 +78,8 @@ function init(){
 
 
     		} );
-			
-			
-    		$('#Examenes_Laboratorista tbody .dc').on('click', 'button.btn-warning', function () {
+
+    		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
 
     	    	console.log("notificar");
     		} );
@@ -85,7 +96,7 @@ function init(){
     				url: 'http://localhost:3000/paciente/examen/"fid//pos + ced,
     				type: 'DELETE',
     				success: function(result) {
-    					tr.hide();        				
+    					tr.hide();
    					 }
 				});
     	    	console.log(ced);
@@ -97,9 +108,36 @@ function init(){
     		dataSet = [];
 	 	});
 
-		
-		
+
+
 }
+
+
+function agregarNotificacion(id_m) {
+	console.log("===>"+id_m);
+	$("#id_muestra").val(id_m);
+}
+
+
+
+function submitForm1(oFormElement) {
+  var id_m_ = document.forms['agragar_notificacion_form'].elements['id_muestra'].value
+  var nota = document.forms['agragar_notificacion_form'].elements['notificacion_'].value
+  //console.log("--->"+fecha1)
+	muentra_nota={
+		["not"]: ""+nota
+	}
+  $.ajax({
+	type: "PUT",
+	  url: "http://localhost:3000/modelo/muestra/notificacion/"+id_m_+"/",
+	  data: JSON.stringify(muentra_nota),
+	  success: function(){ console.log(muentra_nota);
+	  window.alert("la nota fue enviada");},
+	  contentType: 'application/json'
+	});
+  return false;
+}
+
 /*
 function registrar(){
 	var res = document.getElementById("resultado").value;
@@ -109,7 +147,7 @@ function registrar(){
 		url: 'http://localhost:3000/paciente/examen/"fid//pos + ced,
 		type: 'DELETE',
 		success: function(result) {
-			tr.hide();        				
+			tr.hide();
 		 }
 	});
 	console.log(ced);
