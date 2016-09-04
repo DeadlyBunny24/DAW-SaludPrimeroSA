@@ -17,7 +17,7 @@ var datos = function (fecha1, fecha2) {
   let muestraObj={
 
   }
-  $.getJSON("http://localhost:3000/paciente/muestra", function(response){
+  $.getJSON("http://localhost:3000/modelo/muestra", function(response){
 
     response.forEach(function(ficha){
         var dateCheck = ficha.fecha;
@@ -28,21 +28,64 @@ var datos = function (fecha1, fecha2) {
             map.put(ficha.lab, {laboratotio:ficha.lab,cantidad:[]});
             for(let cont= fecha1; cont<=fecha2; cont++){
                 (map.get(ficha.lab)).cantidad.push({mes:meseAnio(cont), cant:0});
+
+                  categorias.push(meseAnio(cont));
             }
           }
           (map.get(ficha.lab)).cantidad.forEach(function(mes_) {
-            if ((mes_.mes).localeCompare(meseAnio(cont))==0){
-              mes_.cant = mes_.cant;
+            if ((mes_.mes).localeCompare(meseAnio(mesCheck))==0){
+              mes_.cant = mes_.cant+1;
             }
           });
         }
     });
 
+    var series_ = []
     for(var i = 0; i++ < map.size; map.next()) {
-
-
-     console.log((map.value()).laboratotio);
+      let lista = [];
+      (map.value()).cantidad.forEach(function(mes_) {
+        lista.push(mes_.cant);
+      });
+      series_.push({name:(map.value()).laboratotio,data:lista});
+      console.log((map.value()).laboratotio);
     }
+
+    $('#container_grafico_3').highcharts({
+           chart: {
+               type: 'column'
+           },
+           title: {
+               text: 'Monthly Average Rainfall'
+           },
+           subtitle: {
+               text: 'Source: WorldClimate.com'
+           },
+           xAxis: {
+               categories: categorias,
+               crosshair: true
+           },
+           yAxis: {
+               min: 0,
+               title: {
+                   text: 'Rainfall (mm)'
+               }
+           },
+           tooltip: {
+               headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+               pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                   '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+               footerFormat: '</table>',
+               shared: true,
+               useHTML: true
+           },
+           plotOptions: {
+               column: {
+                   pointPadding: 0.2,
+                   borderWidth: 0
+               }
+           },
+           series: series_
+       });
 
   });
 }
