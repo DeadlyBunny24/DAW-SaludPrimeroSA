@@ -40,7 +40,7 @@ var datos = function (fecha1, fecha2) {
         }
     });
 
-    var series_ = []
+    var series_ = [];
     for(var i = 0; i++ < map.size; map.next()) {
       let lista = [];
       (map.value()).cantidad.forEach(function(mes_) {
@@ -90,6 +90,58 @@ var datos = function (fecha1, fecha2) {
   });
 }
 
+var initGraph= function() {
+  var map = new Map;
+  $.getJSON("http://localhost:3000/modelo/muestra", function(response){
+
+    response.forEach(function(ficha){
+      if (map.get(ficha.lab) === undefined || map.get(ficha.lab) ==null || map.get(ficha.lab)===null){
+        map.put(ficha.lab, {laboratotio:ficha.lab,cantidad:0});
+      }
+      (map.get(ficha.lab)).cantidad = (map.get(ficha.lab)).cantidad +1;
+    });
+    var series_ = [];
+    for(var i = 0; i++ < map.size; map.next()) {
+        series_.push({name:(map.value()).laboratotio+": "+(map.value()).cantidad+" muestras",y:(map.value()).cantidad});
+    }
+
+    $('#container_grafico_1').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'Browser market shares at a specific website, 2014'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: series_
+
+        }]
+    });
+
+  });
+}
+
 var meseAnio = function (mes) {
   var cad="";
   switch(mes) {
@@ -135,5 +187,5 @@ var meseAnio = function (mes) {
       return cad;
 }
 
-
+initGraph();
 datos(1,12);
