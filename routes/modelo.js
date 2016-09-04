@@ -71,16 +71,6 @@ router.get("/paciente/:id",function(req,res){
 	});	
 });
 
-router.get("/muestra/paciente/:id",function(req,res){
-	var id = req.params["id"];
-	muestra.find({"paciente":id},function(err,docs){
-		if(err){
-			res.send({mensaje:"No existen muestras!"});
-		}else{
-			res.send(docs);
-		}
-	});	
-});
 
 router.get("/muestra/laboratorio/:id",function(req,res){
 	var id = req.params["id"];
@@ -174,7 +164,7 @@ router.put("/muestra/:id",function(req,res){
       res.json();
     })
     .catch(function (error) {
-        //error.send({mensaje:"Error en el ingreso!"});
+        error.send({mensaje:"Error en el ingreso!"});
     });
 });
 
@@ -184,6 +174,18 @@ router.put("/muestra/resultado/:id",function(req,res){
 	muestra.update({_id:id_i},{ $set: { resultado: resp }})
 	.then(function (success) {
       res.json();
+    })
+    .catch(function (error) {
+        //error.send({mensaje:"Error en el ingreso!"});
+    });
+});
+
+router.put("/muestra/paciente/:id",function(req,res){
+	var id_i = req.params["id"];
+	var resp  = req.body.paciente;
+	muestra.update({_id:id_i},{ $set: { paciente: resp }})
+	.then(function (success) {
+      //res.json(resp);
     })
     .catch(function (error) {
         //error.send({mensaje:"Error en el ingreso!"});
