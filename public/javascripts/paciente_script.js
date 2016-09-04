@@ -26,10 +26,7 @@ function init(){
 	//		});	
 	//	});
 		var muestras = new Array;
-		var filaS = [];
-		var filaO = [];
-		var filaH = [];
-		var filap = [];
+		var fila = [];
 		var flag = 0;
 		var user = $("#cedula").text();
 
@@ -39,97 +36,27 @@ function init(){
 
 
 		
-	 	$.getJSON("http://localhost:3000/paciente/" + user, function(response)
+	 	$.getJSON("http://localhost:3000/modelo/muestra/paciente/" + user, function(response)
 	 	{
 	 		
-			response.forEach(function(paciente)
+			response.forEach(function(muestra)
 	 		{	
 
-	 			$("#nombre_i").val(paciente.datos_personales.nombre);
-				$("#apellido_i").val(paciente.datos_personales.apellido);
-				$("#correo_i").val(paciente.datos_personales.correo);
-				$("#cedula_i").val(paciente.datos_personales.cedula);
-				$("#direccion_i").val(paciente.datos_personales.direccion);
-				$("#telefono_i").val(paciente.datos_personales.telefono);
-				$("#imagen_i").attr("src",paciente.datos_personales.foto);
+	 			fila.push(muestra.fecha);
+	 			fila.push(muestra.centro);
+	 			fila.push(muestra.laboratorio);
+	 			fila.push(muestra.tipo);
+	 			fila.push(muestra.examen);
+	 			fila.push(muestra.estado);
+	 			fila.push('<a href = "#" >pdf</> ');
 
-	 			//filap = [];
+	 			muestras.push(fila);
 
-	 			paciente.fichas.forEach(function(ficha)
-	 			{
-	 				filaS.push(ficha.fecha);
-	 				filaS.push(ficha.centro);
-	 				filaS.push(ficha.laboratorio);
-	 				filaS.push("");
-	 				filaS.push("");
-	 				filaS.push("");
-	 				filaS.push("");
-	 				flag = 0;
+	 			fila = [];
 
-	 				ficha.examen.forEach(function(examen)
-	 				{
-	 					
-	 					if (examen.tipo == "sangre")
-	 					{
-	 						filaS[3]=examen.tipo;
-	 						filaS[4]= filaS[4].concat(examen.nombre, ", ");
-	 						filaS[5] = examen.estado;
-	 						if (examen.estado == "listo")
-	 						{
-	 							filaS[6] ='<a href = "#" >pdf</> ';
-	 						}
-	 						flag =1;
-	 					}
-	 					else if (examen.tipo == "orina")
-	 					{
-	 						filaO.push(ficha.fecha);
-	 						filaO.push(ficha.centro);
-	 						filaO.push(ficha.laboratorio);
-	 						filaO.push(examen.tipo);
-	 						filaO.push(examen.nombre);
-	 						filaO.push(examen.estado);
-	 						if (examen.estado == "listo")
-	 						{
-	 							filaO.push('<a href = "#" >pdf</> ');
-	 						}
-	 						else
-	 						{
-	 							filaO.push("");
-	 						}
-	 						muestras.push(filaO);
-	 						filaO = [];
-	 					}
-	 					else if (examen.tipo == "heces")
-	 					{
-	 						filaH.push(ficha.fecha);
-	 						filaH.push(ficha.centro);
-	 						filaH.push(ficha.laboratorio);
-	 						filaH.push(examen.tipo);
-	 						filaH.push(examen.nombre);
-	 						filaH.push(examen.estado);
-	 						if (examen.estado == "listo")
-	 						{
-	 							filaH.push('<a href = "#" >pdf</> ');
-	 						}
-	 						else
-	 						{
-	 							filaH.push("");
-	 						}
-	 						muestras.push(filaH);
-	 						filaH = [];
-	 					};
-
-	 				});
-	 				if (flag==1)
-	 				{
-	 					muestras.push(filaS);
-	 				}
-
-	 				filaS = [];
-	 				
-
-	 			});
 	 		});
+
+
 	 		console.log(muestras);
 	 		$('#Examenes_Paciente').DataTable( 
 		 	{
@@ -148,11 +75,18 @@ function init(){
 
 	 	});
 
+	 	$.getJSON("http://localhost:3000/modelo/paciente/" + user, function(response)
+	 	{
+	 		paciente = response[0];
 
-	 
-
-
-
+	 		$("#nombre_i").val(paciente.nombre);
+			$("#apellido_i").val(paciente.apellido);
+			$("#correo_i").val(paciente.correo);
+			$("#cedula_i").val(paciente.cedula);
+			$("#direccion_i").val(paciente.direccion);
+			$("#telefono_i").val(paciente.telefono);
+			$("#imagen_i").attr("src",paciente.foto);
+	 	}
 	 	
 
 				

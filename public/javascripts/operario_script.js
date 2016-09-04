@@ -136,11 +136,128 @@ function registroPaciente(){
 }
 
 function init(){
+	var fila = [];
+	var fila2 = [];
+
+	var dataSet1 = new Array;
+	var dataSet2 = new Array;
+
+	$.getJSON("http://localhost:3000/modelo/muestra", function(response)
+	{
+		response.forEach(function(muestra)
+		{
+			
+			//console.log(muestra);
+			
+			fila.push(muestra.cedula);
+			fila.push(muestra.fecha);
+			fila.push(muestra.centro);
+			fila.push(muestra.lab);
+			fila.push(muestra.tipo);
+			fila.push(muestra.examenes);
+			fila.push(muestra.estado);
+			fila.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs " data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
+			fila.push(muestra._id);
+			dataSet1.push(fila);
+			fila  = [];
+		});
+				//console.log(dataSet);
+		$('#Examenes_Operario').DataTable(
+		{
+        	data: dataSet1,
+        	columns:
+        	[
+				{title: "Paciente"},
+        		{title: "Fecha"},
+        	    { title: "Centro" },
+        	    { title: "Laboratorio" },
+        	    { title: "Tipo" },
+        	    { title: "Exámenes" },
+        	    { title : "Estado"},
+        	    { title: "Acciones",
+        	    "className":  'dc'
+        		},
+        	    {
+        	    	title: "Id",
+        	    	"visible": false,
+               		"searchable": false
+        	    }
+        	]
+    	});
+
+		// EVENTOS Muestras
+		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () 
+		{
+				console.log("Modificar muestra");
+    	} );
+    	$('#Examenes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
+		{
+				console.log("ELiminar Muestra");
+    	} );
+
+	});
+		
+	$.getJSON("http://localhost:3000/modelo/paciente", function(response)
+	{
+		
+		response.forEach(function(paciente)
+		{
+			fila2.push(paciente.cedula);
+			fila2.push(paciente.nombre);
+			fila2.push(paciente.apellido);
+			fila2.push(paciente.correo);
+			fila2.push(paciente.direccion);
+			fila2.push(paciente.telefono);
+			fila2.push('<button class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editar"></i> Editar</button>'+'&thinsp;'+'<button type="button" class="btn btn-danger btn-xs " data-toggle="modal" data-target="#eliminar"><i class="glyphicon glyphicon-trash"></i> Borrar</button>');
+			dataSet2.push(fila2);
+			fila2 = [];
+		});
+
+
+
+
+		$('#Pacientes_Operario').DataTable(
+		{
+        	data: dataSet2,
+        	columns:
+        	[
+				{title: "Cédula"},
+        		{title: "Nombre"},
+        	    { title: "Apellido" },
+        	    { title: "Correo" },
+        	    { title: "Dirección" },
+        	    { title: "Teléfono" },
+           	    { title: "Acciones",
+        	    "className":  'dc'
+        		}
+        	]
+    	});
+
+    	$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-warning', function () 
+		{
+				console.log("Modificar Paciente");
+    	} );
+    	$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
+		{
+				console.log("ELiminar Paciente");
+    	} );
+
+	});	
+
+
+
+
+
+
+
+
 	//Inicialización
 	$("#container_sucursales").hide();
 	$("#container_datos").hide();
 	$("#container_pacientes").hide();
 	$("#botonRegistro").hide();
+
+
 
 
 	//Comportamiento del menú principal

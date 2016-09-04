@@ -19,7 +19,6 @@ function init(){
 
 
 		var dataSet = new Array;
-		var flag = 0;
 
 		$.getJSON("http://localhost:3000/modelo/muestra", function(response)
 	 	{
@@ -46,10 +45,14 @@ function init(){
 					fila  = [];
 
 	 		});
+<<<<<<< HEAD
 
 
 
 
+=======
+
+>>>>>>> e7999687f882bbd3dacb1ac03ce8d262bb12afa5
 	 		//console.log(dataSet);
 			$('#Examenes_Laboratorista').DataTable(
 		 	{
@@ -75,7 +78,6 @@ function init(){
 
 
     		} );
-
 
     		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
 
