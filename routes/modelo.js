@@ -83,6 +83,17 @@ router.get("/muestra/laboratorio/:id",function(req,res){
 	});	
 });
 
+router.get("/muestra/paciente/:id",function(req,res){
+	var id = req.params["id"];
+	muestra.find({"cedula":id},function(err,docs){
+		if(err){
+			res.send({mensaje:"No existen muestras!"});
+		}else{
+			res.send(docs);
+		}
+	});	
+});
+
 /* Funciones POST */
 router.post("/paciente",function(req,res){
 	var nuevoPaciente = new paciente(req.body);

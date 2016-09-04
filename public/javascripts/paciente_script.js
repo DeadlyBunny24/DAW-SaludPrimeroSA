@@ -38,7 +38,7 @@ function init(){
 		
 	 	$.getJSON("http://localhost:3000/modelo/muestra/paciente/" + user, function(response)
 	 	{
-	 		
+	 		console.log(response);
 			response.forEach(function(muestra)
 	 		{	
 
@@ -86,67 +86,35 @@ function init(){
 			$("#direccion_i").val(paciente.direccion);
 			$("#telefono_i").val(paciente.telefono);
 			$("#imagen_i").attr("src",paciente.foto);
-	 	}
+	 	});
 	 	
 
 				
 		//Sucursales
 		var suc;
+		var opt;
+		var opt2;
 		$.getJSON("http://localhost:3000/modelo/centro/",function(response){
 			
 			response.forEach(function(centro){
-				//Sucursal_1
-				$(".dropdown-menu li:first-child a").click(function(){
-					$(".carousel-inner .item:first-child img").attr("src","");
-					$(".carousel-inner .item:nth-child(2) img").attr("src","");
-					$("#datos_sucursal p:first-child span").text(suc.lista[0].direccion);
-					$("#datos_sucursal p:nth-child(2) span").text(suc.lista[0].descripcion);
-					$("#datos_sucursal p:nth-child(3) span").text(suc.lista[0].horario);
+				$("#centrosm").append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#">' + centro.nombre +'</a></li>');
+				console.log(centro.nombre); 
+
+				$(".dropdown-menu li:last-child a").click(function(){
+					$("#datos_sucursal p:first-child span").text(centro.direccion);
+					$("#datos_sucursal p:nth-child(2) span").text(centro.descripcion);
+					$("#datos_sucursal p:nth-child(3) span").text(centro.horario);
 					$(".carousel-inner .item:first-child img").attr("src","images/surcursal_1_1.jpg");
 					$(".carousel-inner .item:nth-child(2) img").attr("src","images/surcursal_1_2.jpg");
 					
 					// Inicialización del API de google maps
-					initMap(-2.148726,-79.9648);
+					initMap(""+centro.lat, "" + centro.log);
 				});				
 			});
 			//Comportamiento de menú de sucursales
-			$(".carousel-inner .item:first-child img").attr("src","");
-			$(".carousel-inner .item:nth-child(2) img").attr("src","");
-			$("#datos_sucursal p:first-child span").text(suc.lista[0].direccion);
-			$("#datos_sucursal p:nth-child(2) span").text(suc.lista[0].descripcion);
-			$("#datos_sucursal p:nth-child(3) span").text(suc.lista[0].horario);
-			$(".carousel-inner .item:first-child img").attr("src","images/surcursal_1_1.jpg");
-			$(".carousel-inner .item:nth-child(2) img").attr("src","images/surcursal_1_2.jpg");
+	
 			
-			// Inicialización del API de google maps
-			initMap(-2.148726,-79.9648);	
-			//Sucursal_1
-			$(".dropdown-menu li:first-child a").click(function(){
-				$(".carousel-inner .item:first-child img").attr("src","");
-				$(".carousel-inner .item:nth-child(2) img").attr("src","");
-				$("#datos_sucursal p:first-child span").text(suc.lista[0].direccion);
-				$("#datos_sucursal p:nth-child(2) span").text(suc.lista[0].descripcion);
-				$("#datos_sucursal p:nth-child(3) span").text(suc.lista[0].horario);
-				$(".carousel-inner .item:first-child img").attr("src","images/surcursal_1_1.jpg");
-				$(".carousel-inner .item:nth-child(2) img").attr("src","images/surcursal_1_2.jpg");
-				
-				// Inicialización del API de google maps
-				initMap(-2.148726,-79.9648);
-			});
-			
-			//Sucursal_2
-			$(".dropdown-menu li:nth-child(2) a").click(function(){
-				$(".carousel-inner .item:first-child img").attr("src","");
-				$(".carousel-inner .item:nth-child(2) img").attr("src","");
-				$("#datos_sucursal p:first-child span").text(suc.lista[1].direccion);
-				$("#datos_sucursal p:nth-child(2) span").text(suc.lista[1].descripcion);
-				$("#datos_sucursal p:nth-child(3) span").text(suc.lista[1].horario);
-				$(".carousel-inner .item:first-child img").attr("src","images/surcursal_2_1.jpg");
-				$(".carousel-inner .item:nth-child(2) img").attr("src","images/surcursal_2_2.jpg");
-				
-				// Inicialización del API de google maps
-				initMap(-2.145274,-79.948906);
-			});
+
 		});
 	
 		//Datos usuario
@@ -243,14 +211,15 @@ function init(){
 	
 function initMap(lat_p,lng_p) {
 	var mapDiv = document.getElementById('map');
-	var myLatLng = {lat: lat_p, lng: lng_p};
-						
-						
+	var myLatLng = {lat: parseInt(lat_p), lng: parseInt(lng_p)};
+	
+	$("#map").empty();
+
 	var map = new google.maps.Map(mapDiv, {
 		center: myLatLng,
-		zoom: 15
+		zoom: 13
 	});
-						
+				
 	var marker = new google.maps.Marker({
 		position: myLatLng,
 		map: map,
