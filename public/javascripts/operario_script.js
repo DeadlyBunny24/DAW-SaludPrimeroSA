@@ -60,21 +60,25 @@ function registroMuestra(){
 		fichas: muestra}*/
 
 	/*$.ajax({
-	type: "PUT",
-	  url: "http://localhost:3000/paciente/fichas/"+cedula,
-	  data: muestra,
+	type: "POST",
+	  url: "http://localhost:3000/modelo/muestra/"+cedula,
+	  data: JSON.stringify(muestra),
 	  success: function(){ alert("Muestra registrada satisfactoriamente.");},
 	  error: function(error){
           if(error.responseText == 'showAlert')
               alert("Paciente no encontrado.")},
 	  contentType: 'application/x-www-form-urlencoded'
 	});*/
-
+ 
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "http://localhost:3000/paciente/fichas/"+cedula,
-	  "method": "PUT",
+	  "url": "http://localhost:3000/modelo/muestra/"+cedula,
+	  "method": "POST",
+	  "success": "function(){ alert("Muestra registrada satisfactoriamente.");}",
+	  "error": "function(error){
+          if(error.responseText == 'showAlert')
+              alert("Paciente no encontrado.")}",
 	  "headers": {
 		"cache-control": "no-cache",
 		"postman-token": "da45d334-ca95-5796-2719-c96d4e9958e6",
@@ -117,7 +121,7 @@ function registroPaciente(){
 		//console.log(paciente);
 	$.ajax({
 	type: "POST",
-	  url: "http://localhost:3000/paciente/",
+	  url: "http://localhost:3000/modelo/paciente",
 	  data: JSON.stringify(paciente),
 	  success: function(){ console.log(paciente);
 	  window.alert("El paciente fue registrado exitosamente.");},
