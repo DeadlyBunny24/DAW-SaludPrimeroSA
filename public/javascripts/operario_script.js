@@ -35,42 +35,44 @@ function registroMuestra(){
 	muestra={
 	fecha: "a",
 	centro: "a",
-	laboratorio: "a",
-	examen: []
+	lab: "a",
+	examenes: "a",
+	tipo: "a",
+	estado: "a",
+	cedula:"a"
 	}
 	muestra.fecha= today;
 	muestra.centro= $("#centro").val();
-	muestra.laboratorio= $("#lab").val();
+	muestra.lab= $("#lab").val();
+	muestra.cedula= cedula;
+	muestra.estado= "enviado";
+	
+	
 	$('input[name="rMuestra"]:checked').each(function() {
-		var examenes;
-		examenes={
-	tipo: "a",
-	nombre: "a",
-	estado: "a",
-	resultado: "a"
-	}
-		examenes.tipo= this.getAttribute("class");
-		examenes.nombre= this.value;
-		examenes.resultado="";
-		examenes.estado= "enviado";
-		muestra.examen.push(examenes);
+		var examen;
+		//examen= this.value;
+		muestra.examenes= this.value;
+		muestra.tipo= this.getAttribute("class");
+		//muestra.resultado="";
+	   // muestra.examenes.push(examen);
 		});
+		
 		console.log(muestra);
 		/*var datos={
 		fichas: muestra}*/
 
-	/*$.ajax({
+	$.ajax({
 	type: "POST",
 	  url: "http://localhost:3000/modelo/muestra/"+cedula,
-	  data: JSON.stringify(muestra),
+	  data: muestra,
 	  success: function(){ alert("Muestra registrada satisfactoriamente.");},
 	  error: function(error){
           if(error.responseText == 'showAlert')
               alert("Paciente no encontrado.")},
 	  contentType: 'application/x-www-form-urlencoded'
-	});*/
+	});
  
-	var settings = {
+	/*var settings = {
 	  "async": true,
 	  "crossDomain": true,
 	  "url": "http://localhost:3000/modelo/muestra/"+cedula,
@@ -92,7 +94,7 @@ function registroMuestra(){
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-
+*/
 
 
 }
@@ -101,41 +103,48 @@ var paciente, datosMail;
 function registroPaciente(){
 
 	paciente={
-	["datos_personales.nombre"]: "a",
-	["datos_personales.apellido"]: "a",
-	["datos_personales.cedula"]: "a",
-	["datos_personales.correo"]: "a",
-	["datos_personales.contrasena"]: "a"
+	nombre: "a",
+	apellido: "a",
+	cedula: "a",
+	correo: "a",
+	contrasena: "a"
 	}
 	datosMail={
 	 correo: "a",
-	 contrasena: "a"
+	 contrasena: "a",
+	 nombre: "a"
 	}
-	paciente["datos_personales.nombre"]= $("#nombres").val();
-	paciente["datos_personales.apellido"]= $("#apellidos").val();
-	paciente["datos_personales.cedula"]= $("#cedula").val();
-	paciente["datos_personales.correo"]= $("#correo").val();
-	paciente["datos_personales.contrasena"]= Math.random().toString(36).slice(-8);
+	paciente.nombre= $("#nombres").val();
+	paciente.apellido= $("#apellidos").val();
+	paciente.cedula= $("#cedula").val();
+	paciente.correo= $("#correo").val();
+	paciente.contrasena= Math.random().toString(36).slice(-8);
 	datosMail.correo=$("#correo").val();
-	datosMail.contrasena=paciente["datos_personales.contrasena"];
+	datosMail.contrasena=paciente.contrasena;
+	datosMail.nombre= paciente.nombre+" "+ paciente.apellido;
 		//console.log(paciente);
 	$.ajax({
 	type: "POST",
 	  url: "http://localhost:3000/modelo/paciente",
 	  data: JSON.stringify(paciente),
-	  success: function(){ console.log(paciente);
-	  window.alert("El paciente fue registrado exitosamente.");},
-	  contentType: 'application/json'
-	});
-
-	$.ajax({
+	  success: function(){ 
+	  console.log(paciente);
+	  window.alert("El paciente fue registrado exitosamente.");
+	  $.ajax({
 	type: "POST",
-	  url: "http://localhost:3000/paciente/email",
+	  url: "http://localhost:3000/modelo/email",
 	  data: JSON.stringify(datosMail),
 	  success: function(){ console.log(datosMail);
 	  window.alert("El mail fue enviado exitosamente.");},
 	  contentType: 'application/json'
 	});
+	},error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Error registrando Paciente.")},
+	  contentType: 'application/json'
+	});
+     
+	
 
 }
 
