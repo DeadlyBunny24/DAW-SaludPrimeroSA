@@ -45,14 +45,6 @@ function init(){
 					fila  = [];
 
 	 		});
-<<<<<<< HEAD
-
-
-
-
-=======
-
->>>>>>> e7999687f882bbd3dacb1ac03ce8d262bb12afa5
 	 		//console.log(dataSet);
 			$('#Examenes_Laboratorista').DataTable(
 		 	{
