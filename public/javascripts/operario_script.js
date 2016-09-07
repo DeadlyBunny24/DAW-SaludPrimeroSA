@@ -15,6 +15,40 @@ function dropdownLab(val) {
   $("#lab").attr("value",val.replace(/\n|<.*?>/g,''));
   var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
 }
+
+function dropdownTipo(val) {
+  var y = $("#tipoDrop");
+  var str= val.replace(/\n|<.*?>/g,'');
+  str= str.replace('Muestra de ','');
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
+  $("#tipo").attr("value",str);
+  
+  
+  if ($("#tipo").val()== "Sangre"){
+		$("#exOrina").hide();
+		$("#exHeces").hide();
+		$("#exSangre").show();
+		$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+		
+  } else if ($("#tipo").val()== "Orina"){
+		$("#exSangre").hide();
+		$("#exHeces").hide();
+		$("#exOrina").show();
+		$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+  } else if ($("#tipo").val()== "Heces"){
+		$("#exOrina").hide();
+		$("#exSangre").hide();
+		$("#exHeces").show();
+		$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+  }
+}
+
 var muestra;
 function registroMuestra(){
 
@@ -36,7 +70,7 @@ function registroMuestra(){
 	fecha: "a",
 	centro: "a",
 	lab: "a",
-	examenes: "a",
+	examenes: "",
 	tipo: "a",
 	estado: "a",
 	cedula:"a"
@@ -46,21 +80,16 @@ function registroMuestra(){
 	muestra.lab= $("#lab").val();
 	muestra.cedula= cedula;
 	muestra.estado= "enviado";
+	muestra.tipo= $("#tipo").val();
 	
-	
-	$('input[name="rMuestra"]:checked').each(function() {
-		var examen;
-		//examen= this.value;
-		muestra.examenes= this.value;
-		muestra.tipo= this.getAttribute("class");
-		//muestra.resultado="";
-	   // muestra.examenes.push(examen);
+	$('input[name="rMuestra"]:checked').each(function() {	
+		muestra.examenes= muestra.examenes + this.value + ", ";
+		
 		});
 		
+		muestra.examenes= muestra.examenes.slice(0, -2);
 		console.log(muestra);
-		/*var datos={
-		fichas: muestra}*/
-
+	
 	$.ajax({
 	type: "POST",
 	  url: "http://localhost:3000/modelo/muestra/"+cedula,
@@ -71,30 +100,6 @@ function registroMuestra(){
               alert("Paciente no encontrado.")},
 	  contentType: 'application/x-www-form-urlencoded'
 	});
- 
-	/*var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": "http://localhost:3000/modelo/muestra/"+cedula,
-	  "method": "POST",
-	  "success": "function(){ alert("Muestra registrada satisfactoriamente.");}",
-	  "error": "function(error){
-          if(error.responseText == 'showAlert')
-              alert("Paciente no encontrado.")}",
-	  "headers": {
-		"cache-control": "no-cache",
-		"postman-token": "da45d334-ca95-5796-2719-c96d4e9958e6",
-		"content-type": "application/x-www-form-urlencoded"
-	  },
-	  "data": {
-		"fichas": JSON.stringify(muestra)
-		}
-	}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-*/
 
 
 }
@@ -269,6 +274,9 @@ function init(){
 	$("#container_datos").hide();
 	$("#container_pacientes").hide();
 	$("#botonRegistro").hide();
+	$("#exOrina").hide();
+	$("#exHeces").hide();
+	$("#exSangre").hide();
 
 
 
@@ -281,12 +289,13 @@ function init(){
 		$("#container_examenes").hide();
 		$("#container_datos").hide();
 		$("#botonRegistro").hide();
+		$("#botonRegistroMuestra").hide();
 		$("#container_pacientes").hide();
 		$("#container_sucursales").show();
 	});
 
 	$(".menu li:nth-child(1) a").click(function(){
-		$(".breadcrumb li h2").text("Examenes");
+		$(".breadcrumb li h2").text("Exámenes");
 		$(".menu li:nth-child(1)").siblings("li").removeClass("active");
 		$(".menu li:nth-child(1)").addClass("active");
 		$("#container_sucursales").hide();
@@ -294,26 +303,18 @@ function init(){
 		$("#container_pacientes").hide();
 		$("#botonRegistro").hide();
 		$("#container_examenes").show();
+		$("#botonRegistroMuestra").show();
+		
 	});
 
 	$(".menu li:nth-child(3) a").click(function(){
-		$(".breadcrumb li h2").text("Información de registro");
+		$(".breadcrumb li h2").text("Pacientes");
 		$(".menu li:nth-child(3)").siblings("li").removeClass("active");
 		$(".menu li:nth-child(3)").addClass("active");
 		$("#container_sucursales").hide();
 		$("#container_examenes").hide();
-		$("#botonRegistro").hide();
-		$("#container_pacientes").hide();
-		$("#container_datos").show();
-	});
-
-	$(".menu li:nth-child(4) a").click(function(){
-		$(".breadcrumb li h2").text("Pacientes");
-		$(".menu li:nth-child(4)").siblings("li").removeClass("active");
-		$(".menu li:nth-child(4)").addClass("active");
-		$("#container_sucursales").hide();
-		$("#container_examenes").hide();
 		$("#container_datos").hide();
+		$("#botonRegistroMuestra").hide();
 		$("#container_pacientes").show();
 		$("#botonRegistro").show();
 
