@@ -44,9 +44,9 @@ function init(){
 
 	 			fila.push(muestra.fecha);
 	 			fila.push(muestra.centro);
-	 			fila.push(muestra.laboratorio);
+	 			fila.push(muestra.lab);
 	 			fila.push(muestra.tipo);
-	 			fila.push(muestra.examen);
+	 			fila.push(muestra.examenes);
 	 			fila.push(muestra.estado);
 	 			fila.push('<a href = "#" >pdf</> ');
 
@@ -65,9 +65,9 @@ function init(){
     	    	[
     	    	    { title: "Fecha" },
     	    	    { title: "Centro"},
-    	    	    { title: "laboratorio"},
+    	    	    { title: "Laboratorio"},
     	    	    { title: "Tipo" },
-    	    	    { title: "Exámen" },
+    	    	    { title: "Ex&aacutemen" },
     	    	    { title: "Estado" },
     	    	    { title: "Resultado" }
     	    	]
@@ -94,6 +94,8 @@ function init(){
 		var suc;
 		var opt;
 		var opt2;
+		var fotos;
+		var i = 0;
 		$.getJSON("http://localhost:3000/modelo/centro/",function(response){
 			
 			response.forEach(function(centro){
@@ -104,8 +106,22 @@ function init(){
 					$("#datos_sucursal p:first-child span").text(centro.direccion);
 					$("#datos_sucursal p:nth-child(2) span").text(centro.descripcion);
 					$("#datos_sucursal p:nth-child(3) span").text(centro.horario);
-					$(".carousel-inner .item:first-child img").attr("src","images/surcursal_1_1.jpg");
-					$(".carousel-inner .item:nth-child(2) img").attr("src","images/surcursal_1_2.jpg");
+					fotos = centro.galeria.split(',');
+					i = 0;
+					$(".carousel-inner").empty();
+					fotos.forEach(function(foto)
+					{
+						console.log(foto);
+						if (i==0)
+						{
+							$(".carousel-inner").append('<div class="item active"><img src="'+ foto +'" alt="portada_1"></div>');
+						}
+						else
+						{
+							$(".carousel-inner").append('<div class="item"><img src="'+ foto +'" alt="portada_1"></div>');
+						}
+						i=i+1;
+					})
 					
 					// Inicialización del API de google maps
 					initMap(""+centro.lat, "" + centro.log);
