@@ -210,7 +210,7 @@ function init(){
     	} );
     	$('#Examenes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
 		{
-				console.log("ELiminar Muestra");
+				console.log("Eliminar Muestra");
     	} );
 
 	});
@@ -277,7 +277,25 @@ function init(){
 	$("#exOrina").hide();
 	$("#exHeces").hide();
 	$("#exSangre").hide();
-
+	$('#myModalPaciente').on('hidden.bs.modal', function () {//resetea el modal de ingreso del paciente cada vez que se cierre
+    $(this).find("input,textarea,select").val('').end();
+	});
+	
+	$('#myModalMuestra').on('hidden.bs.modal', function () {//resetea el modal de ingreso de muestra cada vez que se cierre
+    var x = $("#centroDrop");
+	var y = $("#labDrop");
+	var z = $("#tipoDrop");
+	$(this).find("input,textarea,select").val('').end();
+	var aNode = x[0].innerHTML = 'Seleccione un Centro <span class="caret"></span>';
+	var bNode = y[0].innerHTML = 'Seleccione un Laboratorio <span class="caret"></span>';
+	var cNode = z[0].innerHTML = 'Seleccione un tipo de Muestra <span class="caret"></span>';
+	$("#exOrina").hide();
+	$("#exHeces").hide();
+	$("#exSangre").hide();
+	$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+	});
 
 
 

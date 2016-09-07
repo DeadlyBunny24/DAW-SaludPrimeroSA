@@ -346,25 +346,25 @@ Highcharts.setOptions(Highcharts.theme);
 		  <div class="modal-body">
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Nombres</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Nombres</label>
 						<div class="col-lg-10">
 						<input id="nombres" type="text" class="form-control" name="nombres">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Apellidos</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Apellidos</label>
 						<div class="col-lg-10">
 						<input id="apellidos" type="text" class="form-control" name="apellidos">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Cedula</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Cedula</label>
 						<div class="col-lg-10">
-						<input id="cedula" type="text" class="form-control" name="cedula">
+						<input id="cedula" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" name="cedula">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Correo Electronico</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Correo Electrónico</label>
 						<div class="col-lg-10">
 						<input id="correo" type="email" class="form-control" name="correo">
 						</div>
@@ -388,40 +388,10 @@ Highcharts.setOptions(Highcharts.theme);
 			<h4 class="modal-title" id="myModalLabel">Ingresar la información de la Muestra</h4>
 		  </div>
 		  <div class="modal-body">
-				<!--<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Nombres</label>
-						<div class="col-lg-10">
-						<input id="nombres" type="text" class="form-control" name="nombres">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Apellidos</label>
-						<div class="col-lg-10">
-						<input id="apellidos" type="text" class="form-control" name="apellidos">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Cedula</label>
-						<div class="col-lg-10">
-						<input id="cedula" type="text" class="form-control" name="cedula">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Correo Electronico</label>
-						<div class="col-lg-10">
-						<input id="correo" type="email" class="form-control" name="correo">
-						</div>
-					</div>-->
-					
-						
-							<!-- <div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-tasks"></i> Informació® ¤el registro</h3>
-							</div> -->
 							<div class="panel-body">
 								
 					<div class="col-lg-5" style="margin-bottom: 25px;  padding-left: 0px;">
-								<input type="text" class="form-control" id="paciente" placeholder="Paciente">
+								<input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" id="paciente" placeholder="Cédula del Paciente">
 								</div>	
 					<br>
 					<br>
@@ -494,130 +464,6 @@ Highcharts.setOptions(Highcharts.theme);
 		  <div class="modal-footer">
 			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
 			<button type="button" class="btn" id="registrarPaciente" onclick="registroMuestra();" data-dismiss="modal">Registrar</button>
-		  </div>
-
-		</div>
-	  </div>
-	</div>
-	
-
-	
-	<div class="modal fade" id="myModalLaboratorios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content modal-u-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
-		  </div>
-		  <div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Enfermedad</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Enfermedad 2</option>
-							<option>Enfermedad 3</option>
-							<option>Enfermedad 4</option>
-							<option>Enfermedad 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker1">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker2">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</form>
-		  </div>
-
-		  <div class="modal-footer">
-			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
-		  </div>
-
-		</div>
-	  </div>
-	</div>
-
-	<div class="modal fade" id="myModalCiudades" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content modal-u-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
-		  </div>
-		  <div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Enfermedad</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Enfermedad 2</option>
-							<option>Enfermedad 3</option>
-							<option>Enfermedad 4</option>
-							<option>Enfermedad 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Laboratorio</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Laboratorio 2</option>
-							<option>Laboratorio 3</option>
-							<option>Laboratorio 4</option>
-							<option>Laboratorio 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker1">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker2">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</form>
-		  </div>
-
-		  <div class="modal-footer">
-			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
 		  </div>
 
 		</div>
