@@ -16,7 +16,7 @@ router.get("/paciente",function(req,res){
 		}else{
 			res.send(docs);
 		}
-	});	
+	});
 });
 
 router.get("/laboratorio",function(req,res){
@@ -26,7 +26,7 @@ router.get("/laboratorio",function(req,res){
 		}else{
 			res.send(docs);
 		}
-	});	
+	});
 });
 
 router.get("/centro",function(req,res){
@@ -36,7 +36,7 @@ router.get("/centro",function(req,res){
 		}else{
 			res.send(docs);
 		}
-	});	
+	});
 });
 
 router.get("/muestra",function(req,res){
@@ -46,7 +46,7 @@ router.get("/muestra",function(req,res){
 		}else{
 			res.send(docs)
 		}
-	});	
+	});
 });
 
 router.get("/muestra/:id",function(req,res){
@@ -57,7 +57,7 @@ router.get("/muestra/:id",function(req,res){
 		}else{
 			res.send(docs)
 		}
-	});	
+	});
 });
 
 router.get("/paciente/:id",function(req,res){
@@ -68,7 +68,7 @@ router.get("/paciente/:id",function(req,res){
 		}else{
 			res.send(docs);
 		}
-	});	
+	});
 });
 
 
@@ -80,7 +80,7 @@ router.get("/muestra/laboratorio/:id",function(req,res){
 		}else{
 			res.send(docs);
 		}
-	});	
+	});
 });
 
 /* Funciones POST */
@@ -97,7 +97,7 @@ router.post("/paciente",function(req,res){
 
 
 router.post("/muestra/:id",function(req,res){
-	var nuevaMuestra = new muestra(req.body);	
+	var nuevaMuestra = new muestra(req.body);
 	var id = req.params["id"];
 	paciente.find({"cedula":id},function(err,docs){
 		if(err){
@@ -113,13 +113,13 @@ router.post("/muestra/:id",function(req,res){
 				if(err){
 					res.send({mensaje:"Error en el ingreso!"});
 				}else{
-					res.send({mensaje:"Ingreso exitoso!"});	
+					res.send({mensaje:"Ingreso exitoso!"});
 				}
 			});
 			docs[0].muestras.push(nuevaMuestra);
 			docs[0].save();
 		}
-	});			
+	});
 });
 
 router.post("/laboratorio",function(req,res){
@@ -158,7 +158,7 @@ router.put("/paciente/:id",function(req,res){
 
 router.put("/muestra/:id",function(req,res){
 	var id_i = req.params["id"];
-	
+
 	muestra.update({_id:id_i},req.body)
 	.then(function (success) {
       res.json();
@@ -222,9 +222,9 @@ router.delete("/paciente/:id",function(req,res){
 						}else{
 							res.send(id_i);
 						}
-				});	
+				});
 			}
-	});	
+	});
 });
 
 router.delete("/muestra/:id",function(req,res){
@@ -232,17 +232,17 @@ router.delete("/muestra/:id",function(req,res){
          muest.remove(function(err){
              if(!err) {
                  paciente.update({_id: muest.paciente},{$pull: {muestras: muest._id}},function (err, numberAffected) {
-                      if(!err) {      
+                      if(!err) {
 						res.send({mensaje:"Borrado exitoso!"});
                       } else {
-                        res.send({mensaje:"Error en el borrado!"});                                      
+                        res.send({mensaje:"Error en el borrado!"});
                     }
                   });
 			}else{
 				res.send({mensaje:"Error en el borrado!"});
 			}
             });
-        });		
+        });
 });
 
 
