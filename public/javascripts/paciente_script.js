@@ -201,13 +201,28 @@ function init(){
 	
 	//Comportamiento boton editar
 	$("#boton_editar").click(function(){
-		$("#nombre_i").prop('disabled', false);
-		$("#apellido_i").prop('readonly', false);
-		$("#correo_i").prop('readonly', false);
-		$("#cedula_i").prop('readonly', false);
-		$("#direccion_i").prop('readonly', false);
-		$("#telefono_i").prop('readonly', false);
-		$("#boton_editar").text("Guardar");
+		if($("#boton_editar").text()=="Guardar")
+		{
+			console.log('save');
+			$("#nombre_i").prop('readonly', true);
+			$("#apellido_i").prop('readonly', true);
+			$("#correo_i").prop('readonly', true);
+			$("#cedula_i").prop('readonly', true);
+			$("#direccion_i").prop('readonly', true);
+			$("#telefono_i").prop('readonly', true);
+			$("#boton_editar").text("Editar");
+		}
+		else
+		{
+			$("#nombre_i").prop('readonly', false);
+			$("#apellido_i").prop('readonly', false);
+			$("#correo_i").prop('readonly', false);
+			$("#cedula_i").prop('disabled', false);
+			$("#direccion_i").prop('readonly', false);
+			$("#telefono_i").prop('readonly', false);
+			$("#boton_editar").text("Guardar");
+		}
+		
 	});
 	$("#boton_cancelar").click(function(){
 		$("#nombre_i").prop('readonly', true);

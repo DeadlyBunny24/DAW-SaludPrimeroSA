@@ -89,51 +89,17 @@ function registroMuestra(){
 		
 		muestra.examenes= muestra.examenes.slice(0, -2);
 		console.log(muestra);
-<<<<<<< HEAD
-		/*var datos={
-		fichas: muestra}*/
-
-	$.ajax({
-	type: "POST",
-	  url: "http://localhost:3000/modelo/muestra/"+cedula,
-	  data: JSON.stringify(muestra),
-=======
 	
 	$.ajax({
 	type: "POST",
 	  url: "http://localhost:3000/modelo/muestra/"+cedula,
 	  data: muestra,
->>>>>>> ajax-registros
 	  success: function(){ alert("Muestra registrada satisfactoriamente.");},
 	  error: function(error){
           if(error.responseText == 'showAlert')
               alert("Paciente no encontrado.")},
 	  contentType: 'application/x-www-form-urlencoded'
 	});
-<<<<<<< HEAD
-
-	/*var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": "http://localhost:3000/paciente/fichas/"+cedula,
-	  "method": "PUT",
-	  "headers": {
-		"cache-control": "no-cache",
-		"postman-token": "da45d334-ca95-5796-2719-c96d4e9958e6",
-		"content-type": "application/x-www-form-urlencoded"
-	  },
-	  "data": {
-		"fichas": JSON.stringify(muestra)
-		}
-	
-	}*/
-/*
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});*/
-
-=======
->>>>>>> ajax-registros
 
 
 }
@@ -164,11 +130,7 @@ function registroPaciente(){
 		//console.log(paciente);
 	$.ajax({
 	type: "POST",
-<<<<<<< HEAD
-	  url: "http://localhost:3000/modelo/paciente/",
-=======
 	  url: "http://localhost:3000/modelo/paciente",
->>>>>>> ajax-registros
 	  data: JSON.stringify(paciente),
 	  success: function(){ 
 	  console.log(paciente);
@@ -380,3 +342,4 @@ function init(){
 
 
 	//Compa?ro
+
