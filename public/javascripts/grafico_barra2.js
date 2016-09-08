@@ -57,10 +57,10 @@ var datos = function (fecha1, fecha2) {
                type: 'column'
            },
            title: {
-               text: 'Monthly Average Rainfall'
+               text: 'Numero de muestras por laboratorio en un intervalo de tiempo'
            },
            subtitle: {
-               text: 'Source: WorldClimate.com'
+               text: ''
            },
            xAxis: {
                categories: categorias,
@@ -69,7 +69,7 @@ var datos = function (fecha1, fecha2) {
            yAxis: {
                min: 0,
                title: {
-                   text: 'Rainfall (mm)'
+                   text: 'Numero de muestras'
                }
            },
            tooltip: {
@@ -117,7 +117,7 @@ var initGraph= function() {
             }
         },
         title: {
-            text: 'Browser market shares at a specific website, 2014'
+            text: 'Numero de muestras por Laboratorio'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
