@@ -9,10 +9,21 @@ function dropdownCentro(val) {
   $("#centro").attr("value",val.replace(/\n|<.*?>/g,''));
   var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
 }
+function dropdownCentro1(val) {
+  var y = $("#centroDrop1");
+  $("#centro1").attr("value",val.replace(/\n|<.*?>/g,''));
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
+}
 
 function dropdownLab(val) {
   var y = $("#labDrop");
   $("#lab").attr("value",val.replace(/\n|<.*?>/g,''));
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
+}
+
+function dropdownLab1(val) {
+  var y = $("#labDrop1");
+  $("#lab1").attr("value",val.replace(/\n|<.*?>/g,''));
   var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
 }
 
@@ -48,6 +59,40 @@ function dropdownTipo(val) {
 		});
   }
 }
+
+function dropdownTipo1(val) {
+  var y = $("#tipoDrop1");
+  var str= val.replace(/\n|<.*?>/g,'');
+  str= str.replace('Muestra de ','');
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
+  $("#tipo1").attr("value",str);
+  
+  
+  if ($("#tipo1").val()== "Sangre"){
+		$("#exOrina1").hide();
+		$("#exHeces1").hide();
+		$("#exSangre1").show();
+		$('input[name="rMuestra1"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+		
+  } else if ($("#tipo1").val()== "Orina"){
+		$("#exSangre1").hide();
+		$("#exHeces1").hide();
+		$("#exOrina1").show();
+		$('input[name="rMuestra1"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+  } else if ($("#tipo1").val()== "Heces"){
+		$("#exOrina1").hide();
+		$("#exSangre1").hide();
+		$("#exHeces1").show();
+		$('input[name="rMuestra1"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+  }
+}
+
 
 var muestra;
 function registroMuestra(){
@@ -101,8 +146,47 @@ function registroMuestra(){
 	  contentType: 'application/x-www-form-urlencoded'
 	});
 
-
+ location.reload();
 }
+
+var muestra1;
+function modificarMuestra(){
+
+	
+	
+	muestra1={
+	centro: "a",
+	lab: "a",
+	examenes: "",
+	tipo: "a",
+	}
+	
+	muestra1.centro= $("#centro1").val();
+	muestra1.lab= $("#lab1").val();
+	muestra1.tipo= $("#tipo1").val();
+	
+	$('input[name="rMuestra1"]:checked').each(function() {	
+		muestra1.examenes= muestra1.examenes + this.value + ", ";
+		
+		});
+		
+		muestra1.examenes= muestra1.examenes.slice(0, -2);
+		console.log(muestra1);
+	
+	$.ajax({
+	type: "PUT",
+	  url: "http://localhost:3000/modelo/muestra/"+$("#idMuestra").val(),
+	  data: muestra1,
+	  success: function(){ alert("Muestra modificada satisfactoriamente.");},
+	  error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Paciente no encontrado.")},
+	  contentType: 'application/x-www-form-urlencoded'
+	});
+
+	 location.reload();
+}
+
 
 var paciente, datosMail;
 function registroPaciente(){
@@ -148,7 +232,7 @@ function registroPaciente(){
               alert("Error registrando Paciente.")},
 	  contentType: 'application/json'
 	});
-     
+     location.reload();
 	
 
 }
@@ -159,7 +243,7 @@ function init(){
 
 	var dataSet1 = new Array;
 	var dataSet2 = new Array;
-
+	
 	$.getJSON("http://localhost:3000/modelo/muestra", function(response)
 	{
 		response.forEach(function(muestra)
@@ -180,7 +264,8 @@ function init(){
 			fila  = [];
 		});
 				//console.log(dataSet);
-		$('#Examenes_Operario').DataTable(
+			
+		var table = $('#Examenes_Operario').DataTable(
 		{
         	data: dataSet1,
         	columns:
@@ -202,15 +287,53 @@ function init(){
         	    }
         	]
     	});
-
+		
 		// EVENTOS Muestras
 		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () 
-		{
-				console.log("Modificar muestra");
+		{		
+		var data = table.row( $(this).parent().parent() ).data();
+				console.log(data);
+				$("#paciente1").val(data[0]);
+				var x = $("#centroDrop1");
+		
+				var y = $("#labDrop1");
+				var z = $("#tipoDrop1");
+				var aNode = x[0].innerHTML = data[2] +' <span class="caret"></span>';
+				var bNode = y[0].innerHTML =  data[3] +' <span class="caret"></span>';
+				var cNode = z[0].innerHTML =  'Muestra de '+ data[4] +' <span class="caret"></span>';
+				//var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
+				
+				if(data[4]== 'Sangre'){
+				$("#exSangre1").show();
+				} else if(data[4]== 'Orina'){
+				$("#exOrina1").show();
+				} else if(data[4]== 'Heces'){
+				$("#exHeces1").show();
+				}
+				$('input[name="rMuestra1"]').each(function() {//quita la selección de todos los checkboxes
+				if($(this).val()==data[5]){
+				$(this).prop('checked', true);
+				}
+					});
+				
+				$("#idMuestra").val(data[8]);
+				$("#myModalModificarMuestra").modal();
     	} );
     	$('#Examenes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
 		{
-				console.log("Eliminar Muestra");
+				var identificacion = table.row( $(this).parent().parent() ).data()[8];
+				$.ajax({
+					type: "DELETE",
+					  url: "http://localhost:3000/modelo/muestra/"+identificacion,
+					  
+					  success: function(){ alert("Muestra eliminada satisfactoriamente.");},
+					  error: function(error){
+						  if(error.responseText == 'showAlert')
+							  alert("Paciente no encontrado.")},
+					  contentType: 'application/x-www-form-urlencoded'
+					});
+				
+				location.reload();
     	} );
 
 	});
@@ -277,6 +400,9 @@ function init(){
 	$("#exOrina").hide();
 	$("#exHeces").hide();
 	$("#exSangre").hide();
+	$("#exOrina1").hide();
+	$("#exHeces1").hide();
+	$("#exSangre1").hide();
 	$('#myModalPaciente').on('hidden.bs.modal', function () {//resetea el modal de ingreso del paciente cada vez que se cierre
     $(this).find("input,textarea,select").val('').end();
 	});
@@ -297,6 +423,21 @@ function init(){
 		});
 	});
 
+	$('#myModalModificarMuestra').on('hidden.bs.modal', function () {//resetea el modal de ingreso de muestra cada vez que se cierre
+    var x = $("#centroDrop1");
+	var y = $("#labDrop1");
+	var z = $("#tipoDrop1");
+	$(this).find("input,textarea,select").val('').end();
+	var aNode = x[0].innerHTML = 'Seleccione un Centro <span class="caret"></span>';
+	var bNode = y[0].innerHTML = 'Seleccione un Laboratorio <span class="caret"></span>';
+	var cNode = z[0].innerHTML = 'Seleccione un tipo de Muestra <span class="caret"></span>';
+	$("#exOrina1").hide();
+	$("#exHeces1").hide();
+	$("#exSangre1").hide();
+	$('input[name="rMuestra1"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+	});
 
 
 	//Comportamiento del menú principal
