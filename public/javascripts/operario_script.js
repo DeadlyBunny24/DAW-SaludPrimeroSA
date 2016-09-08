@@ -115,7 +115,7 @@ function registroMuestra(){
 	fecha: "a",
 	centro: "a",
 	lab: "a",
-	examenes: "",
+	examenes: [],
 	tipo: "a",
 	estado: "a",
 	cedula:"a"
@@ -157,7 +157,7 @@ function modificarMuestra(){
 	muestra1={
 	centro: "a",
 	lab: "a",
-	examenes: "",
+	examenes: [],
 	tipo: "a",
 	}
 	
@@ -167,6 +167,7 @@ function modificarMuestra(){
 	
 	$('input[name="rMuestra1"]:checked').each(function() {	
 		muestra1.examenes= muestra1.examenes + this.value + ", ";
+	
 		
 		});
 		
@@ -215,7 +216,7 @@ function registroPaciente(){
 	datosMail.correo=$("#correo").val();
 	datosMail.contrasena=paciente.contrasena;
 	datosMail.nombre= paciente.nombre+" "+ paciente.apellido;
-		//console.log(paciente);
+		console.log(paciente);
 	$.ajax({
 	type: "POST",
 	  url: "http://localhost:3000/modelo/paciente",
@@ -223,7 +224,12 @@ function registroPaciente(){
 	  success: function(){ 
 	  console.log(paciente);
 	  window.alert("El paciente fue registrado exitosamente.");
-	  $.ajax({
+	},error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Error registrando Paciente.")},
+	  contentType: 'application/json'
+	});
+	$.ajax({
 	type: "POST",
 	  url: "http://localhost:3000/modelo/email",
 	  data: JSON.stringify(datosMail),
@@ -231,11 +237,7 @@ function registroPaciente(){
 	  window.alert("El mail fue enviado exitosamente.");},
 	  contentType: 'application/json'
 	});
-	},error: function(error){
-          if(error.responseText == 'showAlert')
-              alert("Error registrando Paciente.")},
-	  contentType: 'application/json'
-	});
+	
      location.reload();
 	
 
@@ -299,7 +301,6 @@ function init(){
 				console.log(data);
 				$("#paciente1").val(data[0]);
 				var x = $("#centroDrop1");
-		
 				var y = $("#labDrop1");
 				var z = $("#tipoDrop1");
 				var aNode = x[0].innerHTML = data[2] +' <span class="caret"></span>';
@@ -316,10 +317,20 @@ function init(){
 				} else if(data[4].toLowerCase()== 'heces'){
 				$("#exHeces1").show();
 				}
+				
+				var res = data[5].replace(/\s+/g, '');
+				var ex = res.split(",");
+				
 				$('input[name="rMuestra1"]').each(function() {//quita la selección de todos los checkboxes
-				if($(this).val().toLowerCase()==data[5].toLowerCase()){
-				$(this).prop('checked', true);
-				}
+				var check = $(this);
+				
+				ex.forEach(function(examen) {
+					if(check.val()==examen){
+					
+						check.prop('checked', true);
+					}
+				});
+				
 					});
 				
 				$("#idMuestra").val(data[8]);

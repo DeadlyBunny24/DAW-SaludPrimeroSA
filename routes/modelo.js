@@ -278,7 +278,7 @@ router.post("/email",function(req,res){
 		to: req.body.correo, // list of receivers 
 		subject: 'Creacion de Cuenta en Salud Primero SA.', // Subject line 
 		//text: 'Su cuenta fue creada exitosamente. Su usuario para ingresar a nuestra pagina es su cedula y su contraseña es: '+req.body.contrasena // plaintext body 
-		html:'Hola, <strong>'+req.body.nombre+'</strong>, gracias por usar el servicio de SaludPrimero.<br>Podrá ingresar a su cuenta usando su cedula como nombre de usuario y la siguiente contraseña es:\n<b>'+req.body.contrasena+'</b></p>'	
+		html:'Hola, <strong>'+req.body.nombre+'</strong>, gracias por usar el servicio de SaludPrimero.<br>Podrá ingresar a su cuenta usando su cedula como nombre de usuario y la siguiente contraseña:\n<b>'+req.body.contrasena+'</b></p>'	
 		
 		
 	};
