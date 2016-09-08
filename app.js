@@ -59,14 +59,14 @@ app.post('/login', function(req, res){
 	var username= req.body.username;
 	var password= req.body.password;
 	var rol= req.body.rol;
-	var url1= "http://localhost:3000/paciente/";
+	var url1= "http://localhost:3000/modelo/paciente/";
 	
 	if (rol== "Paciente"){
 	request({method: "GET", url: url1+username, json: true}, function(error, response, body){
 		if (!error && response.statusCode === 200) {
 		//console.log(body[0].datos_personales.contrasena);
 		
-			if (body[0].datos_personales.contrasena== password){
+			if (body[0].contrasena== password){
 			req.session ["username"]= username;
 			req.session ["rol"]= rol;
 			res.send(200,'home');
@@ -104,7 +104,7 @@ app.post('/login', function(req, res){
 
 app.get('/logout', function(req, res, next){
 	req.session.destroy();
-	res.render('login');
+	res.redirect('/');
 });
 
 

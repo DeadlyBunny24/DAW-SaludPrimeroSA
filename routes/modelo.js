@@ -83,6 +83,17 @@ router.get("/muestra/laboratorio/:id",function(req,res){
 	});
 });
 
+router.get("/muestra/paciente/:id",function(req,res){
+	var id = req.params["id"];
+	muestra.find({"cedula":id},function(err,docs){
+		if(err){
+			res.send({mensaje:"No existen muestras!"});
+		}else{
+			res.send(docs);
+		}
+	});	
+});
+
 /* Funciones POST */
 router.post("/paciente",function(req,res){
 	var nuevoPaciente = new paciente(req.body);
@@ -112,14 +123,33 @@ router.post("/muestra/:id",function(req,res){
 			nuevaMuestra.save(function(err){
 				if(err){
 					res.send({mensaje:"Error en el ingreso!"});
+					console.log("Error en el ingreso!");
 				}else{
+<<<<<<< HEAD
 					res.send({mensaje:"Ingreso exitoso!"});
+=======
+					res.send({mensaje:""});	
+					console.log("Ingreso exitoso!");
+>>>>>>> 7e8924c370d9c4cfd19c354b115c4e507a877614
 				}
 			});
 			docs[0].muestras.push(nuevaMuestra);
 			docs[0].save();
 		}
+<<<<<<< HEAD
 	});
+=======
+	});	
+/*muestra.create(req.body,function(err){
+if (err){
+res.send("Error en el ingreso!");
+}
+else{
+res.send("Ingreso exitoso!");
+}
+
+});	*/
+>>>>>>> 7e8924c370d9c4cfd19c354b115c4e507a877614
 });
 
 router.post("/laboratorio",function(req,res){
@@ -164,6 +194,7 @@ router.put("/muestra/:id",function(req,res){
       res.json();
     })
     .catch(function (error) {
+		res.send(500,'showAlert');
         error.send({mensaje:"Error en el ingreso!"});
     });
 });
@@ -188,7 +219,8 @@ router.put("/muestra/paciente/:id",function(req,res){
       //res.json(resp);
     })
     .catch(function (error) {
-        //error.send({mensaje:"Error en el ingreso!"});
+        res.send(500,'showAlert');
+		//error.send({mensaje:"Error en el ingreso!"});
     });
 });
 
@@ -243,6 +275,28 @@ router.delete("/muestra/:id",function(req,res){
 			}
             });
         });
+});
+
+router.post("/email",function(req,res){
+		//console.log(req.body.contrasena);
+		
+		var transporter = nodemailer.createTransport('smtps://salud1ero%40gmail.com:dawesgenial@smtp.gmail.com');
+	var mailOptions = {
+		from: 'Laboratorios Salud Primero S.A. <salud1ero@gmail.com>', // sender address 
+		to: req.body.correo, // list of receivers 
+		subject: 'Creacion de Cuenta en Salud Primero SA.', // Subject line 
+		//text: 'Su cuenta fue creada exitosamente. Su usuario para ingresar a nuestra pagina es su cedula y su contraseña es: '+req.body.contrasena // plaintext body 
+		html:'Hola, <strong>'+req.body.nombre+'</strong>, gracias por usar el servicio de SaludPrimero.<br>Podrá ingresar a su cuenta usando su cedula como nombre de usuario y la siguiente contraseña:\n<b>'+req.body.contrasena+'</b></p>'	
+		
+		
+	};
+	
+	transporter.sendMail(mailOptions, function(error, info){
+		if(error){
+			return console.log(error);
+		}
+		console.log('Message sent: ' + info.response);
+	});
 });
 
 
