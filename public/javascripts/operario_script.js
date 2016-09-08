@@ -15,6 +15,40 @@ function dropdownLab(val) {
   $("#lab").attr("value",val.replace(/\n|<.*?>/g,''));
   var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
 }
+
+function dropdownTipo(val) {
+  var y = $("#tipoDrop");
+  var str= val.replace(/\n|<.*?>/g,'');
+  str= str.replace('Muestra de ','');
+  var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
+  $("#tipo").attr("value",str);
+  
+  
+  if ($("#tipo").val()== "Sangre"){
+		$("#exOrina").hide();
+		$("#exHeces").hide();
+		$("#exSangre").show();
+		$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+		
+  } else if ($("#tipo").val()== "Orina"){
+		$("#exSangre").hide();
+		$("#exHeces").hide();
+		$("#exOrina").show();
+		$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+  } else if ($("#tipo").val()== "Heces"){
+		$("#exOrina").hide();
+		$("#exSangre").hide();
+		$("#exHeces").show();
+		$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+  }
+}
+
 var muestra;
 function registroMuestra(){
 
@@ -35,27 +69,27 @@ function registroMuestra(){
 	muestra={
 	fecha: "a",
 	centro: "a",
-	laboratorio: "a",
-	examen: []
+	lab: "a",
+	examenes: "",
+	tipo: "a",
+	estado: "a",
+	cedula:"a"
 	}
 	muestra.fecha= today;
 	muestra.centro= $("#centro").val();
-	muestra.laboratorio= $("#lab").val();
-	$('input[name="rMuestra"]:checked').each(function() {
-		var examenes;
-		examenes={
-	tipo: "a",
-	nombre: "a",
-	estado: "a",
-	resultado: "a"
-	}
-		examenes.tipo= this.getAttribute("class");
-		examenes.nombre= this.value;
-		examenes.resultado="";
-		examenes.estado= "enviado";
-		muestra.examen.push(examenes);
+	muestra.lab= $("#lab").val();
+	muestra.cedula= cedula;
+	muestra.estado= "enviado";
+	muestra.tipo= $("#tipo").val();
+	
+	$('input[name="rMuestra"]:checked').each(function() {	
+		muestra.examenes= muestra.examenes + this.value + ", ";
+		
 		});
+		
+		muestra.examenes= muestra.examenes.slice(0, -2);
 		console.log(muestra);
+<<<<<<< HEAD
 		/*var datos={
 		fichas: muestra}*/
 
@@ -63,12 +97,20 @@ function registroMuestra(){
 	type: "POST",
 	  url: "http://localhost:3000/modelo/muestra/"+cedula,
 	  data: JSON.stringify(muestra),
+=======
+	
+	$.ajax({
+	type: "POST",
+	  url: "http://localhost:3000/modelo/muestra/"+cedula,
+	  data: muestra,
+>>>>>>> ajax-registros
 	  success: function(){ alert("Muestra registrada satisfactoriamente.");},
 	  error: function(error){
           if(error.responseText == 'showAlert')
               alert("Paciente no encontrado.")},
 	  contentType: 'application/x-www-form-urlencoded'
 	});
+<<<<<<< HEAD
 
 	/*var settings = {
 	  "async": true,
@@ -90,6 +132,8 @@ $.ajax(settings).done(function (response) {
   console.log(response);
 });*/
 
+=======
+>>>>>>> ajax-registros
 
 
 }
@@ -98,41 +142,52 @@ var paciente, datosMail;
 function registroPaciente(){
 
 	paciente={
-	["datos_personales.nombre"]: "a",
-	["datos_personales.apellido"]: "a",
-	["datos_personales.cedula"]: "a",
-	["datos_personales.correo"]: "a",
-	["datos_personales.contrasena"]: "a"
+	nombre: "a",
+	apellido: "a",
+	cedula: "a",
+	correo: "a",
+	contrasena: "a"
 	}
 	datosMail={
 	 correo: "a",
-	 contrasena: "a"
+	 contrasena: "a",
+	 nombre: "a"
 	}
-	paciente["datos_personales.nombre"]= $("#nombres").val();
-	paciente["datos_personales.apellido"]= $("#apellidos").val();
-	paciente["datos_personales.cedula"]= $("#cedula").val();
-	paciente["datos_personales.correo"]= $("#correo").val();
-	paciente["datos_personales.contrasena"]= Math.random().toString(36).slice(-8);
+	paciente.nombre= $("#nombres").val();
+	paciente.apellido= $("#apellidos").val();
+	paciente.cedula= $("#cedula").val();
+	paciente.correo= $("#correo").val();
+	paciente.contrasena= Math.random().toString(36).slice(-8);
 	datosMail.correo=$("#correo").val();
-	datosMail.contrasena=paciente["datos_personales.contrasena"];
+	datosMail.contrasena=paciente.contrasena;
+	datosMail.nombre= paciente.nombre+" "+ paciente.apellido;
 		//console.log(paciente);
 	$.ajax({
 	type: "POST",
+<<<<<<< HEAD
 	  url: "http://localhost:3000/modelo/paciente/",
+=======
+	  url: "http://localhost:3000/modelo/paciente",
+>>>>>>> ajax-registros
 	  data: JSON.stringify(paciente),
-	  success: function(){ console.log(paciente);
-	  window.alert("El paciente fue registrado exitosamente.");},
-	  contentType: 'application/json'
-	});
-
-	$.ajax({
+	  success: function(){ 
+	  console.log(paciente);
+	  window.alert("El paciente fue registrado exitosamente.");
+	  $.ajax({
 	type: "POST",
-	  url: "http://localhost:3000/paciente/email",
+	  url: "http://localhost:3000/modelo/email",
 	  data: JSON.stringify(datosMail),
 	  success: function(){ console.log(datosMail);
 	  window.alert("El mail fue enviado exitosamente.");},
 	  contentType: 'application/json'
 	});
+	},error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Error registrando Paciente.")},
+	  contentType: 'application/json'
+	});
+     
+	
 
 }
 
@@ -193,7 +248,7 @@ function init(){
     	} );
     	$('#Examenes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
 		{
-				console.log("ELiminar Muestra");
+				console.log("Eliminar Muestra");
     	} );
 
 	});
@@ -257,7 +312,28 @@ function init(){
 	$("#container_datos").hide();
 	$("#container_pacientes").hide();
 	$("#botonRegistro").hide();
-
+	$("#exOrina").hide();
+	$("#exHeces").hide();
+	$("#exSangre").hide();
+	$('#myModalPaciente').on('hidden.bs.modal', function () {//resetea el modal de ingreso del paciente cada vez que se cierre
+    $(this).find("input,textarea,select").val('').end();
+	});
+	
+	$('#myModalMuestra').on('hidden.bs.modal', function () {//resetea el modal de ingreso de muestra cada vez que se cierre
+    var x = $("#centroDrop");
+	var y = $("#labDrop");
+	var z = $("#tipoDrop");
+	$(this).find("input,textarea,select").val('').end();
+	var aNode = x[0].innerHTML = 'Seleccione un Centro <span class="caret"></span>';
+	var bNode = y[0].innerHTML = 'Seleccione un Laboratorio <span class="caret"></span>';
+	var cNode = z[0].innerHTML = 'Seleccione un tipo de Muestra <span class="caret"></span>';
+	$("#exOrina").hide();
+	$("#exHeces").hide();
+	$("#exSangre").hide();
+	$('input[name="rMuestra"]:checked').each(function() {//quita la selección de todos los checkboxes
+		$(this).removeAttr('checked');
+		});
+	});
 
 
 
@@ -269,12 +345,13 @@ function init(){
 		$("#container_examenes").hide();
 		$("#container_datos").hide();
 		$("#botonRegistro").hide();
+		$("#botonRegistroMuestra").hide();
 		$("#container_pacientes").hide();
 		$("#container_sucursales").show();
 	});
 
 	$(".menu li:nth-child(1) a").click(function(){
-		$(".breadcrumb li h2").text("Examenes");
+		$(".breadcrumb li h2").text("Exámenes");
 		$(".menu li:nth-child(1)").siblings("li").removeClass("active");
 		$(".menu li:nth-child(1)").addClass("active");
 		$("#container_sucursales").hide();
@@ -282,26 +359,18 @@ function init(){
 		$("#container_pacientes").hide();
 		$("#botonRegistro").hide();
 		$("#container_examenes").show();
+		$("#botonRegistroMuestra").show();
+		
 	});
 
 	$(".menu li:nth-child(3) a").click(function(){
-		$(".breadcrumb li h2").text("Información de registro");
+		$(".breadcrumb li h2").text("Pacientes");
 		$(".menu li:nth-child(3)").siblings("li").removeClass("active");
 		$(".menu li:nth-child(3)").addClass("active");
 		$("#container_sucursales").hide();
 		$("#container_examenes").hide();
-		$("#botonRegistro").hide();
-		$("#container_pacientes").hide();
-		$("#container_datos").show();
-	});
-
-	$(".menu li:nth-child(4) a").click(function(){
-		$(".breadcrumb li h2").text("Pacientes");
-		$(".menu li:nth-child(4)").siblings("li").removeClass("active");
-		$(".menu li:nth-child(4)").addClass("active");
-		$("#container_sucursales").hide();
-		$("#container_examenes").hide();
 		$("#container_datos").hide();
+		$("#botonRegistroMuestra").hide();
 		$("#container_pacientes").show();
 		$("#botonRegistro").show();
 
