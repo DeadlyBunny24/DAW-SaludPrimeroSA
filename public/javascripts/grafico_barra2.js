@@ -5,7 +5,7 @@ function submitForm(oFormElement) {
   //console.log("--->"+fecha1)
   var cc1 = fecha1.split("/");
   var cc2 = fecha2.split("/");
-  datos(parseInt(cc1[1])-1,parseInt(cc2[1])-1);
+  datos(parseInt(cc1[0]),parseInt(cc2[0]));
   return false;
 }
 
@@ -24,7 +24,7 @@ var datos = function (fecha1, fecha2) {
     response.forEach(function(ficha){
         var dateCheck = ficha.fecha;
         var c = dateCheck.split("/");
-        var mesCheck = parseInt(c[1])-1;
+        var mesCheck = parseInt(c[0]);
         if (mesCheck >= fecha1 && mesCheck <= fecha2){
           if (map.get(ficha.lab) === undefined || map.get(ficha.lab) ==null || map.get(ficha.lab)===null){
             map.put(ficha.lab, {laboratotio:ficha.lab,cantidad:[]});
