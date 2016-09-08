@@ -191,7 +191,8 @@ function modificarMuestra(){
 
 var paciente, datosMail;
 function registroPaciente(){
-
+	
+	if ($("#cedula").val().length== 10){
 	paciente={
 	nombre: "a",
 	apellido: "a",
@@ -226,7 +227,7 @@ function registroPaciente(){
 	  window.alert("El paciente fue registrado exitosamente.");
 	},error: function(error){
           if(error.responseText == 'showAlert')
-              alert("Error registrando Paciente.")},
+              alert("Error registrando Paciente.");},
 	  contentType: 'application/json'
 	});
 	$.ajax({
@@ -239,7 +240,9 @@ function registroPaciente(){
 	});
 	
      location.reload();
-	
+	} else{
+		window.alert("Ingrese una cedula válida.");
+	}
 
 }
 var paciente1;
