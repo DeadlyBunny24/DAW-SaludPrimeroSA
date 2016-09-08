@@ -71,7 +71,7 @@ function init(){
 
     		} );
 
-    		$('#Examenes_Operario tbody .dc').on('click', 'button.btn-warning', function () {
+    		$('#Examenes_Laboratorista tbody .dc').on('click', 'button.btn-warning', function () {
 
     	    	console.log("notificar");
     		} );
