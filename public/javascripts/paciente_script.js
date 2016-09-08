@@ -207,6 +207,7 @@ function init(){
 		if($("#boton_editar").text()=="Guardar")
 		{
 			console.log('save');
+			modificarPaciente();
 			$("#nombre_i").prop('readonly', true);
 			$("#apellido_i").prop('readonly', true);
 			$("#correo_i").prop('readonly', true);
@@ -214,9 +215,11 @@ function init(){
 			$("#direccion_i").prop('readonly', true);
 			$("#telefono_i").prop('readonly', true);
 			$("#boton_editar").text("Editar");
+			
 		}
 		else
 		{
+			
 			$("#nombre_i").prop('readonly', false);
 			$("#apellido_i").prop('readonly', false);
 			$("#correo_i").prop('readonly', false);
@@ -224,6 +227,7 @@ function init(){
 			$("#direccion_i").prop('readonly', false);
 			$("#telefono_i").prop('readonly', false);
 			$("#boton_editar").text("Guardar");
+			
 		}
 		
 	});
@@ -243,6 +247,38 @@ function init(){
 	
 }
 	
+	var paciente1;
+function modificarPaciente(){
+
+	paciente1={
+	nombre: "a",
+	apellido: "a",
+	correo: "a",
+	direccion: "a",
+	telefono: "a"
+	}
+	paciente1.nombre= $("#nombre_i").val();
+	paciente1.apellido= $("#apellido_i").val();
+	paciente1.correo= $("#correo_i").val();
+	paciente1.direccion= $("#direccion_i").val();
+	paciente1.telefono= $("#telefono_i").val();
+	
+		console.log(paciente1);
+	$.ajax({
+	type: "PUT",
+	  url: "http://localhost:3000/modelo/paciente/"+$("#cedula_i").val(),
+	  data: JSON.stringify(paciente1),
+	  success: function(){ 
+	  console.log(paciente1);
+	  window.alert("El paciente fue modificado exitosamente.");
+	},error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Error registrando Paciente.")},
+	  contentType: 'application/json'
+	});
+	
+
+}
 function initMap(lat_p,lng_p) {
 	var mapDiv = document.getElementById('map');
 	var myLatLng = {lat: parseInt(lat_p), lng: parseInt(lng_p)};
