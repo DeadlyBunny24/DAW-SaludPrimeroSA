@@ -48,8 +48,11 @@ function init(){
 	 			fila.push(muestra.tipo);
 	 			fila.push(muestra.examenes);
 	 			fila.push(muestra.estado);
+				if(muestra.estado=="listo")	{
 	 			fila.push('<a href = "#" >pdf</> ');
-
+			} else {
+			fila.push('');
+			}
 	 			muestras.push(fila);
 
 	 			fila = [];

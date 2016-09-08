@@ -302,16 +302,18 @@ function init(){
 				var bNode = y[0].innerHTML =  data[3] +' <span class="caret"></span>';
 				var cNode = z[0].innerHTML =  'Muestra de '+ data[4] +' <span class="caret"></span>';
 				//var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
-				
-				if(data[4]== 'Sangre'){
+				$("#centro1").val(data[2]);
+				$("#lab1").val(data[3]);
+				$("#tipo1").val(data[4]);
+				if(data[4].toLowerCase()== 'sangre'){
 				$("#exSangre1").show();
-				} else if(data[4]== 'Orina'){
+				} else if(data[4].toLowerCase()== 'orina'){
 				$("#exOrina1").show();
-				} else if(data[4]== 'Heces'){
+				} else if(data[4].toLowerCase()== 'heces'){
 				$("#exHeces1").show();
 				}
 				$('input[name="rMuestra1"]').each(function() {//quita la selección de todos los checkboxes
-				if($(this).val()==data[5]){
+				if($(this).val().toLowerCase()==data[5].toLowerCase()){
 				$(this).prop('checked', true);
 				}
 					});
