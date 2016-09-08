@@ -242,6 +242,42 @@ function registroPaciente(){
 	
 
 }
+var paciente1;
+function modificarPaciente(){
+
+	paciente1={
+	nombre: "a",
+	apellido: "a",
+	cedula: "a",
+	correo: "a",
+	direccion: "a",
+	telefono: "a"
+	}
+	paciente1.nombre= $("#nombres1").val();
+	paciente1.apellido= $("#apellidos1").val();
+	paciente1.cedula= $("#cedula1").val();
+	paciente1.correo= $("#correo1").val();
+	paciente1.direccion= $("#direccion1").val();
+	paciente1.telefono= $("#telefono1").val();
+	
+		console.log(paciente1);
+	$.ajax({
+	type: "PUT",
+	  url: "http://localhost:3000/modelo/paciente/"+paciente1.cedula,
+	  data: JSON.stringify(paciente1),
+	  success: function(){ 
+	  console.log(paciente1);
+	  window.alert("El paciente fue modificado exitosamente.");
+	},error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Error registrando Paciente.")},
+	  contentType: 'application/json'
+	});
+
+     location.reload();
+	
+
+}
 
 function init(){
 	var fila = [];
@@ -395,33 +431,13 @@ function init(){
 		{
 				var data = table2.row( $(this).parent().parent() ).data();
 				console.log(data);
-				$("#paciente1").val(data[0]);
-				var x = $("#centroDrop1");
-		
-				var y = $("#labDrop1");
-				var z = $("#tipoDrop1");
-				var aNode = x[0].innerHTML = data[2] +' <span class="caret"></span>';
-				var bNode = y[0].innerHTML =  data[3] +' <span class="caret"></span>';
-				var cNode = z[0].innerHTML =  'Muestra de '+ data[4] +' <span class="caret"></span>';
-				//var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
-				$("#centro1").val(data[2]);
-				$("#lab1").val(data[3]);
-				$("#tipo1").val(data[4]);
-				if(data[4].toLowerCase()== 'sangre'){
-				$("#exSangre1").show();
-				} else if(data[4].toLowerCase()== 'orina'){
-				$("#exOrina1").show();
-				} else if(data[4].toLowerCase()== 'heces'){
-				$("#exHeces1").show();
-				}
-				$('input[name="rMuestra1"]').each(function() {//quita la selección de todos los checkboxes
-				if($(this).val().toLowerCase()==data[5].toLowerCase()){
-				$(this).prop('checked', true);
-				}
-					});
-				
-				$("#idMuestra").val(data[8]);
-				$("#myModalModificarMuestra").modal();
+				$("#nombres1").val(data[1]);
+				$("#apellidos1").val(data[2]);
+				$("#cedula1").val(data[0]);
+				$("#correo1").val(data[3]);
+				$("#direccion1").val(data[4]);
+				$("#telefono1").val(data[5]);
+				$("#myModalModificarPaciente").modal();
     	} );
     	$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
 		{
