@@ -61,7 +61,7 @@ function init(){
 					fila.push('<button class="btn btn-warning btn-xs" data-toggle="modal"'+
 					'data-target="#notificar" onclick="agregarNotificacion(\''+muestra._id+'\');" ><i class="glyphicon glyphicon-pencil"></i> Notificar</button>'
 					+'&thinsp;'+'<button type="button" class="btn btn-primary btn-xs" data-toggle="modal"'
-					+'onclick=" agregarEXAMEN(\''+muestra._id+'\',\''+muestra.examenes+'\');" data-target="#myModal1"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
+					+'onclick=" agregarEXAMEN(\''+muestra._id+'\',\''+muestra.examenes+'\',\''+muestra.estado+'\');" data-target="#myModal1"><i class="glyphicon glyphicon-plus"></i> Ingresar</button>');
 					fila.push(muestra._id);
 					dataSet.push(fila);
 					fila  = [];
@@ -133,11 +133,12 @@ function agregarNotificacion(id_m) {
 }
 
 var map_resulta = new Map();
-function agregarEXAMEN(id_m,examen1) {
+function agregarEXAMEN(id_m,examen1, estado_) {
     var cad_examenes = "";
     var examenes = examen1.split(",");
- $("#id_muestra_resultado").val(id_m);
-    examenes.forEach(function(ficha){
+    if(estado_ != "Listo") {
+      $("#id_muestra_resultado").val(id_m);
+      examenes.forEach(function(ficha){
       ficha = normalize(ficha);
       ficha = ficha.replace(" ","");
 
@@ -177,8 +178,14 @@ function agregarEXAMEN(id_m,examen1) {
         map_resulta.put(ficha, {examen:ficha,resultados:[]});
         }
     );
-document.getElementById("contenedor_examen_add").innerHTML= cad_examenes
+
+    document.getElementById("contenedor_examen_add").innerHTML= cad_examenes;
+  } else {
+    document.getElementById("contenedor_examen_add").innerHTML= "<h4>Esta muestra ya a sido revisada</h4>";
+  }
 }
+
+
 
 function agregar_resultado(examen) {
     var parametro_ = $("#"+examen+"Inputparametro").val()
@@ -196,6 +203,26 @@ function agregar_resultado(examen) {
   node.innerHTML=cad_examenes_;         // Create a text noe
   //node.appendChild(textnode);                              // Append the text to <li>
   document.getElementById(examen+"tabla").appendChild(node);
+}
+
+var modificar_estado_muestra_op = function modificarMuestraEstado(id_muetsra){
+
+	var muestra={
+	estado: "Listo"
+	}
+
+	$.ajax({
+	type: "PUT",
+	  url: "http://localhost:3000/modelo/muestra/"+id_muetsra,
+	  data: muestra,
+	  success: function(){ alert("Muestra modificada satisfactoriamente.");},
+	  error: function(error){
+          if(error.responseText == 'showAlert')
+              alert("Paciente no encontrado.")},
+	  contentType: 'application/x-www-form-urlencoded'
+	});
+
+	 location.reload();
 }
 
 function guardarExamenes() {
@@ -226,8 +253,7 @@ function guardarExamenes() {
 	  contentType: 'application/json'
 	});
     document.getElementById("mensaje_suces").innerHTML="la nota fue enviada con exito";
-    $("#notificacion_").val("");
-  return false;
+  modificar_estado_muestra_op(id_muestra);
 }
 
 

@@ -20,6 +20,8 @@
 		<link href="stylesheets/bootstrap-datetimepicker.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
 <style>
 /**
  * Grid-light theme for Highcharts JS
@@ -194,7 +196,7 @@ Highcharts.setOptions(Highcharts.theme);
   	        </div>
 
 
-					
+
 
 					<div id="container_pacientes">
 
@@ -214,9 +216,9 @@ Highcharts.setOptions(Highcharts.theme);
     </footer>-->
     </div>
 
-	
 
-	
+
+
 
 <div class="modal fade" id="myModalModificarPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -273,7 +275,7 @@ Highcharts.setOptions(Highcharts.theme);
 		</div>
 	  </div>
 	</div>
-	
+
 	<div class="modal fade" id="myModalPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
@@ -329,8 +331,8 @@ Highcharts.setOptions(Highcharts.theme);
 		</div>
 	  </div>
 	</div>
-	
-	
+
+
 	<div class="modal fade" id="myModalMuestra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
@@ -340,10 +342,10 @@ Highcharts.setOptions(Highcharts.theme);
 		  </div>
 		  <div class="modal-body">
 							<div class="panel-body">
-								
+
 					<div class="col-lg-5" style="margin-bottom: 25px;  padding-left: 0px;">
 								<input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" id="paciente" placeholder="Cédula del Paciente">
-								</div>	
+								</div>
 					<br>
 					<br>
 					<br>
@@ -407,9 +409,9 @@ Highcharts.setOptions(Highcharts.theme);
 				<div class="checkbox">
 				<label><input class="Heces" type="checkbox" id= "coprocultivo" name="rMuestra" value="Coprocultivo">Coprocultivo</label>
 				</div>
-				</div>			
+				</div>
 						</div>
-					
+
 				</form>
 		  </div>
 		  <div class="modal-footer">
@@ -421,7 +423,7 @@ Highcharts.setOptions(Highcharts.theme);
 	  </div>
 	</div>
 
-	
+
 	<div class="modal fade" id="myModalModificarMuestra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
@@ -431,10 +433,10 @@ Highcharts.setOptions(Highcharts.theme);
 		  </div>
 		  <div class="modal-body">
 							<div class="panel-body">
-								
+
 					<div class="col-lg-5" style="margin-bottom: 25px;  padding-left: 0px;">
 								<input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" id="paciente1" disable placeholder="Cédula del Paciente">
-								</div>	
+								</div>
 					<br>
 					<br>
 					<br>
@@ -499,9 +501,9 @@ Highcharts.setOptions(Highcharts.theme);
 				<div class="checkbox">
 				<label><input class="Heces" type="checkbox" id= "coprocultivo" name="rMuestra1" value="Coprocultivo">Coprocultivo</label>
 				</div>
-				</div>			
+				</div>
 						</div>
-					
+
 				</form>
 		  </div>
 		  <div class="modal-footer">
@@ -512,7 +514,7 @@ Highcharts.setOptions(Highcharts.theme);
 		</div>
 	  </div>
 	</div>
-	
+
 
 		<!-- Scripts -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -530,10 +532,14 @@ Highcharts.setOptions(Highcharts.theme);
  optional -->
 <script src="http://code.highcharts.com/modules/offline-exporting.js"></script>
 <script src="javascripts/grafico_barra2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 		<script type="text/javascript">
-      	$(function () {
-
-      });
+      $( function() {
+         $( "#fecha1" ).datepicker();
+       } );
+       $( function() {
+          $( "#fecha2" ).datepicker();
+        } );
       		</script>
 
 	</body>
