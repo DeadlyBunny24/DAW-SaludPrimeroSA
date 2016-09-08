@@ -3,7 +3,9 @@ function submitForm(oFormElement) {
   var fecha1 = document.forms['myform'].elements['fecha1'].value
   var fecha2 = document.forms['myform'].elements['fecha2'].value
   //console.log("--->"+fecha1)
-  datos(fecha1,fecha2);
+  var cc1 = fecha1.split("/");
+  var cc2 = fecha2.split("/");
+  datos(parseInt(cc1[1])-1,parseInt(cc2[1])-1);
   return false;
 }
 

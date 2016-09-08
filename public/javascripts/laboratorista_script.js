@@ -115,6 +115,7 @@ function agregarNotificacion(id_m) {
 function submitForm1(oFormElement) {
   var id_m_ = document.forms['agragar_notificacion_form'].elements['id_muestra'].value
   var nota = document.forms['agragar_notificacion_form'].elements['notificacion_'].value
+  console.log("--->"+nota)
   //console.log("--->"+fecha1)
 	muentra_nota={
 		["not"]: ""+nota
@@ -124,9 +125,12 @@ function submitForm1(oFormElement) {
 	  url: "http://localhost:3000/modelo/muestra/notificacion/"+id_m_+"/",
 	  data: JSON.stringify(muentra_nota),
 	  success: function(){ console.log(muentra_nota);
-	  window.alert("la nota fue enviada");},
+      document.getElementById("mensaje_suces").innerHTML="la nota fue enviada con exito";
+        },
 	  contentType: 'application/json'
 	});
+    document.getElementById("mensaje_suces").innerHTML="la nota fue enviada con exito";
+    $("#notificacion_").val("");
   return false;
 }
 
