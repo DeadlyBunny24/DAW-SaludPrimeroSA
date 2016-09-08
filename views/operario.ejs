@@ -123,7 +123,7 @@ Highcharts.setOptions(Highcharts.theme);
       <div id="contenedor_general" class="row">
         <div id= "menu_sucursales" class="col-sm-3 col-md-2 sidebar">
           <ul class="menu nav nav-sidebar">
-            <li class="active"><a href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Ex&aacute;menes <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Muestras <span class="sr-only">(current)</span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>  Generar Reportes</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Pacientes</a></li>
           </ul>
@@ -131,7 +131,7 @@ Highcharts.setOptions(Highcharts.theme);
         <div id="contenedor_info" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 ">
 	        <div id="navegacion" class="row">
 	        	<ol class="breadcrumb" style="    margin-bottom: 0px;">
-				  <li><h2>Exámenes</h2></li>
+				  <li><h2>Muestras</h2></li>
 				  <button type="button" class="btn-u btn-u-blue btn-header" id="botonRegistro" style="border-bottom: 10%;"
                                     data-toggle="modal" data-target="#myModalPaciente">
 					  	            <span  aria-hidden="true"></span> Registrar Paciente
@@ -214,129 +214,67 @@ Highcharts.setOptions(Highcharts.theme);
     </footer>-->
     </div>
 
-	<div class="modal fade" id="myModalMeses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+
+	
+
+<div class="modal fade" id="myModalModificarPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
+			<h4 class="modal-title" id="myModalLabel">Ingresar Datos</h4>
 		  </div>
 		  <div class="modal-body">
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Enfermedad</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Nombres</label>
 						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todas</option>
-							<option>Enfermedad 2</option>
-							<option>Enfermedad 3</option>
-							<option>Enfermedad 4</option>
-							<option>Enfermedad 5</option>
-						</select>
+						<input id="nombres1" type="text" class="form-control" name="nombres1">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Laboratorio</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Apellidos</label>
 						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Laboratorio 2</option>
-							<option>Laboratorio 3</option>
-							<option>Laboratorio 4</option>
-							<option>Laboratorio 5</option>
-						</select>
+						<input id="apellidos1" type="text" class="form-control" name="apellidos1">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Cedula</label>
 						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker3">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
+						<input id="cedula1" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" name="cedula">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Correo Electrónico</label>
 						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker4">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
+						<input id="correo1" type="email" class="form-control" name="correo1">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Dirección</label>
+						<div class="col-lg-10">
+						<input id="correo1" type="email" class="form-control" name="direccion1">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Telefono</label>
+						<div class="col-lg-10">
+						<input id="correo1" type="email" class="form-control" name="telefono1">
 						</div>
 					</div>
 				</form>
 		  </div>
-
 		  <div class="modal-footer">
 			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
+			<button type="button" class="btn" id="registrarPaciente1" onclick="modificarPaciente();" data-dismiss="modal">Modificar</button>
 		  </div>
 
 		</div>
 	  </div>
 	</div>
-
-	<div class="modal fade" id="myModalEnfermedad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content modal-u-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Filtros</h4>
-		  </div>
-		  <div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Laboratorio</label>
-						<div class="col-lg-10">
-							<select class="form-control">
-							<option>Todos</option>
-							<option>Laboratorio 2</option>
-							<option>Laboratorio 3</option>
-							<option>Laboratorio 4</option>
-							<option>Laboratorio 5</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha ini</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker1">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail1" class="col-lg-2 control-label">Fecha fin</label>
-						<div class="col-lg-10">
-							<div class="input-group date" id="datetimepicker2">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon add-on border-u">
-									<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="glyphicon glyphicon-calendar"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</form>
-		  </div>
-
-		  <div class="modal-footer">
-			<button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-			<button type="button" class="btn btn-primary">Filtrar</button>
-		  </div>
-
-		</div>
-	  </div>
-	</div>
-
-<div class="modal fade" id="myModalPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+	<div class="modal fade" id="myModalPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content modal-u-content">
 		  <div class="modal-header">
@@ -369,6 +307,18 @@ Highcharts.setOptions(Highcharts.theme);
 						<input id="correo" type="email" class="form-control" name="correo">
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Dirección</label>
+						<div class="col-lg-10">
+						<input id="correo1" type="email" class="form-control" name="direccion">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label" style="color: black; font-weight: bold;">Telefono</label>
+						<div class="col-lg-10">
+						<input id="correo1" type="email" class="form-control" name="telefono">
+						</div>
+					</div>
 				</form>
 		  </div>
 		  <div class="modal-footer">
@@ -379,6 +329,7 @@ Highcharts.setOptions(Highcharts.theme);
 		</div>
 	  </div>
 	</div>
+	
 	
 	<div class="modal fade" id="myModalMuestra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">

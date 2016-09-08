@@ -196,7 +196,9 @@ function registroPaciente(){
 	apellido: "a",
 	cedula: "a",
 	correo: "a",
-	contrasena: "a"
+	contrasena: "a",
+	direccion: "a",
+	telefono: "a"
 	}
 	datosMail={
 	 correo: "a",
@@ -207,6 +209,8 @@ function registroPaciente(){
 	paciente.apellido= $("#apellidos").val();
 	paciente.cedula= $("#cedula").val();
 	paciente.correo= $("#correo").val();
+	paciente.direccion= $("#direccion").val();
+	paciente.telefono= $("#telefono").val();
 	paciente.contrasena= Math.random().toString(36).slice(-8);
 	datosMail.correo=$("#correo").val();
 	datosMail.contrasena=paciente.contrasena;
@@ -378,7 +382,35 @@ function init(){
 
     	$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-warning', function () 
 		{
-				console.log("Modificar Paciente");
+				var data = table2.row( $(this).parent().parent() ).data();
+				console.log(data);
+				$("#paciente1").val(data[0]);
+				var x = $("#centroDrop1");
+		
+				var y = $("#labDrop1");
+				var z = $("#tipoDrop1");
+				var aNode = x[0].innerHTML = data[2] +' <span class="caret"></span>';
+				var bNode = y[0].innerHTML =  data[3] +' <span class="caret"></span>';
+				var cNode = z[0].innerHTML =  'Muestra de '+ data[4] +' <span class="caret"></span>';
+				//var aNode = y[0].innerHTML = val + ' <span class="caret"></span>';
+				$("#centro1").val(data[2]);
+				$("#lab1").val(data[3]);
+				$("#tipo1").val(data[4]);
+				if(data[4].toLowerCase()== 'sangre'){
+				$("#exSangre1").show();
+				} else if(data[4].toLowerCase()== 'orina'){
+				$("#exOrina1").show();
+				} else if(data[4].toLowerCase()== 'heces'){
+				$("#exHeces1").show();
+				}
+				$('input[name="rMuestra1"]').each(function() {//quita la selección de todos los checkboxes
+				if($(this).val().toLowerCase()==data[5].toLowerCase()){
+				$(this).prop('checked', true);
+				}
+					});
+				
+				$("#idMuestra").val(data[8]);
+				$("#myModalModificarMuestra").modal();
     	} );
     	$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
 		{
