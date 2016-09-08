@@ -359,7 +359,7 @@ function init(){
 
 
 
-		$('#Pacientes_Operario').DataTable(
+		var table2 =$('#Pacientes_Operario').DataTable(
 		{
         	data: dataSet2,
         	columns:
@@ -382,7 +382,20 @@ function init(){
     	} );
     	$('#Pacientes_Operario tbody .dc').on('click', 'button.btn-danger', function () 
 		{
-				console.log("ELiminar Paciente");
+				var cedula = table2.row( $(this).parent().parent() ).data()[0];
+				$.ajax({
+					type: "DELETE",
+					  url: "http://localhost:3000/modelo/paciente/"+cedula,
+					  
+					  success: function(){ alert("Paciente eliminado satisfactoriamente.");},
+					  error: function(error){
+						  if(error.responseText == 'showAlert')
+							  alert("Paciente no encontrado.")},
+					  contentType: 'application/x-www-form-urlencoded'
+					});
+				
+				location.reload();
+				//console.log("ELiminar Paciente");
     	} );
 
 	});	
